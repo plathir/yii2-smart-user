@@ -9,7 +9,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist plathir/yii2-user "*"
+php composer.phar require --prefer-dist plathir/yii2-smart-user "*"
 ```
 
 or add
