@@ -1,74 +1,62 @@
 <?php
 
-use plathir\user\models\LoginForm;
-use yii\web\Controller;
+namespace plathir\user\controllers;
 
-
-use dektrium\user\Finder;
-use plathir\user\Module;
 use Yii;
-use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
+use plathir\user\models\LoginForm;
+
+
 
 class SecurityController extends Controller {
 
-    /** @var Finder */
-    protected $finder;
-
-    /**
-     * @param string $id
-     * @param Module $module
-     * @param Finder $finder
-     * @param array  $config
-     */
-    public function __construct($id, $module, Finder $finder, $config = []) {
-        $this->finder = $finder;
-        parent::__construct($id, $module, $config);
-    }
-
-    /** @inheritdoc */
     public function behaviors() {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    ['allow' => true, 'actions' => ['login'], 'roles' => ['?']],
-                    ['allow' => true, 'actions' => ['login', 'logout'], 'roles' => ['@']],
-                ]
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post']
-                ]
-            ]
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'logout'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['login', 'logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
         ];
     }
 
-    public function actionLogin() {
-
+public function actionLogin()
+    {
         if (!\Yii::$app->user->isGuest) {
-            $this->goHome();
+            return $this->goHome();
         }
 
-        $model = \Yii::createObject(LoginForm::className());
-
-        $this->performAjaxValidation($model);
-
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('login', [
-                    'model' => $model,
-                    'module' => $this->module,
-        ]);
     }
 
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
     }
-
+    
 }

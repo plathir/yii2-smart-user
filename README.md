@@ -1,4 +1,4 @@
-yii2-user
+yii2-smart-user
 ==============
 
 Under Development !!! Do not use...
