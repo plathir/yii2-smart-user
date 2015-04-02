@@ -1,7 +1,7 @@
 <?php
 namespace plathir\user\models;
 
-use plathir\models\User;
+use plathir\user\models\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 use Yii;
@@ -34,7 +34,11 @@ class ResetPasswordForm extends Model
         $this->_user = User::findByPasswordResetToken($token);
         if (!$this->_user) {
             throw new InvalidParamException('Wrong password reset token.');
-        }
+        } else 
+//            {
+//            throw new InvalidParamException('user is empty.');
+//        }
+//        
         parent::__construct($config);
     }
 

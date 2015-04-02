@@ -6,6 +6,7 @@ use Yii;
 use plathir\user\models\PasswordResetRequestForm;
 use plathir\user\models\ResetPasswordForm;
 use plathir\user\models\SignupForm;
+use plathir\user\models\User;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
