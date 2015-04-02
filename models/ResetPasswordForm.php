@@ -35,10 +35,7 @@ class ResetPasswordForm extends Model
         if (!$this->_user) {
             throw new InvalidParamException('Wrong password reset token.');
         } else 
-//            {
-//            throw new InvalidParamException('user is empty.');
-//        }
-//        
+        
         parent::__construct($config);
     }
 
