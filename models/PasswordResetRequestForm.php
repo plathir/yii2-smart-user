@@ -27,6 +27,7 @@ class PasswordResetRequestForm extends Model {
                 'message' => 'There is no user with such email.'
             ],
         ];
+        
     }
 
     /**
