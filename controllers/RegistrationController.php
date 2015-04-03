@@ -7,10 +7,12 @@ use plathir\user\models\PasswordResetRequestForm;
 use plathir\user\models\ResetPasswordForm;
 use plathir\user\models\SignupForm;
 use plathir\user\models\User;
+use plathir\user\models\ActivateUser;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+
 
 class RegistrationController extends Controller {
 
@@ -18,10 +20,10 @@ class RegistrationController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'user-activation'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'user-activation'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -39,8 +41,11 @@ class RegistrationController extends Controller {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+                if ($model->sendEmail()) {
+                    Yii::$app->getSession()->setFlash('success', 'Check your email for account Activation.');
                     return $this->goHome();
+                } else {
+                    Yii::$app->getSession()->setFlash('error', 'problem woth email');
                 }
             }
         }
@@ -48,6 +53,26 @@ class RegistrationController extends Controller {
         return $this->render('signup', [
                     'model' => $model,
         ]);
+    }
+
+    public function actionUserActivation($token) {
+         try {
+            $model = new ActivateUser($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->activate()) {
+            Yii::$app->getSession()->setFlash('success', 'User activated !');
+            
+                if (Yii::$app->getUser()->login($model->user)) {
+                    return $this->goHome();
+                }
+        }
+        
+            Yii::$app->getSession()->setFlash('error', 'activation incomplete !.');
+            return $this->goHome();
+        
     }
 
     public function actionRequestPasswordReset() {

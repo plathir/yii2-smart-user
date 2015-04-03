@@ -14,6 +14,8 @@ class SignupForm extends Model
     public $email;
     public $password;
 
+    public $viewPath = '@vendor/plathir/yii2-smart-user/views/mail';
+        
     /**
      * @inheritdoc
      */
@@ -55,4 +57,32 @@ class SignupForm extends Model
 
         return null;
     }
+    
+    public function sendEmail() {
+        /* @var $user User */
+        $user = User::findOne([
+                    'status' => User::STATUS_ACTIVE,
+     //               'activate_token' => null,
+                    'email' => $this->email,
+        ]);
+
+        if ($user) {
+            if (!User::isActivateTokenValid($user->password_reset_token)) {
+                $user->generateActivateToken();
+            }
+            if ($user->save()) {
+                $mailer = \Yii::$app->mailer;
+                $mailer->viewPath = $this->viewPath;
+                $mailer->getView()->theme = \Yii::$app->view->theme;
+                return $mailer->compose(['html' => 'ActivateToken-html', 'text' => 'ActivateToken-text'], ['user' => $user])
+                                ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                ->setTo($this->email)
+                                ->setSubject('Activate Account for ' . \Yii::$app->name)
+                                ->send();
+            }
+        }
+
+        return false;
+    }
+    
 }

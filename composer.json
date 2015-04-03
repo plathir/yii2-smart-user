@@ -17,7 +17,9 @@
     "autoload": {
         "psr-4": {
             "plathir\\user\\": ""
+        },
+        "extra": {
+            "bootstrap": "plathir\\user\\Bootstrap"
         }
-
     }
 }

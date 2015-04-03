@@ -38,7 +38,7 @@ class ResetPasswordForm extends Model
         
         parent::__construct($config);
     }
-
+    
     /**
      * @inheritdoc
      */
