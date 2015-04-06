@@ -9,10 +9,10 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 
-Modal::begin([
-    'header' => '<h2>Hello world</h2>',
-    'toggleButton' => ['label' => 'click me'],
-]);
+//Modal::begin([
+//    'header' => '<h2>Hello world</h2>',
+//    'toggleButton' => ['label' => 'click me'],
+//]);
 
 echo '<h3>Index Account</h3>';
 
@@ -20,6 +20,6 @@ echo Html::a('Account Edit', ['edit']);
 echo '<br>';
 echo Html::a('Change Password', ['change-password']);
 
-
-Modal::end();
+//
+//Modal::end();
 
