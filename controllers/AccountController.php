@@ -23,7 +23,7 @@ class AccountController extends Controller {
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['edit'],
+                        'actions' => ['index','edit', 'change-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -32,24 +32,42 @@ class AccountController extends Controller {
         ];
     }
 
-    /**
-     * Displays page where user can update account settings (username, email or password).
-     * @return string|\yii\web\Response
-     */
-    public function actionEdit() {
-        $AccountModel = new AccountForm();
-
-        //$AccountModel = $this->findModel(\Yii::$app->user->identity->id);
-        
-        if ($AccountModel->load(Yii::$app->request->post())) {
-            return $this->goHome;
-        } else {
-            return $this->render('edit', [
-                        'model' => $AccountModel,
-            ]);
-        }
+    
+       public function actionIndex() {
+        $model = $this->findModel(\Yii::$app->user->identity->id);
+        return $this->render('index', [
+                    'model' => $model,
+        ]);
     }
+    
+        public function actionEdit() {
+        $model = $this->findModel(\Yii::$app->user->identity->id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->edit()) {
+                Yii::$app->getSession()->setFlash('success', 'Account changed !');
+                return $this->refresh();
+            }
+        }
 
+        return $this->render('edit', [
+                    'model' => $model,
+        ]);
+    }
+    
+        public function actionChangePassword() {
+        $model = $this->findModel(\Yii::$app->user->identity->id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->edit()) {
+                    Yii::$app->getSession()->setFlash('success', 'Password changed !');
+                    return $this->refresh();
+            }
+        }
+        return $this->render('change_password', [
+                    'model' => $model,
+        ]);
+    }
+    
+    
     protected function findModel($id) {
         if (($model = User::findOne($id)) !== null) {
             $new_model = new AccountForm();
