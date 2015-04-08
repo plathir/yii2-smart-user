@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\AccountForm;
 use plathir\user\models\User;
+use plathir\user\models\ChangePasswordForm;
 
 class AccountController extends Controller {
 
@@ -55,11 +56,13 @@ class AccountController extends Controller {
     }
     
         public function actionChangePassword() {
-        $model = $this->findModel(\Yii::$app->user->identity->id);
+        $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->edit()) {
+            if ($user = $model->ChangePassword()) {
                     Yii::$app->getSession()->setFlash('success', 'Password changed !');
                     return $this->refresh();
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
             }
         }
         return $this->render('change_password', [
@@ -74,6 +77,17 @@ class AccountController extends Controller {
             $new_model->username = $model->username;
             $new_model->email = $model->email;
 
+            return $new_model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+        protected function findModelChangePassword($id) {
+        if (($model = User::findOne($id)) !== null) {
+            $new_model = new ChangePasswordForm();
+            $new_model->username = $model->username;
+            $new_model->email = $model->email;
             return $new_model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -17,13 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
-                <?= $form->field($model, 'email')->textInput(['readonly' => true]) ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <?= $form->field($model, 'new_password')->passwordInput() ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button']) ?>
-                </div>
+            <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'email')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'new_password')->passwordInput() ?>            
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <div class="form-group">
+                <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button']) ?>
+            </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

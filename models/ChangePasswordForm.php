@@ -56,17 +56,15 @@ class ChangePasswordForm extends Model {
      */
     public function ChangePassword() {
         if ($this->validate()) {
-//            $upd_user = \Yii::$app->user->identity;
-//            $upd_user->username = $this->username;
-//            $upd_user->email = $this->email;
-//            $upd_user->setPassword($this->password);
-//            $upd_user->generateAuthKey();
-            if ($upd_user->save()) {
-                return $upd_user;
+
+            $upd_user = \Yii::$app->user->identity;
+            if ($this->new_password != '' && Yii::$app->security->validatePassword($this->password, $upd_user->password_hash)) {
+                $upd_user->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
+                if ($upd_user->save()) {
+                    return $upd_user;
+                }
             }
         }
-
         return null;
     }
-
 }
