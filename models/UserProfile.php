@@ -2,6 +2,7 @@
 
 namespace plathir\user\models;
 
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -15,24 +16,22 @@ use Yii;
  * @property integer $updated_at
  * @property integer $updated_by
  */
-class UserProfile extends \yii\db\ActiveRecord
-{
+class UserProfile extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%user_profile}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'first_name', 'last_name', 'gender', 'birth_date', 'updated_at', 'updated_by'], 'required'],
-            [['id', 'gender', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'first_name', 'last_name', 'gender', 'birth_date'], 'required'],
+            [['id', 'gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
@@ -41,16 +40,33 @@ class UserProfile extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'gender' => Yii::t('app', 'Gender'),
             'birth_date' => Yii::t('app', 'Birth Date'),
+            'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            // Place your custom code here
+            $this->updated_by = \Yii::$app->user->identity->id;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function behaviors() {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
 }

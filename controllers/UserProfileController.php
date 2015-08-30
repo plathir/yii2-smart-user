@@ -12,15 +12,24 @@ use yii\filters\VerbFilter;
 /**
  * UserProfileController implements the CRUD actions for UserProfile model.
  */
-class UserProfileController extends Controller
-{
-    public function behaviors()
-    {
+class UserProfileController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete-my-profile' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'edit-my-profile', 'create-my-profile', 'delete-my-profile'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -30,14 +39,13 @@ class UserProfileController extends Controller
      * Lists all UserProfile models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new UserProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -46,10 +54,9 @@ class UserProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -58,35 +65,55 @@ class UserProfileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new UserProfile();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    public function actionCreateMyProfile() {
+        $model = $this->findModel(\Yii::$app->user->identity->id);
+        if ($model == null) {
+            $model = new UserProfile();
+            $model->id = \Yii::$app->user->identity->id;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['account/my']);
+            } else {
+                if (\Yii::$app->request->isAjax) {
+                    return $this->renderAjax('create-my-profile', [
+                                'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('create-my-profile', [
+                                'model' => $model,
+                    ]);
+                }
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            Yii::$app->getSession()->setFlash('danger', 'profile already created!');
+            return $this->actionEditMyProfile();
         }
     }
 
     /**
-     * Updates an existing UserProfile model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     * Edit my Profile
+     * 
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionEditMyProfile() {
+        $model = $this->findModel(\Yii::$app->user->identity->id);
+        if ($model != null) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['account/my']);
+            } else {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+                if (\Yii::$app->request->isAjax) {
+                    return $this->renderAjax('edit-my-profile', [
+                                'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('edit-my-profile', [
+                                'model' => $model,
+                    ]);
+                }
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->getSession()->setFlash('danger', 'profile not exist !');
+            return $this->actionCreateMyProfile();
         }
     }
 
@@ -96,11 +123,10 @@ class UserProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    public function actionDeleteMyProfile() {
+        $this->findModel(\Yii::$app->user->identity->id)->delete();
+        Yii::$app->getSession()->setFlash('success', 'Deleted !');
+        return $this->redirect(['account/my']);
     }
 
     /**
@@ -110,12 +136,17 @@ class UserProfileController extends Controller
      * @return UserProfile the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = UserProfile::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return null;
+            //throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-}
+
+
+    
+
+
+        }

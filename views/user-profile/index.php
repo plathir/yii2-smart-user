@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\grid\ActionColumn;
 /* @var $this yii\web\View */
 /* @var $searchModel common\extensions\user\models\UserProfileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

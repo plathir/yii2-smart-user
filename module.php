@@ -2,15 +2,22 @@
 
 namespace plathir\user;
 
-class Module extends \yii\base\Module
-{
-    public $controllerNamespace = 'plathir\user\controllers';
+use Yii;
 
-    public function init()
-    {
-        
+class Module extends \yii\base\Module {
+
+    public $controllerNamespace = 'plathir\user\controllers';
+  
+    public function init() {
+
         parent::init();
 
-        // custom initialization code goes here
+        $this->registerAssets();
     }
+
+    public function registerAssets() {
+        $view = Yii::$app->getView();
+        userAsset::register($view);
+    }
+
 }

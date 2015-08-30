@@ -7,6 +7,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\AccountForm;
 use plathir\user\models\User;
+use plathir\user\models\UserProfile;
+use plathir\user\models\UserProfileSearch;
 use plathir\user\models\ChangePasswordForm;
 
 class AccountController extends Controller {
@@ -24,7 +26,7 @@ class AccountController extends Controller {
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','edit', 'change-password'],
+                        'actions' => ['my', 'edit', 'change-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -33,44 +35,65 @@ class AccountController extends Controller {
         ];
     }
 
-    
-       public function actionIndex() {
-        $model = $this->findModel(\Yii::$app->user->identity->id);
-        return $this->render('index', [
-                    'model' => $model,
+    public function actionMy() {
+
+        $account = User::findIdentity(\Yii::$app->user->identity->id);
+        $profile = UserProfile::find()
+                ->where(['id' => \Yii::$app->user->identity->id])
+                ->one();
+
+        //        ::search(['id' => \Yii::$app->user->identity->id ]);
+
+
+        return $this->render('my', [
+                    'account' => $account,
+                    'profile' => $profile,
         ]);
     }
-    
-        public function actionEdit() {
+
+    public function actionEdit() {
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->edit()) {
                 Yii::$app->getSession()->setFlash('success', 'Account changed !');
-                return $this->refresh();
+                //return $this->refresh();
+                return $this->redirect(['account/my']);
             }
         }
-
-        return $this->render('edit', [
-                    'model' => $model,
-        ]);
+        if (\Yii::$app->request->isAjax) {
+            return $this->renderAjax('edit', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('edit', [
+                        'model' => $model,
+            ]);
+        }
     }
-    
-        public function actionChangePassword() {
+
+    public function actionChangePassword() {
         $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->ChangePassword()) {
-                    Yii::$app->getSession()->setFlash('success', 'Password changed !');
-                    return $this->refresh();
+                Yii::$app->getSession()->setFlash('success', 'Password changed !');
+                //  return $this->refresh();
+                return $this->redirect(['account/my']);
             } else {
                 Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
             }
         }
+        if (\Yii::$app->request->isAjax) {
+        return $this->renderAjax('change_password', [
+                    'model' => $model,
+        ]);
+        } else {
         return $this->render('change_password', [
                     'model' => $model,
         ]);
+            
+        }
     }
-    
-    
+
     protected function findModel($id) {
         if (($model = User::findOne($id)) !== null) {
             $new_model = new AccountForm();
@@ -83,7 +106,7 @@ class AccountController extends Controller {
         }
     }
 
-        protected function findModelChangePassword($id) {
+    protected function findModelChangePassword($id) {
         if (($model = User::findOne($id)) !== null) {
             $new_model = new ChangePasswordForm();
             $new_model->username = $model->username;

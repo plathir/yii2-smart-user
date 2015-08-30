@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -15,13 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>Please fill out the following fields to edit account:</p>
 
     <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-                <?= $form->field($model, 'username') ?>
-                <?= $form->field($model, 'email') ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button']) ?>
-                </div>
+        <div class="col-lg-12">
+            <?php $form = ActiveForm::begin(['options' => ['id' => 'account-form', 'enableAjaxValidation' => true]]); ?>
+            <?= $form->field($model, 'username') ?>
+            <?= $form->field($model, 'email') ?>
+            <div class="form-group">
+                <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button']) ?>
+            </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
