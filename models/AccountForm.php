@@ -71,6 +71,8 @@ class AccountForm extends Model {
      * @return User|null the saved model or null if saving fails
      */
     public function edit() {
+//         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//         return $this->validate();
         if ($this->validate()) {
             $upd_user = \Yii::$app->user->identity;
             $upd_user->username = $this->username;

@@ -70,7 +70,7 @@ class UserProfileController extends Controller {
         if ($model == null) {
             $model = new UserProfile();
             $model->id = \Yii::$app->user->identity->id;
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && ($user = $model->save())) {
                 return $this->redirect(['account/my']);
             } else {
                 if (\Yii::$app->request->isAjax) {
@@ -99,8 +99,6 @@ class UserProfileController extends Controller {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['account/my']);
             } else {
-
-
                 if (\Yii::$app->request->isAjax) {
                     return $this->renderAjax('edit-my-profile', [
                                 'model' => $model,

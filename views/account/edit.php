@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-12">
-            <?php $form = ActiveForm::begin(['options' => ['id' => 'account-form', 'enableAjaxValidation' => true]]); ?>
+            <?php $form = ActiveForm::begin(['options' => ['id' => 'account-form', 'enableAjaxValidation' => true, 'enableClientValidation'=>true]]); ?>
             <?= $form->field($model, 'username') ?>
             <?= $form->field($model, 'email') ?>
             <div class="form-group">

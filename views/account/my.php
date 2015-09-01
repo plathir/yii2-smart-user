@@ -98,67 +98,62 @@ use yii\bootstrap\Modal;
             <h3>
                 My User Data 
             </h3>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <?php
-                        echo Tabs::widget([
+            <div>
+                <?php
+                echo Tabs::widget([
 
-                            'items' => [
-                                [
-                                    'label' => 'Account',
-                                    'content' => '<br>' .
-                                    Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Account Edit', ['value' => Url::to(['edit']), 'class' => 'btn btn-success', 'id' => 'modalButtonAccount']) .
-                                    '&nbsp ' .
-                                    Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass']) .
-                                    '<br><br>' . $account_html,
-                                //            'headerOptions' => ['class'=>"col-lg-3"],
-                                ],
-                                [
-                                    'label' => 'Profile',
-                                    'content' => '<br>' .
-                                    $profile_html,
-                                    //   'headerOptions' => ['class'=>"col-lg-3"],
-                                    'options' => ['id' => 'profileTab'],
-                                ],
-                            ],
-                        ]);
-                        ?>
-                    </div>
-
-                    <?php
-                    // Display modal Account edit
-                    Modal::begin([
-                        'header' => '<h4>Account Edit</h4>',
-                        'id' => 'modalAccount',
-                        'size' => 'modal-sm',
-                    ]);
-                    echo "<div id='modalContentAccount'> </div>";
-                    Modal::end();
-                    ?>
-                    <?php
-                    // Display change Password edit
-                    Modal::begin([
-                        'header' => '<h4>Change Password</h4>',
-                        'id' => 'modalChangePass',
-                        'size' => 'modal-sm',
-                    ]);
-                    echo "<div id='modalContentChangePass'> </div>";
-                    Modal::end();
-                    ?>
-
-                    <?php
-                    Modal::begin([
-                        'header' => '<h4>Edit Profile</h4>',
-                        'id' => 'modalProfile',
-                        'size' => 'modal-md',
-                    ]);
-                    echo "<div id='modalContentProfile'> </div>";
-                    Modal::end();
-                    ?>
-
-                </div>
+                    'items' => [
+                        [
+                            'label' => 'Account',
+                            'content' => '<br>' .
+                            Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Account Edit', ['value' => Url::to(['edit']), 'class' => 'btn btn-success', 'id' => 'modalButtonAccount']) .
+                            '&nbsp ' .
+                            Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass']) .
+                            '<br><br>' . $account_html,
+                        //            'headerOptions' => ['class'=>"col-lg-3"],
+                        ],
+                        [
+                            'label' => 'Profile',
+                            'content' => '<br>' .
+                            $profile_html,
+                            //   'headerOptions' => ['class'=>"col-lg-3"],
+                            'options' => ['id' => 'profileTab'],
+                        ],
+                    ],
+                ]);
+                ?>
             </div>
+
+            <?php
+            // Display modal Account edit
+            Modal::begin([
+                'header' => '<h4>Account Edit</h4>',
+                'id' => 'modalAccount',
+                'size' => 'modal-sm',
+            ]);
+            echo "<div id='modalContentAccount'> </div>";
+            Modal::end();
+            ?>
+            <?php
+            // Display change Password edit
+            Modal::begin([
+                'header' => '<h4>Change Password</h4>',
+                'id' => 'modalChangePass',
+                'size' => 'modal-sm',
+            ]);
+            echo "<div id='modalContentChangePass'> </div>";
+            Modal::end();
+            ?>
+
+            <?php
+            Modal::begin([
+                'header' => '<h4>Edit Profile</h4>',
+                'id' => 'modalProfile',
+                'size' => 'modal-md',
+            ]);
+            echo "<div id='modalContentProfile'> </div>";
+            Modal::end();
+            ?>
         </div>    
     </div>
 </div>
