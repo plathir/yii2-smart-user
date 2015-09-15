@@ -50,23 +50,50 @@ class AccountController extends Controller {
         ]);
     }
 
+//    public function actionEdit() {
+//        $model = $this->findModel(\Yii::$app->user->identity->id);
+//        //if ($model->load(Yii::$app->request->post()) && ($model->edit())) {
+//        if ($model->load(Yii::$app->request->post())) {
+//         //  Yii::$app->getSession()->setFlash('success', 'Account changed !');
+//       //     return $this->refresh();
+//
+//           // return $this->redirect(['account/my']);
+//         
+//        } else {
+//            if (\Yii::$app->request->isAjax) {
+//                return $this->renderAjax('edit', [
+//                            'model' => $model,
+//                ]);
+//            } else {
+//                return $this->render('edit', [
+//                            'model' => $model,
+//                ]);
+//            }
+//        }
+//    }
+
     public function actionEdit() {
         $model = $this->findModel(\Yii::$app->user->identity->id);
-        if ($model->load(Yii::$app->request->post()) && ($model->edit())) {
-            Yii::$app->getSession()->setFlash('success', 'Account changed !');
-            //return $this->refresh();
-            return $this->redirect(['account/my']);
-        } else {
-            if (\Yii::$app->request->isAjax) {
-                return $this->renderAjax('edit', [
-                            'model' => $model,
-                ]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->edit()) {
+                Yii::$app->getSession()->setFlash('success', 'Account changed !');
+              //  echo 1;
+                return $this->redirect(['account/my']);
             } else {
-                return $this->render('edit', [
-                            'model' => $model,
-                ]);
+                echo 0;
             }
-        }
+        } else {
+            //    if (\Yii::$app->request->isAjax) {
+            return $this->renderAjax('edit', [
+                        'model' => $model,
+            ]);
+        }// else {
+//                return $this->render('edit', [
+//                            'model' => $model,
+//                ]);
+//            }
+//        }
     }
 
     public function actionChangePassword() {

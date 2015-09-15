@@ -1,4 +1,4 @@
-$(function() { 
+$(function () {
     // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         // save the latest tab; use cookies if you like 'em better:
@@ -13,30 +13,31 @@ $(function() {
 });
 
 
-$(function() {
-    $('#modalButtonAccount').click(function() {
+$(function () {
+    $('#modalButtonAccount').click(function () {
         $('#modalAccount').modal('show')
                 .find('#modalContentAccount')
                 .load($(this).attr('value'));
-        
+
     });
 });
 
 
-$(function() {
-    $('#modalButtonChangePass').click(function() {
+$(function () {
+    $('#modalButtonChangePass').click(function () {
         $('#modalChangePass').modal('show')
                 .find('#modalContentChangePass')
                 .load($(this).attr('value'));
-        
+
     });
 });
 
-$(function() {
-    $('#modalButtonProfile').click(function() {
+$(function () {
+    $('#modalButtonProfile').click(function () {
         $('#modalProfile').modal('show')
                 .find('#modalContentProfile')
                 .load($(this).attr('value'));
-        
+
     });
 });
+
