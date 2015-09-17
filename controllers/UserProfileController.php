@@ -97,7 +97,7 @@ class UserProfileController extends Controller {
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model != null) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                 Yii::$app->getSession()->setFlash('success', 'profile changed !');
+                Yii::$app->getSession()->setFlash('success', 'profile changed !');
                 return $this->redirect(['account/my']);
             } else {
                 if (\Yii::$app->request->isAjax) {
@@ -144,8 +144,4 @@ class UserProfileController extends Controller {
         }
     }
 
-
-    
-
-
-        }
+}

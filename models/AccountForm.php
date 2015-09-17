@@ -70,7 +70,7 @@ class AccountForm extends Model {
      *
      * @return User|null the saved model or null if saving fails
      */
-    public function edit() {
+    public function ValidateAndSave() {
 //         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 //         return $this->validate();
         if ($this->validate()) {
@@ -82,9 +82,9 @@ class AccountForm extends Model {
             if ($upd_user->save()) {
                 return true;
             }
-        }
-
+        } 
         return null;
     }
 
 }
+

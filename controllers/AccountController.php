@@ -6,6 +6,8 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\AccountForm;
+use plathir\user\models\UserAccount;
+use plathir\user\models\UserAccountSearch;
 use plathir\user\models\User;
 use plathir\user\models\UserProfile;
 use plathir\user\models\ChangePasswordForm;
@@ -26,6 +28,10 @@ class AccountController extends Controller {
                 'rules' => [
                     [
                         'actions' => ['my', 'edit', 'change-password'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [ 'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,50 +56,31 @@ class AccountController extends Controller {
         ]);
     }
 
-//    public function actionEdit() {
-//        $model = $this->findModel(\Yii::$app->user->identity->id);
-//        //if ($model->load(Yii::$app->request->post()) && ($model->edit())) {
-//        if ($model->load(Yii::$app->request->post())) {
-//         //  Yii::$app->getSession()->setFlash('success', 'Account changed !');
-//       //     return $this->refresh();
-//
-//           // return $this->redirect(['account/my']);
-//         
-//        } else {
-//            if (\Yii::$app->request->isAjax) {
-//                return $this->renderAjax('edit', [
-//                            'model' => $model,
-//                ]);
-//            } else {
-//                return $this->render('edit', [
-//                            'model' => $model,
-//                ]);
-//            }
-//        }
-//    }
-
     public function actionEdit() {
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
 
-            if ($model->edit()) {
+            if ($model->ValidateAndSave()) {
                 Yii::$app->getSession()->setFlash('success', 'Account changed !');
-              //  echo 1;
+                //  echo 1;
                 return $this->redirect(['account/my']);
             } else {
                 echo 0;
+//                    return $this->renderAjax('edit', [
+//                                'model' => $model,
+//                    ]);
             }
         } else {
-            //    if (\Yii::$app->request->isAjax) {
-            return $this->renderAjax('edit', [
-                        'model' => $model,
-            ]);
-        }// else {
-//                return $this->render('edit', [
-//                            'model' => $model,
-//                ]);
-//            }
-//        }
+            if (\Yii::$app->request->isAjax) {
+                return $this->renderAjax('edit', [
+                            'model' => $model,
+                ]);
+            } else {
+                return $this->render('edit', [
+                            'model' => $model,
+                ]);
+            }
+        }
     }
 
     public function actionChangePassword() {
@@ -139,6 +126,16 @@ class AccountController extends Controller {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionIndex() {
+        $searchModel = new UserAccountSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
 }
