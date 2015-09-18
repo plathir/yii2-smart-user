@@ -7,13 +7,13 @@ use Yii;
 class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'plathir\user\controllers';
-    public $adminuserID = '';
+    public $AdminUserID = '';
   
     public function init() {
 
         parent::init();
-        if ($adminuserID == ''){
-          $AdminuserID = '1';  
+        if ($this->AdminUserID == ''){
+          $this->AdminUserID = '1';  
         }
         $this->registerAssets();
     }

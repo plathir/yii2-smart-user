@@ -22,13 +22,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'gender')->textInput() ?>
 
     <?=
-    $form->field($model, 'birth_date')->widget(\yii\jui\DatePicker::classname());
-    //[
-    //'language' => 'ru',
-    //  'dateFormat' => 'dd-MM-yyyy',]);
+    $form->field($model, 'birth_date');
     ?>
-
-
     <?php //= $form->field($model, 'updated_at')->textInput() ?>
 
     <?php //= $form->field($model, 'updated_by')->textInput() ?>

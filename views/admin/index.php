@@ -40,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); 
     
-    echo 'Admin User ID : ' . $AdminuserID;
     ?>
 
     

@@ -22,7 +22,7 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'gender')->textInput() ?>
 
-    <?= $form->field($model, 'birth_date')->widget(\yii\jui\DatePicker::classname()); ?>
+    <?= $form->field($model, 'birth_date'); ?>
 
 
     <?php //= $form->field($model, 'updated_at')->textInput() ?>
