@@ -10,6 +10,7 @@ use plathir\user\models\AdminUsersSearch;
 use plathir\user\models\User;
 use plathir\user\models\CreateUserForm;
 
+
 class AdminController extends Controller {
 
     /** @inheritdoc */
@@ -19,7 +20,6 @@ class AdminController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                    
                 ],
             ],
             'access' => [
@@ -57,11 +57,19 @@ class AdminController extends Controller {
     }
 
     public function actionUpdate($id) {
-        return $this->render('update', [
-                    'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->update()) {
+            return $this->render('view', [
+                        'model' => $model,
+            ]);
+        } else {
+            return $this->render('update', [
+                        'model' => $model,
+            ]);
+        }
     }
-    
+
     public function actionIndex() {
         $searchModel = new AdminUsersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

@@ -7,11 +7,14 @@ use Yii;
 class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'plathir\user\controllers';
+    public $adminuserID = '';
   
     public function init() {
 
         parent::init();
-
+        if ($adminuserID == ''){
+          $AdminuserID = '1';  
+        }
         $this->registerAssets();
     }
 
@@ -20,4 +23,5 @@ class Module extends \yii\base\Module {
         userAsset::register($view);
     }
 
+    
 }

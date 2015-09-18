@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-account-update">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    	<?php echo $this->render('_form', [
+    	<?php echo $this->render('_form_update', [
 		'model' => $model,
 	]); ?>
     
