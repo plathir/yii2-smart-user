@@ -5,7 +5,6 @@ namespace plathir\user\models;
 use plathir\user\models\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-use Yii;
 
 /**
  * Password reset form

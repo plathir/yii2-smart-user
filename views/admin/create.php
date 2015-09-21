@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 
 
-$this->title = Yii::t('app', 'Creare User');
+$this->title = Yii::t('app', 'Create User');
 $this->params['breadcrumbs'][] = $this->title;    
 
 ?>

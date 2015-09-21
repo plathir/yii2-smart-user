@@ -10,13 +10,15 @@ use yii\widgets\ActiveForm;
 ?>
 
 
-    <p>Please fill out the following fields to signup:</p>
+    <p>Please fill out the following fields to Create:</p>
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-create']); ?>
                 <?= $form->field($model, 'username') ?>
                 <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'status') ?>
+                <?= $form->field($model, 'role') ?>
                 <?= $form->field($model, 'password')->passwordInput(); ?>
                 <div class="form-group">
                     <?= Html::submitButton('Create' , ['class' => 'btn btn-success']) ?>

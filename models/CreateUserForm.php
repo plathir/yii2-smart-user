@@ -6,15 +6,31 @@
 
 namespace plathir\user\models;
 
-use yii\base\Model;
-use yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use Yii;
 
-class CreateUserForm extends Model {
+/** * @property integer $id
+ * @property string $username
+ * @property string $password_hash
+ * @property string $password_reset_token
+ * @property string $activate_token
+ * @property string $email
+ * @property string $auth_key
+ * @property integer $status
+ * @property integer $role
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property string $password write-only password_get_info($hash)
 
-    public $id;
-    public $username;
-    public $email;
+ * */
+class CreateUserForm extends ActiveRecord {
+
     public $password;
+
+    public static function tableName() {
+        return '{{%user}}';
+    }
 
     /**
      * @inheritdoc
@@ -27,29 +43,36 @@ class CreateUserForm extends Model {
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
+            ['status', 'required'],
+            ['role', 'required'],
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\plathir\user\models\User', 'message' => 'This email address has already been taken.'],
-            ['password', 'required'],
+            ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],
         ];
     }
 
-    public function signup() {
-        if ($this->validate()) {
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
-            if ($user->save()) {
-                return $user;
-                print_r($user);
-                die();
-            }
-        }
-
-        return null;
+    public function setPassword($password) {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
-    
+    public function generateAuthKey() {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            // Place your custom code here
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function behaviors() {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
 }

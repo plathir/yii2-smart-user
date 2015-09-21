@@ -14,6 +14,7 @@ use Yii;
  * @property integer $gender
  * @property string $birth_date
  * @property integer $updated_at
+ * @property integer $created_at
  * @property integer $updated_by
  */
 class AdminUsers extends \yii\db\ActiveRecord {
@@ -64,5 +65,9 @@ class AdminUsers extends \yii\db\ActiveRecord {
             TimestampBehavior::className(),
         ];
     }
-
+//    public function activate() {
+//        $user = $this->user;
+//        $user->removeActivateToken();
+//        return $user->save();
+//    }
 }

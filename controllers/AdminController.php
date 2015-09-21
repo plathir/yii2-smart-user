@@ -5,11 +5,9 @@ namespace plathir\user\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use plathir\user\models\AdminUsers;
 use plathir\user\models\AdminUsersSearch;
-use plathir\user\models\User;
 use plathir\user\models\CreateUserForm;
-
+use plathir\user\models\ActivateUser;
 
 class AdminController extends Controller {
 
@@ -26,7 +24,7 @@ class AdminController extends Controller {
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['create', 'index', 'view', 'delete', 'update'],
+                        'actions' => ['create', 'index', 'view', 'delete', 'update', 'activate'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -41,8 +39,11 @@ class AdminController extends Controller {
 
     public function actionCreate() {
         $model = new CreateUserForm();
-        if ($model->load(Yii::$app->request->post()) && $new_user = $model->signup()) {
-            return $this->redirect(['view', 'id' => $new_user->id]);
+        $model->setPassword($model->password);
+        $model->generateAuthKey();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->render('view', ['model' => $this->findModel($model->id)
+            ]);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -85,8 +86,34 @@ class AdminController extends Controller {
         return $this->redirect(['index']);
     }
 
+    public function actionActivate($id) {
+        $user = $this->findModel($id);
+        $token = $user->activate_token;
+//        print_r($user);
+//        die();
+        
+        if ($token !== null) {
+            try {
+                $model = new ActivateUser($token);
+            } catch (InvalidParamException $e) {
+                throw new BadRequestHttpException($e->getMessage());
+            }
+
+            if ($model->activate()) {
+                Yii::$app->getSession()->setFlash('success', 'User activated !');
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'activation incomplete !.');
+                return $this->redirect(['index']);
+            }
+        } else {
+            Yii::$app->getSession()->setFlash('error', 'user already active !.');
+            return $this->redirect(['index']);
+        }
+    }
+
     protected function findModel($id) {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = CreateUserForm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
