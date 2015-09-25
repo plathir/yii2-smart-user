@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use plathir\user\models\AdminUsersSearch;
 use plathir\user\models\CreateUserForm;
 use plathir\user\models\ActivateUser;
+use yii\web\NotFoundHttpException;
 
 class AdminController extends Controller {
 
@@ -42,18 +43,21 @@ class AdminController extends Controller {
         $model->setPassword($model->password);
         $model->generateAuthKey();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->render('view', ['model' => $this->findModel($model->id)
+            return $this->render('view', 
+               ['account' => $this->findModel($model->id),
+               
             ]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                        'account' => $model,
             ]);
         }
     }
 
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    'account' => $this->findModel($id),
+                    'profile' => $this->findModelProfile($id),
         ]);
     }
 
@@ -62,11 +66,12 @@ class AdminController extends Controller {
 
         if ($model->load(Yii::$app->request->post()) && $model->update()) {
             return $this->render('view', [
-                        'model' => $model,
+                        'account' => $model,
+                        'profile' => $this->findModelProfile($model->id),
             ]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                        'account' => $model,
             ]);
         }
     }
@@ -91,7 +96,7 @@ class AdminController extends Controller {
         $token = $user->activate_token;
 //        print_r($user);
 //        die();
-        
+
         if ($token !== null) {
             try {
                 $model = new ActivateUser($token);
@@ -120,4 +125,11 @@ class AdminController extends Controller {
         }
     }
 
+        protected function findModelProfile($id) {
+        if (($model = \plathir\user\models\UserProfile::findOne($id)) !== null) {
+            return $model;
+        } else {
+            return false;
+       }
+    }
 }

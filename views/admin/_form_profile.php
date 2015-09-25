@@ -14,10 +14,10 @@ use yii\widgets\ActiveForm;
 <div class="row">
     <div class="col-lg-5">
         <?php $form = ActiveForm::begin(['id' => 'form-update']); ?>
-        <?= $form->field($account, 'username') ?>
-        <?= $form->field($account, 'email') ?>
-        <?= $form->field($account, 'status') ?>
-        <?= $form->field($account, 'role') ?>
+        <?= $form->field($profile, 'username') ?>
+        <?= $form->field($profile, 'email') ?>
+        <?= $form->field($profile, 'status') ?>
+        <?= $form->field($profile, 'role') ?>
         <div class="form-group">
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>
