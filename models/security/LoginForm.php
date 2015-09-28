@@ -1,8 +1,9 @@
 <?php
-namespace plathir\user\models;
+namespace plathir\user\models\security;
 
 use Yii;
 use yii\base\Model;
+use plathir\user\models\account\User;
 
 /**
  * Login form

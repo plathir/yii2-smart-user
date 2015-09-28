@@ -1,6 +1,6 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\account;
 
 use Yii;
 use yii\base\NotSupportedException;

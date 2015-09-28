@@ -1,11 +1,11 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\admin;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use plathir\user\models\AdminUsers;
+use plathir\user\models\admin\AdminUsers;
 
 
 /**

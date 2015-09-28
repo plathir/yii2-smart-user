@@ -4,7 +4,7 @@
  * Create User Model 
  */
 
-namespace plathir\user\models;
+namespace plathir\user\models\admin;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -39,14 +39,14 @@ class CreateUserForm extends ActiveRecord {
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\plathir\user\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\plathir\user\models\account\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['status', 'required'],
             ['role', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\plathir\user\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\plathir\user\models\account\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],
         ];

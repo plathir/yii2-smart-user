@@ -1,7 +1,7 @@
 <?php
-namespace plathir\user\models;
+namespace plathir\user\models\registration;
 
-use plathir\user\models\User;
+use plathir\user\models\account\User;
 use yii\base\Model;
 use Yii;
 
@@ -24,13 +24,13 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\plathir\user\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\plathir\user\models\account\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\plathir\user\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\plathir\user\models\account\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],

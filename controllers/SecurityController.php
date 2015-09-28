@@ -5,7 +5,7 @@ namespace plathir\user\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use plathir\user\models\LoginForm;
+use plathir\user\models\security\LoginForm;
 
 
 

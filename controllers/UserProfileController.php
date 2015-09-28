@@ -3,8 +3,8 @@
 namespace plathir\user\controllers;
 
 use Yii;
-use plathir\user\models\UserProfile;
-use plathir\user\models\UserProfileSearch;
+use plathir\user\models\profile\UserProfile;
+use plathir\user\models\profile\UserProfileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

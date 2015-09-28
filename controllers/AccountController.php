@@ -5,11 +5,11 @@ namespace plathir\user\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use plathir\user\models\AccountForm;
-use plathir\user\models\UserAccount;
-use plathir\user\models\UserAccountSearch;
-use plathir\user\models\User;
-use plathir\user\models\UserProfile;
+use plathir\user\models\account\AccountForm;
+//use plathir\user\models\account\UserAccount;
+//use plathir\user\models\account\UserAccountSearch;
+use plathir\user\models\account\User;
+use plathir\user\models\profile\UserProfile;
 use plathir\user\models\ChangePasswordForm;
 
 class AccountController extends Controller {

@@ -5,9 +5,10 @@ namespace plathir\user\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use plathir\user\models\AdminUsersSearch;
-use plathir\user\models\CreateUserForm;
-use plathir\user\models\ActivateUser;
+use plathir\user\models\admin\AdminUsersSearch;
+use plathir\user\models\admin\CreateUserForm;
+//use plathir\user\models\ActivateUser;
+use plathir\user\models\profile\UserProfile;
 use yii\web\NotFoundHttpException;
 
 class AdminController extends Controller {
@@ -45,7 +46,7 @@ class AdminController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->render('view', 
                ['account' => $this->findModel($model->id),
-               
+                 'profile' => $this->findModelProfile($model->id),                           
             ]);
         } else {
             return $this->render('create', [
@@ -65,6 +66,7 @@ class AdminController extends Controller {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->update()) {
+            Yii::$app->getSession()->setFlash('success', 'User updated !');
             return $this->render('view', [
                         'account' => $model,
                         'profile' => $this->findModelProfile($model->id),
@@ -126,7 +128,7 @@ class AdminController extends Controller {
     }
 
         protected function findModelProfile($id) {
-        if (($model = \plathir\user\models\UserProfile::findOne($id)) !== null) {
+        if (($model = UserProfile::findOne($id)) !== null) {
             return $model;
         } else {
             return false;

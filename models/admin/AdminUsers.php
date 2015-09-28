@@ -1,6 +1,6 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\admin;
 
 use yii\behaviors\TimestampBehavior;
 use Yii;
@@ -14,15 +14,16 @@ use Yii;
  * @property integer $gender
  * @property string $birth_date
  * @property integer $updated_at
+ * @property integer $created_at
  * @property integer $updated_by
  */
-class UserProfile extends \yii\db\ActiveRecord {
+class AdminUsers extends \yii\db\ActiveRecord {
 
     /**
      * @inheritdoc
      */
     public static function tableName() {
-        return '{{%user_profile}}';
+        return '{{%user}}';
     }
 
     /**
@@ -30,10 +31,8 @@ class UserProfile extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['id', 'first_name', 'last_name', 'gender', 'birth_date'], 'required'],
-            [['id', 'gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
-            [['birth_date'], 'safe'],
-            [['first_name', 'last_name'], 'string', 'max' => 40]
+            [['id', 'username', 'email', 'status', 'role'], 'required'],
+            [['id', 'status', 'updated_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -43,20 +42,18 @@ class UserProfile extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
-            'first_name' => Yii::t('app', 'First Name'),
-            'last_name' => Yii::t('app', 'Last Name'),
-            'gender' => Yii::t('app', 'Gender'),
-            'birth_date' => Yii::t('app', 'Birth Date'),
+            'username' => Yii::t('app', 'User Name'),
+            'email' => Yii::t('app', 'E-Mail'),
+            'status' => Yii::t('app', 'Status'),
+            'role' => Yii::t('app', 'User Role'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             // Place your custom code here
-            $this->updated_by = \Yii::$app->user->identity->id;
             return true;
         } else {
             return false;
@@ -69,4 +66,9 @@ class UserProfile extends \yii\db\ActiveRecord {
         ];
     }
 
+//    public function activate() {
+//        $user = $this->user;
+//        $user->removeActivateToken();
+//        return $user->save();
+//    }
 }

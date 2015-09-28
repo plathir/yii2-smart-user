@@ -1,7 +1,7 @@
 <?php
-namespace plathir\user\models;
+namespace plathir\user\models\registration;
 
-use plathir\user\models\User;
+use plathir\user\models\account\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 use Yii;

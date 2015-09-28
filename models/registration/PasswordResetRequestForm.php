@@ -1,8 +1,8 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\registration;
 
-use plathir\user\models\User;
+use plathir\user\models\account\User;
 use yii\base\Model;
 
 /**
@@ -22,7 +22,7 @@ class PasswordResetRequestForm extends Model {
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => '\plathir\user\models\User',
+                'targetClass' => '\plathir\user\models\account\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with such email.'
             ],

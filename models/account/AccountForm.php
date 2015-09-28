@@ -1,8 +1,8 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\account;
 
-use plathir\user\models\User;
+use plathir\user\models\account\User;
 use yii\base\Model;
 use Yii;
 
@@ -45,14 +45,14 @@ class AccountForm extends Model {
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
             ['username', 'unique',
-                'targetClass' => '\plathir\user\models\User',
+                'targetClass' => '\plathir\user\models\account\User',
                 'message' => 'This username already been taken.',
                 'when' => function ($model, $attribute) {
                     return $this->user->$attribute != $model->$attribute;
                 },
             ],
             [ 'email', 'unique',
-                'targetClass' => '\plathir\user\models\User',
+                'targetClass' => '\plathir\user\models\account\User',
                 'message' => 'This email already been taken.',
                 'when' => function ($model, $attribute) {
                     return $this->user->$attribute != $model->$attribute;

@@ -1,11 +1,11 @@
 <?php
 
-namespace plathir\user\models;
+namespace plathir\user\models\profile;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use plathir\user\models\UserProfile;
+use plathir\user\models\profile\UserProfile;
 
 /**
  * UserProfileSearch represents the model behind the search form about `common\extensions\user\models\UserProfile`.
