@@ -3,10 +3,10 @@
 namespace plathir\user\controllers;
 
 use Yii;
-use plathir\user\models\PasswordResetRequestForm;
-use plathir\user\models\ResetPasswordForm;
+use plathir\user\models\registration\PasswordResetRequestForm;
+use plathir\user\models\registration\ResetPasswordForm;
 use plathir\user\models\registration\SignupForm;
-use plathir\user\models\ActivateUser;
+use plathir\user\models\registration\ActivateUser;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
