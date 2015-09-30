@@ -35,8 +35,8 @@ $user_html = DetailView::widget([
 
 if ($profile) {
     $profile_html = '<br>'.
-            Html::a(Yii::t('app', 'Update Profile'), ['update', 'id' => $profile->id], ['class' => 'btn btn-success']) .
-            Html::a(Yii::t('app', 'Delete Profile'), ['delete', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
+            Html::a(Yii::t('app', 'Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) .
+            Html::a(Yii::t('app', 'Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) . 
             '<br><br>'.
             DetailView::widget([
@@ -54,9 +54,8 @@ if ($profile) {
 } else {
 //    $profile_html = 'No Profile Data';
             $profile_html = 'Profile not update yet ! <br> <br>' .
-                Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/create-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
+                Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id'=> $account->id], ['class' => 'btn btn-success']) .    
                 '<br><br>';
-
 }
 
 
