@@ -35,10 +35,11 @@ $user_html = DetailView::widget([
 
 if ($profile) {
     $profile_html = '<br>'.
-            Html::a(Yii::t('app', 'Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) .
-            Html::a(Yii::t('app', 'Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
+            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) . '&nbsp' .
+            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) . 
-            '<br><br>'.
+                  '<br><br>'.
+
             DetailView::widget([
                 'model' => $profile,
                 'attributes' => [
@@ -65,9 +66,11 @@ $items[] = [
     'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
     'encode' => false,
     'content' => '<br>' .
-    Html::a(Yii::t('app', 'Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) .
-    Html::a(Yii::t('app', 'Delete User'), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
-        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) .'&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete User'), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
+        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) .'&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Reset Password'), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning']) .'&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Set Password'), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary']) .'&nbsp' .
     '<br><br>'.
     $user_html,
     'options' => ['id' => 'AccountTab'],

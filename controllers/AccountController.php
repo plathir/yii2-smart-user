@@ -10,7 +10,7 @@ use plathir\user\models\account\AccountForm;
 //use plathir\user\models\account\UserAccountSearch;
 use plathir\user\models\account\User;
 use plathir\user\models\profile\UserProfile;
-use plathir\user\models\ChangePasswordForm;
+use plathir\user\models\registration\ChangePasswordForm;
 
 class AccountController extends Controller {
 
@@ -37,7 +37,7 @@ class AccountController extends Controller {
                     ],
                 ],
             ],
-        ];
+        ];  
     }
 
     public function actionMy() {
@@ -86,7 +86,7 @@ class AccountController extends Controller {
     public function actionChangePassword() {
         $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->ChangePassword()) {
+            if ($model->ChangePassword()) {
                 Yii::$app->getSession()->setFlash('success', 'Password changed !');
                 //  return $this->refresh();
                 return $this->redirect(['account/my']);

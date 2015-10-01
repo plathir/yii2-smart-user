@@ -18,7 +18,7 @@ use yii\bootstrap\Modal;
     <?php
     if ($profile != null) {
         $profile_html = Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/edit-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
-                '&nbsp ' .
+                '&nbsp' .
                 Html::a('<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile', ['user-profile/delete-my-profile'], ['class' => 'btn btn-danger',
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     'id' => 'ButtonProfile1',
