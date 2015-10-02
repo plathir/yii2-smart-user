@@ -9,6 +9,7 @@ use plathir\user\models\admin\AdminUsersSearch;
 use plathir\user\models\admin\CreateUserForm;
 use plathir\user\models\admin\CreateProfileForm;
 use plathir\user\models\profile\UserProfile;
+use plathir\user\models\account\User;
 use yii\web\NotFoundHttpException;
 
 class AdminController extends Controller {
@@ -33,13 +34,12 @@ class AdminController extends Controller {
                             'view',
                             'delete',
                             'update',
-                            'reset-password', 
-                            'set-password', 
+                            'reset-password',
+                            'set-password',
                             'activate',
                             'update-profile',
                             'create-profile',
                             'delete-profile'
-                            
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -162,8 +162,17 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-        $this->findModelProfile($id)->delete();
+        if ($this->findModel($id)->delete()) {
+            if ($this->findModelProfile($id) != null) {
+                if ($this->findModelProfile($id)->delete()) {
+                    Yii::$app->getSession()->setFlash('success', 'User Account and profile deleted !');
+                }
+            } else {
+                Yii::$app->getSession()->setFlash('success', 'User Account deleted !');
+            }
+        } else {
+            Yii::$app->getSession()->setFlash('danger', 'User cannot delete !');
+        }
         return $this->redirect(['index']);
     }
 
@@ -173,10 +182,20 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionDeleteProfile($id) {
-        $this->findModelProfile($id)->delete();
+        if ($this->findModelProfile($id)->delete()) {
+            Yii::$app->getSession()->setFlash('success', 'User profile deleted !');
+        } else {
+            Yii::$app->getSession()->setFlash('danger', 'User Profile cannot delete !');
+        }
         return $this->redirect(['view', 'id' => $id]);
     }
 
+    /**
+     * 
+     * @param type $id
+     * @return type
+     * @throws BadRequestHttpException
+     */
     public function actionActivate($id) {
         $user = $this->findModel($id);
         $token = $user->activate_token;
@@ -200,22 +219,39 @@ class AdminController extends Controller {
         }
     }
 
-    
-    
     public function actionResetPassword($id) {
-            Yii::$app->getSession()->setFlash('success', 'Send email with new password token url');
 
-            // need my code here
-            return $this->redirect(['view', 'id' => $id]);            
+        if ($user = User::findOne($id)) {
+            $user->generatePasswordResetToken();
+            if ($user->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Send email with new password token url');
+                $mailer = \Yii::$app->mailer;
+                $mailer->viewPath = $this->viewPath . '\mail';
+                $mailer->getView()->theme = \Yii::$app->view->theme;
+                $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
+                        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                        ->setTo($user->email)
+                        ->setSubject('Password reset for ' . \Yii::$app->name)
+                        ->send();
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        // need my code here
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     public function actionSetPassword($id) {
-            Yii::$app->getSession()->setFlash('success', 'new password entry');
 
-            // need my code here
-            return $this->redirect(['view', 'id' => $id]);            
+        if ($user = User::findOne($id)) {
+           
+           
+            Yii::$app->getSession()->setFlash('success', 'new password entry');
+        }
+
+        // need my code here
+        return $this->redirect(['view', 'id' => $id]);
     }
-    
+
     /**
      * find User Account Model
      * @param type $id

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,11 +11,10 @@ use yii\bootstrap\Tabs;
 use yii\helpers\Url;
 
 $this->title = Yii::t('app', 'View User');
-$this->params['breadcrumbs'][] = $this->title;
-?>
-
-
-<?php
+$this->params['breadcrumbs'] = [
+    ['label' => 'Users', 'url' => ['index']],
+    $this->title
+];
 
 $user_html = DetailView::widget([
             'model' => $account,
@@ -34,12 +32,11 @@ $user_html = DetailView::widget([
 //echo $user_html;
 
 if ($profile) {
-    $profile_html = '<br>'.
+    $profile_html = '<br>' .
             Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) . '&nbsp' .
             Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
-                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) . 
-                  '<br><br>'.
-
+                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) .
+            '<br><br>' .
             DetailView::widget([
                 'model' => $profile,
                 'attributes' => [
@@ -54,9 +51,9 @@ if ($profile) {
     ]);
 } else {
 //    $profile_html = 'No Profile Data';
-            $profile_html = 'Profile not update yet ! <br> <br>' .
-                Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id'=> $account->id], ['class' => 'btn btn-success']) .    
-                '<br><br>';
+    $profile_html = 'Profile not update yet ! <br> <br>' .
+            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success']) .
+            '<br><br>';
 }
 
 
@@ -66,12 +63,12 @@ $items[] = [
     'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
     'encode' => false,
     'content' => '<br>' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) .'&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' .
     Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete User'), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
-        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) .'&nbsp' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Reset Password'), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning']) .'&nbsp' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Set Password'), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary']) .'&nbsp' .
-    '<br><br>'.
+        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) . '&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Reset Password'), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning']) . '&nbsp' .
+    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Set Password'), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary']) . '&nbsp' .
+    '<br><br>' .
     $user_html,
     'options' => ['id' => 'AccountTab'],
 ];
@@ -86,9 +83,54 @@ $items[] = [
 //                ]),
     'options' => ['id' => 'ProfileTab'],
 ];
+?>
+<div class="col-lg-3 well" align="center">
+        <?php $bundle = plathir\user\userAsset::register($this); ?>
+    <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th><center><?php echo $account->username; ?></center></th>
+        </tr>
+        </thead>
+        <tbody>
 
+            <tr>
+                <td><?php echo '<b>Email : </b>' . $account->email; ?></td>   
+            </tr>
 
+            <tr>
+                <td><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></td>   
+            </tr>
+
+            <tr>
+                <td><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></td>   
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-primary">Facebook</button></td>   
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-primary">Twitter</button></td>   
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-primary">Linkedin</button></td>   
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<div class="col-lg-9">
+    <h3>
+        Data for user : <?= $account->username;?> 
+    </h3>
+    <div>
+<?php
 echo Tabs::widget([
     'items' => $items,
 ]);
+?>
+    </div>
+
+</div>
+
 

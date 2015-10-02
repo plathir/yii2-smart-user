@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($account, 'role') ?>
                 <?= $form->field($account, 'password')->passwordInput(); ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Create' , ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Create' , ['class' => 'btn btn-primary']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
