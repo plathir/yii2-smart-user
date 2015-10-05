@@ -44,7 +44,7 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     'gender',
-                    'birth_date:date',
+                    'birth_date',
                     'created_at:datetime',
                     'updated_at:datetime',
                 ],

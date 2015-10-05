@@ -7,6 +7,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\DatePicker;
 ?>
 
 <p>Please fill out the following fields to update:</p>
@@ -18,16 +19,19 @@ use yii\widgets\ActiveForm;
         <?= $form->field($profile, 'last_name') ?>
         <?= $form->field($profile, 'gender') ?>
         <?=
-        $form->field($profile, 'birth_date')->Yii::$app->formatter->asDate($model->birth_date, "dd-mm-yyyy");
-//        ->widget(DatePicker::classname(), [
-//            'language' => 'el',
-//            'dateFormat' => 'dd-MM-yyyy',
-//        ]);
+        $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Enter birth date ...'],
+            'pluginOptions' => [
+              //  'language' => 'el',
+                'autoclose' => true,
+                 'format' => 'yyyy/mm/dd'
+            ]
+        ]);
         ?>
         <div class="form-group">
-        <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>
-<?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
 
