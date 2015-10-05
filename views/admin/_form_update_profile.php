@@ -17,11 +17,17 @@ use yii\widgets\ActiveForm;
         <?= $form->field($profile, 'first_name') ?>
         <?= $form->field($profile, 'last_name') ?>
         <?= $form->field($profile, 'gender') ?>
-        <?= $form->field($profile, 'birth_date') ?>
+        <?=
+        $form->field($profile, 'birth_date')->Yii::$app->formatter->asDate($model->birth_date, "dd-mm-yyyy");
+//        ->widget(DatePicker::classname(), [
+//            'language' => 'el',
+//            'dateFormat' => 'dd-MM-yyyy',
+//        ]);
+        ?>
         <div class="form-group">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>
-        <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
     </div>
 </div>
 
