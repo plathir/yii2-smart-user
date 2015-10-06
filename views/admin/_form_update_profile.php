@@ -18,6 +18,7 @@ use kartik\widgets\DatePicker;
         <?= $form->field($profile, 'first_name') ?>
         <?= $form->field($profile, 'last_name') ?>
         <?= $form->field($profile, 'gender') ?>
+        <?= $form->field($profile, 'profile_image') ?>
         <?=
         $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Enter birth date ...'],

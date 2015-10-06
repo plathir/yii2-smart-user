@@ -13,6 +13,7 @@ use Yii;
  * @property string $last_name
  * @property integer $gender
  * @property string $birth_date
+ * @property string $profile_image
  * @property integer $updated_at
  * @property integer $updated_by
  */
@@ -33,6 +34,7 @@ class UserProfile extends \yii\db\ActiveRecord {
             [['id', 'first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['id', 'gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
+            [['profile_image'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
     }
@@ -46,6 +48,7 @@ class UserProfile extends \yii\db\ActiveRecord {
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'gender' => Yii::t('app', 'Gender'),
+            'profile_image' => Yii::t('app', 'Profile Image'),
             'birth_date' => Yii::t('app', 'Birth Date'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

@@ -8,7 +8,6 @@
 use yii\widgets\DetailView;
 use yii\helpers\Html;
 use yii\bootstrap\Tabs;
-use yii\helpers\Url;
 
 $this->title = Yii::t('app', 'View User');
 $this->params['breadcrumbs'] = [
@@ -44,6 +43,7 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     'gender',
+                    'profile_image',
                     'birth_date',
                     'created_at:datetime',
                     'updated_at:datetime',
@@ -51,7 +51,7 @@ if ($profile) {
     ]);
 } else {
 //    $profile_html = 'No Profile Data';
-    $profile_html = 'Profile not update yet ! <br> <br>' .
+    $profile_html = '<br>Profile not update yet ! <br> <br>' .
             Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success']) .
             '<br><br>';
 }
@@ -85,8 +85,13 @@ $items[] = [
 ];
 ?>
 <div class="col-lg-3 well" align="center">
-        <?php $bundle = plathir\user\userAsset::register($this); ?>
-    <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
+    <?php $bundle = plathir\user\userAsset::register($this); ?>
+    <?php if ($profile->profile_image == '') { ?>
+        <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
+    <?php } else { ?>
+       <?php echo $module->ProfileImagePath; ?>
+    <?php }
+    ?>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -121,16 +126,15 @@ $items[] = [
 </div>
 <div class="col-lg-9">
     <h3>
-        Data for user : <?= $account->username;?> 
+        Data for user : <?= $account->username; ?> 
     </h3>
     <div>
-<?php
-echo Tabs::widget([
-    'items' => $items,
-]);
-?>
+        <?php
+        echo Tabs::widget([
+            'items' => $items,
+        ]);
+        ?>
     </div>
-
 </div>
 
 

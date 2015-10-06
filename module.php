@@ -8,6 +8,7 @@ class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'plathir\user\controllers';
     public $AdminUserID = '';
+    public $ProfileImagePath = '/image_path/';
   
     public function init() {
 
@@ -18,7 +19,7 @@ class Module extends \yii\base\Module {
         $this->registerAssets();
     }
 
-    public function registerAssets() {
+    public function registerAssets() {  
         $view = Yii::$app->getView();
         userAsset::register($view);
     }

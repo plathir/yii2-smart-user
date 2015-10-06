@@ -1,6 +1,6 @@
 <?php
 
-namespace plathir\user\models\registration;
+namespace plathir\user\models\admin;
 
 use plathir\user\models\account\User;
 use yii\base\Model;
@@ -9,16 +9,14 @@ use Yii;
 /**
  * Signup form
  */
-class ChangePasswordForm extends Model {
+class SetPasswordForm extends Model {
 
     public $id;
     public $new_password;
 
-
     /**
      * @inheritdoc
      */
-
     public function __construct() {
         parent::__construct();
     }
@@ -28,6 +26,16 @@ class ChangePasswordForm extends Model {
             ['new_password', 'required'],
             ['new_password', 'string', 'min' => 6],
         ];
+    }
+
+    public function SaveNewPassword() {
+        $user = User::findOne($this->id);
+        $user->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
+        if ($user->save()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

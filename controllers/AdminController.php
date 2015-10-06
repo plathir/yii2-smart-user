@@ -10,9 +10,18 @@ use plathir\user\models\admin\CreateUserForm;
 use plathir\user\models\admin\CreateProfileForm;
 use plathir\user\models\profile\UserProfile;
 use plathir\user\models\account\User;
+use plathir\user\models\admin\SetPasswordForm;
 use yii\web\NotFoundHttpException;
 
+/**
+ * @property \plathir\user\Module $module
+ * 
+ */
 class AdminController extends Controller {
+
+    public function __construct($id, $module) {
+        parent::__construct($id, $module);
+    }
 
     /** @inheritdoc */
     public function behaviors() {
@@ -98,9 +107,11 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionView($id) {
+        
         return $this->render('view', [
                     'account' => $this->findModel($id),
                     'profile' => $this->findModelProfile($id),
+                    'module' => $this->module,
         ]);
     }
 
@@ -241,15 +252,18 @@ class AdminController extends Controller {
     }
 
     public function actionSetPassword($id) {
-
+        $model = new SetPasswordForm();
+        $model->id = $id;
         if ($user = User::findOne($id)) {
-           
-           
-            Yii::$app->getSession()->setFlash('success', 'new password entry');
+            if ($model->load(Yii::$app->request->post()) && $model->SaveNewPassword()) {
+                Yii::$app->getSession()->setFlash('success', 'new password set');
+                return $this->render('view', ['account' => $this->findModel($model->id),
+                            'profile' => $this->findModelProfile($model->id),
+                ]);
+            } else {
+                return $this->render('set-password', ['model' => $model]);
+            }
         }
-
-        // need my code here
-        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
