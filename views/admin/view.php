@@ -89,7 +89,7 @@ $items[] = [
     <?php if ($profile->profile_image == '') { ?>
         <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
     <?php } else { ?>
-       <?php echo $module->ProfileImagePath; ?>
+        <?php echo $module->ProfileImagePath; ?>
     <?php }
     ?>
     <table class="table table-bordered">
