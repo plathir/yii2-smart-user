@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     	<?php echo $this->render('_form_update_profile', [
 		'profile' => $profile,
+                'module' => $module,
 	]); ?>
     
 </div>

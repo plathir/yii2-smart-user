@@ -8,11 +8,13 @@ class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'plathir\user\controllers';
     public $AdminUserID = '';
-    public $ProfileImagePath = '/image_path/';
+    public $alias = '';
+    public $ProfileImagePath = '@web';
   
     public function init() {
 
         parent::init();
+        
         if ($this->AdminUserID == ''){
           $this->AdminUserID = '1';  
         }

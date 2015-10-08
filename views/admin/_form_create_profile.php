@@ -14,11 +14,11 @@ use kartik\widgets\DatePicker;
 
 <div class="row">
     <div class="col-lg-5">
-        <?php $form = ActiveForm::begin(['id' => 'form-update']); ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-update', 'options' => ['enctype'=> 'multipart/form-data']]); ?>
         <?= $form->field($profile, 'first_name') ?>
         <?= $form->field($profile, 'last_name') ?>
         <?= $form->field($profile, 'gender') ?>
-        <?= $form->field($profile, 'profile_image') ?>
+        <?= $form->field($profile, 'file')->fileInput() ?>
         <?= $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Enter birth date ...'],
             'pluginOptions' => [

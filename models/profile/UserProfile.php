@@ -18,7 +18,9 @@ use Yii;
  * @property integer $updated_by
  */
 class UserProfile extends \yii\db\ActiveRecord {
-
+   public $file;
+    
+    
     /**
      * @inheritdoc
      */
@@ -34,7 +36,8 @@ class UserProfile extends \yii\db\ActiveRecord {
             [['id', 'first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['id', 'gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
-            [['profile_image'], 'string'],
+            [['file'], 'file'],
+            [['profile_image'], 'string', 'max' => 200 ],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
     }
@@ -48,6 +51,7 @@ class UserProfile extends \yii\db\ActiveRecord {
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'gender' => Yii::t('app', 'Gender'),
+            'file' =>  Yii::t('app', 'File for Profile Image'),
             'profile_image' => Yii::t('app', 'Profile Image'),
             'birth_date' => Yii::t('app', 'Birth Date'),
             'created_at' => Yii::t('app', 'Created At'),

@@ -14,7 +14,9 @@ use Yii;
  * @property integer $id
  * @property string $first_name
  * @property string $last_name
+ * @property string $profile_image
  * @property integer $gender
+ * @property file $file
  * @property string $birth_date
  * @property integer $updated_at
  * @property integer $updated_by
@@ -22,7 +24,7 @@ use Yii;
  * */
 class CreateProfileForm extends ActiveRecord {
 
-    public $password;
+    public $file;
 
     public static function tableName() {
         return '{{%user_profile}}';
@@ -36,7 +38,24 @@ class CreateProfileForm extends ActiveRecord {
             [['first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
+            [['file'], 'file'],
+            [['profile_image'], 'string', 'max' => 200],
             [['first_name', 'last_name'], 'string', 'max' => 40]
+        ];
+    }
+
+    public function attributeLabels() {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'first_name' => Yii::t('app', 'First Name'),
+            'last_name' => Yii::t('app', 'Last Name'),
+            'gender' => Yii::t('app', 'Gender'),
+            'file' => Yii::t('app', 'File for Profile Image'),
+            'profile_image' => Yii::t('app', 'Profile Image'),
+            'birth_date' => Yii::t('app', 'Birth Date'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
 
@@ -49,7 +68,6 @@ class CreateProfileForm extends ActiveRecord {
             return false;
         }
     }
-              
 
     public function behaviors() {
         return [

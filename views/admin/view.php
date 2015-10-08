@@ -86,11 +86,20 @@ $items[] = [
 ?>
 <div class="col-lg-3 well" align="center">
     <?php $bundle = plathir\user\userAsset::register($this); ?>
-    <?php if ($profile->profile_image == '') { ?>
+    <?php
+    if ($profile) {
+        if ($profile->profile_image == '') {
+            ?>
+            <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
+        <?php } else { ?>
+            <img src=<?php echo yii::getAlias($module->ProfileImagePath) . '/' . $profile->profile_image; ?> alt="..." class="img-circle" width="150" align="center" >
+            <?php
+        }
+    } else {
+        ?>
         <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
-    <?php } else { ?>
-        <?php echo $module->ProfileImagePath; ?>
-    <?php }
+        <?php
+    }
     ?>
     <table class="table table-bordered">
         <thead>
@@ -134,6 +143,7 @@ $items[] = [
             'items' => $items,
         ]);
         ?>
+        <?php //echo yii::getAlias($module->ProfileImagePath); ?>  
     </div>
 </div>
 

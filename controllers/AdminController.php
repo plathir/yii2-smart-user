@@ -12,6 +12,7 @@ use plathir\user\models\profile\UserProfile;
 use plathir\user\models\account\User;
 use plathir\user\models\admin\SetPasswordForm;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * @property \plathir\user\Module $module
@@ -48,12 +49,13 @@ class AdminController extends Controller {
                             'activate',
                             'update-profile',
                             'create-profile',
-                            'delete-profile'
+                            'delete-profile',
+                            'delete-image'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [ 'actions' => ['index'],
+                    ['actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -90,9 +92,21 @@ class AdminController extends Controller {
     public function actionCreateProfile($id) {
         $model = new CreateProfileForm();
         $model->id = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', 'Profile created !');
-            return $this->redirect(['view', 'id' => $id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+            $ImageName = $model->id;
+
+            if ($model->file) {
+                $model->file->saveAs($ImageName . '.' . $model->file->extension);
+                $model->profile_image = $ImageName . '.' . $model->file->extension;
+            }
+            if ($model->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Profile created !');
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                
+            }
         } else {
             return $this->render('create-profile', [
                         'profile' => $model,
@@ -107,7 +121,7 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionView($id) {
-        
+
         return $this->render('view', [
                     'account' => $this->findModel($id),
                     'profile' => $this->findModelProfile($id),
@@ -124,12 +138,20 @@ class AdminController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->update()) {
-            Yii::$app->getSession()->setFlash('success', 'User updated !');
-            return $this->redirect(['view', 'id' => $id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->update()) {
+                Yii::$app->getSession()->setFlash('success', 'User updated !');
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                return $this->render('update', [
+                            'account' => $model,
+                            'module' => $this->module,
+                ]);
+            }
         } else {
             return $this->render('update', [
                         'account' => $model,
+                        'module' => $this->module,
             ]);
         }
     }
@@ -142,12 +164,31 @@ class AdminController extends Controller {
     public function actionUpdateProfile($id) {
         $model = $this->findModelProfile($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->update()) {
-            Yii::$app->getSession()->setFlash('success', 'User Profile updated !');
-            return $this->redirect(['view', 'id' => $id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->profile_image == '') {
+
+                $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+                $ImageName = $model->id;
+                if ($model->file) {
+                    $model->file->saveAs($ImageName . '.' . $model->file->extension);
+                    $model->profile_image = $ImageName . '.' . $model->file->extension;
+                }
+            }
+
+            if ($model->update()) {
+                Yii::$app->getSession()->setFlash('success', 'User Profile updated !');
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                return $this->render('update-profile', [
+                            'profile' => $model,
+                            'module' => $this->module,
+                ]);
+            }
         } else {
             return $this->render('update-profile', [
                         'profile' => $model,
+                        'module' => $this->module,
             ]);
         }
     }
@@ -247,7 +288,7 @@ class AdminController extends Controller {
                 return $this->redirect(['view', 'id' => $id]);
             }
         }
-        // need my code here
+// need my code here
         return $this->redirect(['view', 'id' => $id]);
     }
 
@@ -264,6 +305,18 @@ class AdminController extends Controller {
                 return $this->render('set-password', ['model' => $model]);
             }
         }
+    }
+
+    public function actionDeleteImage($id) {
+        $model = $this->findModelProfile($id);
+        if ($model) {
+//    unlink(realpath(\yii::getAlias($this->module->ProfileImagePath)) . '/' . $model->profile_image);
+
+            $model->profile_image = '';
+            $model->file = '';
+            $model->update();
+        }
+        return $this->redirect(['update-profile', 'id' => $id]);
     }
 
     /**
