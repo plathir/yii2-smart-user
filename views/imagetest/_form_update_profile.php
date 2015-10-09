@@ -8,7 +8,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
+use vova07\fileapi\Widget as FileAPI;
 ?>
+
 
 <p>Please fill out the following fields to update:</p>
 
@@ -22,6 +24,15 @@ use kartik\widgets\DatePicker;
         } else {
             echo $form->field($profile, 'file')->fileInput();
         }
+
+        echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
+            'settings' => [
+                'url' => ['imagetest/fileapi-upload']
+            ],
+            'crop' => true,
+            'cropResizeWidth' => 100,
+            'cropResizeHeight' => 100
+        ])->label(false);
         ?>
 
         <?= $form->field($profile, 'first_name') ?>

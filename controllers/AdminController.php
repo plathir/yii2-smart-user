@@ -3,6 +3,7 @@
 namespace plathir\user\controllers;
 
 use Yii;
+use Yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\admin\AdminUsersSearch;
@@ -12,7 +13,7 @@ use plathir\user\models\profile\UserProfile;
 use plathir\user\models\account\User;
 use plathir\user\models\admin\SetPasswordForm;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
+use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
 /**
  * @property \plathir\user\Module $module
@@ -98,7 +99,7 @@ class AdminController extends Controller {
             $ImageName = $model->id;
 
             if ($model->file) {
-                $model->file->saveAs($ImageName . '.' . $model->file->extension);
+                $model->file->saveAs($this->module->ProfileImagePath . '/' . $ImageName . '.' . $model->file->extension);
                 $model->profile_image = $ImageName . '.' . $model->file->extension;
             }
             if ($model->save()) {
@@ -171,7 +172,7 @@ class AdminController extends Controller {
                 $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
                 $ImageName = $model->id;
                 if ($model->file) {
-                    $model->file->saveAs($ImageName . '.' . $model->file->extension);
+                    $model->file->saveAs($this->module->ProfileImagePath . '/' . $ImageName . '.' . $model->file->extension);
                     $model->profile_image = $ImageName . '.' . $model->file->extension;
                 }
             }
@@ -234,7 +235,11 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionDeleteProfile($id) {
+        $image = $this->findModelProfile($id)->profile_image;
         if ($this->findModelProfile($id)->delete()) {
+            if ($image) {
+                unlink($this->module->ProfileImagePath . '/' . $image);
+            }
             Yii::$app->getSession()->setFlash('success', 'User profile deleted !');
         } else {
             Yii::$app->getSession()->setFlash('danger', 'User Profile cannot delete !');
@@ -310,8 +315,7 @@ class AdminController extends Controller {
     public function actionDeleteImage($id) {
         $model = $this->findModelProfile($id);
         if ($model) {
-//    unlink(realpath(\yii::getAlias($this->module->ProfileImagePath)) . '/' . $model->profile_image);
-
+            unlink($this->module->ProfileImagePath . '/' . $model->profile_image);
             $model->profile_image = '';
             $model->file = '';
             $model->update();

@@ -4,11 +4,12 @@
  * Create User Model 
  */
 
-namespace plathir\user\models\admin;
+namespace plathir\user\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
+use vova07\fileapi\behaviors\UploadBehavior;
 
 /** * @property integer $id
  * @property integer $id
@@ -22,7 +23,7 @@ use Yii;
  * @property integer $updated_by
 
  * */
-class CreateProfileForm extends ActiveRecord {
+class ImagetestForm extends ActiveRecord {
 
     public $file;
 
@@ -72,6 +73,18 @@ class CreateProfileForm extends ActiveRecord {
     public function behaviors() {
         return [
             TimestampBehavior::className(),
+            
+            'uploadBehavior' => [
+                'class' => UploadBehavior::className(),
+                'attributes' => [
+                    'profile_image' => [
+                        'path' => '@web/media/images/users/preview',
+                        'tempPath' => '@web/media/images/users/temp',
+                        'url' => '@web/media/images/users'
+                    ]
+                ]
+            ]
+            
         ];
     }
 

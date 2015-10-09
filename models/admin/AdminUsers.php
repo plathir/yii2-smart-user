@@ -4,6 +4,9 @@ namespace plathir\user\models\admin;
 
 use yii\behaviors\TimestampBehavior;
 use Yii;
+use vova07\fileapi\behaviors\UploadBehavior;
+use plathir\user\controllers\AdminController;
+
 
 /**
  * This is the model class for table "{{%user_profile}}".
@@ -65,10 +68,4 @@ class AdminUsers extends \yii\db\ActiveRecord {
             TimestampBehavior::className(),
         ];
     }
-
-//    public function activate() {
-//        $user = $this->user;
-//        $user->removeActivateToken();
-//        return $user->save();
-//    }
 }

@@ -37,7 +37,7 @@ class AccountController extends Controller {
                     ],
                 ],
             ],
-        ];  
+        ];
     }
 
     public function actionMy() {
@@ -59,16 +59,13 @@ class AccountController extends Controller {
     public function actionEdit() {
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model->load(Yii::$app->request->post())) {
-
             if ($model->ValidateAndSave()) {
                 Yii::$app->getSession()->setFlash('success', 'Account changed !');
                 //  echo 1;
                 return $this->redirect(['account/my']);
-            } else {
-                echo 0;
-//                    return $this->renderAjax('edit', [
-//                                'model' => $model,
-//                    ]);
+            } elseif (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
             }
         } else {
             if (\Yii::$app->request->isAjax) {

@@ -61,16 +61,14 @@ $('form#{$model->formName()}').on('beforeSubmit', function(e) {
 //post ajax url
    $.post(\$form.attr("action"), \$form.serialize())
       .done(function(result) 
-          {
-            console.log(result);
-            if (result != 0 )  
-            {
-              $('#modalAccount').modal('hide');
-            }
+          { 
+           
+             $('#modalAccount').modal('hide');
          })
-      .fail(function()
+      .fail(function(result)
            {
-            console.log("server error !")
+             
+            console.log(result)
            });
 
      return false;

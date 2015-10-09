@@ -92,7 +92,7 @@ $items[] = [
             ?>
             <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
         <?php } else { ?>
-            <img src=<?php echo yii::getAlias($module->ProfileImagePath) . '/' . $profile->profile_image; ?> alt="..." class="img-circle" width="150" align="center" >
+            <img src=<?php echo yii::getAlias($module->ProfileImagePathPreview) . '/' . $profile->profile_image; ?> alt="..." class="img-circle" width="150" align="center" >
             <?php
         }
     } else {
