@@ -10,6 +10,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 use vova07\fileapi\behaviors\UploadBehavior;
+use plathir\user\traits\ModuleTrait;
 
 /** * @property integer $id
  * @property integer $id
@@ -17,13 +18,13 @@ use vova07\fileapi\behaviors\UploadBehavior;
  * @property string $last_name
  * @property string $profile_image
  * @property integer $gender
- * @property file $file
  * @property string $birth_date
  * @property integer $updated_at
  * @property integer $updated_by
 
  * */
 class ImagetestForm extends ActiveRecord {
+     use ModuleTrait;
 
     public static function tableName() {
         return '{{%user_profile}}';
@@ -37,7 +38,7 @@ class ImagetestForm extends ActiveRecord {
             [['first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
-            [['profile_image'], 'string', 'max' => 200],
+            [['profile_image'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
     }
@@ -74,9 +75,9 @@ class ImagetestForm extends ActiveRecord {
                 'class' => UploadBehavior::className(),
                 'attributes' => [
                     'profile_image' => [
-                        'path' => '@web/media/images/users',
-                        'tempPath' => '@web/temp/media/images/users',
-                        'url' => 'media/images/users'
+                        'path' =>  $this->module->ProfileImagePath,            //'@media/images/users',
+                        'tempPath' => $this->module->ProfileImageTempPath,     //'@media/temp/images/users',
+                        'url' => $this->module->ProfileImagePathPreview        //'/my-yii-adv/media/images/users'
                     ]
                 ]
             ]

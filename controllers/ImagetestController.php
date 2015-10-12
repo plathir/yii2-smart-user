@@ -4,6 +4,7 @@ namespace plathir\user\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 use plathir\user\models\ImagetestForm;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
@@ -50,7 +51,7 @@ class ImagetestController extends Controller {
         return [
             'fileapi-upload' => [
                 'class' => FileAPIUpload::className(),
-                'path' => '@web/media/images/users',
+                'path' => $this->module->ProfileImagePath,
             ],
         ];
     }
@@ -70,20 +71,17 @@ class ImagetestController extends Controller {
     function actionUpdate($id) {
         $model = $this->findModelProfile($id);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->update()) {
-                echo '<pre>';
-                print_r($model);
-                echo '</pre>';
-                die();
+            if ($model->save(false)) {
                 Yii::$app->getSession()->setFlash('success', 'Profile changed !');
-                return $this->redirect(['view', 'id' => $id]);
+                return $this->refresh();
+                // return $this->redirect(['view', 'id' => $id]);
             } else {
                 Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
                 return $this->redirect(['update', 'id' => $id]);
             }
         } else {
             return $this->render('update', [
-                        'profile' => $this->findModelProfile($id),
+                        'profile' => $model,
                         'module' => $this->module,
             ]);
         }

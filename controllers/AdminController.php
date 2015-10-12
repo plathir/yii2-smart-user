@@ -93,13 +93,14 @@ class AdminController extends Controller {
     public function actionCreateProfile($id) {
         $model = new CreateProfileForm();
         $model->id = $id;
+
         if ($model->load(Yii::$app->request->post())) {
 
             $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
             $ImageName = $model->id;
 
             if ($model->file) {
-                $model->file->saveAs($this->module->ProfileImagePath . '/' . $ImageName . '.' . $model->file->extension);
+                $model->file->saveAs(\yii::getAlias($this->module->ProfileImagePath) . '/' . $ImageName . '.' . $model->file->extension);
                 $model->profile_image = $ImageName . '.' . $model->file->extension;
             }
             if ($model->save()) {
@@ -172,7 +173,7 @@ class AdminController extends Controller {
                 $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
                 $ImageName = $model->id;
                 if ($model->file) {
-                    $model->file->saveAs($this->module->ProfileImagePath . '/' . $ImageName . '.' . $model->file->extension);
+                    $model->file->saveAs(\yii::getAlias($this->module->ProfileImagePath) . '/' . $ImageName . '.' . $model->file->extension);
                     $model->profile_image = $ImageName . '.' . $model->file->extension;
                 }
             }
@@ -315,7 +316,7 @@ class AdminController extends Controller {
     public function actionDeleteImage($id) {
         $model = $this->findModelProfile($id);
         if ($model) {
-            unlink($this->module->ProfileImagePath . '/' . $model->profile_image);
+            //  unlink($this->module->ProfileImagePath . '/' . $model->profile_image);
             $model->profile_image = '';
             $model->file = '';
             $model->update();
