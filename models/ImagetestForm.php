@@ -25,8 +25,6 @@ use vova07\fileapi\behaviors\UploadBehavior;
  * */
 class ImagetestForm extends ActiveRecord {
 
-    public $file;
-
     public static function tableName() {
         return '{{%user_profile}}';
     }
@@ -39,7 +37,6 @@ class ImagetestForm extends ActiveRecord {
             [['first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
-            [['file'], 'file'],
             [['profile_image'], 'string', 'max' => 200],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
@@ -77,10 +74,9 @@ class ImagetestForm extends ActiveRecord {
                 'class' => UploadBehavior::className(),
                 'attributes' => [
                     'profile_image' => [
-                        'path' => 'media/images/users',
-                        'tempPath' => 'temp/media/images/users',
+                        'path' => '@web/media/images/users',
+                        'tempPath' => '@web/temp/media/images/users',
                         'url' => 'media/images/users'
-
                     ]
                 ]
             ]

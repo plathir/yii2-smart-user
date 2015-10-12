@@ -2,7 +2,7 @@
 
 namespace plathir\user\controllers;
 
-use yii;
+use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\ImagetestForm;
@@ -16,20 +16,6 @@ class ImagetestController extends Controller {
 
     public function __construct($id, $module) {
         parent::__construct($id, $module);
-    }
-
-    public function actions() {
-        return [
-            'fileapi-upload' => [
-                'class' => FileAPIUpload::className(),
-                'path' => '@web/media/images/users',
-            ],
-            'upload' => [
-                'class' => 'vova07\fileapi\actions\UploadAction',
-                'path' => '@web/media/images/users',
-                'uploadOnlyImage' => false
-            ]
-        ];
     }
 
     /** @inheritdoc */
@@ -51,12 +37,20 @@ class ImagetestController extends Controller {
                             'update',
                             'view',
                             'fileapi-upload',
-                            'upload'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+            ],
+        ];
+    }
+
+    public function actions() {
+        return [
+            'fileapi-upload' => [
+                'class' => FileAPIUpload::className(),
+                'path' => '@web/media/images/users',
             ],
         ];
     }
@@ -77,6 +71,10 @@ class ImagetestController extends Controller {
         $model = $this->findModelProfile($id);
         if ($model->load(Yii::$app->request->post())) {
             if ($model->update()) {
+                echo '<pre>';
+                print_r($model);
+                echo '</pre>';
+                die();
                 Yii::$app->getSession()->setFlash('success', 'Profile changed !');
                 return $this->redirect(['view', 'id' => $id]);
             } else {
