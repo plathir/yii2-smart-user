@@ -73,22 +73,18 @@ class ImagetestForm extends ActiveRecord {
     public function behaviors() {
         return [
             TimestampBehavior::className(),
-            
             'uploadBehavior' => [
                 'class' => UploadBehavior::className(),
                 'attributes' => [
                     'profile_image' => [
-                        'path' => '@web/media/images/users/preview',
-                        'tempPath' => '@web/media/images/users/temp',
-                        'url' => '@web/media/images/users'
+                        'path' => 'media/images/users',
+                        'tempPath' => 'temp/media/images/users',
+                        'url' => 'media/images/users'
+
                     ]
                 ]
             ]
-            
         ];
     }
 
-    
- 
-    
 }

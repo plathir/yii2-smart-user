@@ -5,7 +5,7 @@ namespace plathir\user\controllers;
 use yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use plathir\user\models\profile\UserProfile;
+use plathir\user\models\ImagetestForm;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
 /**
@@ -22,7 +22,12 @@ class ImagetestController extends Controller {
         return [
             'fileapi-upload' => [
                 'class' => FileAPIUpload::className(),
-                'path' => 'media/images/users'
+                'path' => '@web/media/images/users',
+            ],
+            'upload' => [
+                'class' => 'vova07\fileapi\actions\UploadAction',
+                'path' => '@web/media/images/users',
+                'uploadOnlyImage' => false
             ]
         ];
     }
@@ -44,7 +49,9 @@ class ImagetestController extends Controller {
                             'index',
                             'create',
                             'update',
-                            'view'
+                            'view',
+                            'fileapi-upload',
+                            'upload'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -67,13 +74,21 @@ class ImagetestController extends Controller {
     }
 
     function actionUpdate($id) {
-        
-        
-        
-        return $this->render('update', [
-                    'profile' => $this->findModelProfile($id),
-                    'module' => $this->module,
-        ]);
+        $model = $this->findModelProfile($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->update()) {
+                Yii::$app->getSession()->setFlash('success', 'Profile changed !');
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
+                return $this->redirect(['update', 'id' => $id]);
+            }
+        } else {
+            return $this->render('update', [
+                        'profile' => $this->findModelProfile($id),
+                        'module' => $this->module,
+            ]);
+        }
     }
 
     function actionView($id) {
@@ -84,7 +99,7 @@ class ImagetestController extends Controller {
     }
 
     function findModelProfile($id) {
-        if (($model = UserProfile::findOne($id)) !== null) {
+        if (($model = ImagetestForm::findOne($id)) !== null) {
             return $model;
         } else {
             return false;

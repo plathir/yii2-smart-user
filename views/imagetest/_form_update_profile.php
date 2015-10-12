@@ -21,13 +21,14 @@ use vova07\fileapi\Widget as FileAPI;
             <img src=<?php echo yii::getAlias($module->ProfileImagePathPreview) . '/' . $profile->profile_image; ?> alt="..." class="img-circle" width="150" align="center" > 
             <?php echo '<br>' . Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete Image'), ['delete-image', 'id' => $profile->id], ['class' => 'btn btn-danger']) . '&nbsp' ?>
             <?php
-        } else {
-            echo $form->field($profile, 'file')->fileInput();
+//        } else {
+//            echo $form->field($profile, 'file')->fileInput();
         }
 
         echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
             'settings' => [
-                'url' => ['imagetest/fileapi-upload']
+                'url' => ['imagetest/fileapi-upload'],
+                'autoUpload' => true,
             ],
             'crop' => true,
             'cropResizeWidth' => 100,
