@@ -75,9 +75,9 @@ class ImagetestForm extends ActiveRecord {
                 'class' => UploadBehavior::className(),
                 'attributes' => [
                     'profile_image' => [
-                        'path' =>  $this->module->ProfileImagePath,            //'@media/images/users',
-                        'tempPath' => $this->module->ProfileImageTempPath,     //'@media/temp/images/users',
-                        'url' => $this->module->ProfileImagePathPreview        //'/my-yii-adv/media/images/users'
+                        'path' => $this->module->ProfileImagePath, // 'c:\xampp\htdocs\my-yii-adv\media\images\users' , // $this->module->ProfileImagePath         
+                        'tempPath' => $this->module->ProfileImageTempPath, //'c:\xampp\htdocs\my-yii-adv\media\temp\images\users', //,     //'@media/temp/images/users',
+                        'url' => $this->module->ProfileImagePathPreview //'http://localhost/my-yii-adv/media/images/users'    //$this->module->ProfileImagePathPreview        //'/my-yii-adv/media/images/users'
                     ]
                 ]
             ]

@@ -51,7 +51,7 @@ class ImagetestController extends Controller {
         return [
             'fileapi-upload' => [
                 'class' => FileAPIUpload::className(),
-                'path' => $this->module->ProfileImagePath,
+                'path' => $this->module->ProfileImageTempPath,
             ],
         ];
     }
@@ -73,8 +73,8 @@ class ImagetestController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save(false)) {
                 Yii::$app->getSession()->setFlash('success', 'Profile changed !');
-                return $this->refresh();
-                // return $this->redirect(['view', 'id' => $id]);
+                //return $this->refresh();
+                 return $this->redirect(['view', 'id' => $id]);
             } else {
                 Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
                 return $this->redirect(['update', 'id' => $id]);
