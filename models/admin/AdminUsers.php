@@ -4,8 +4,6 @@ namespace plathir\user\models\admin;
 
 use yii\behaviors\TimestampBehavior;
 use Yii;
-use vova07\fileapi\behaviors\UploadBehavior;
-use plathir\user\controllers\AdminController;
 
 
 /**
@@ -22,6 +20,7 @@ use plathir\user\controllers\AdminController;
  */
 class AdminUsers extends \yii\db\ActiveRecord {
 
+  
     /**
      * @inheritdoc
      */

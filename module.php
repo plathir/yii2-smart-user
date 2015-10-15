@@ -8,10 +8,9 @@ class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'plathir\user\controllers';
     public $AdminUserID = '';
-    public $ProfileImagePath = '@media/images/users';
-    public $ProfileImageTempPath = '@media/temp/images/users';
-    public $ProfileImagePathPreview = '/my-yii-adv/media/images/users';
- 
+    public $ProfileImagePath = '';
+    public $ProfileImageTempPath = '';
+    public $ProfileImagePathPreview = '';
     
     public function init() {
 

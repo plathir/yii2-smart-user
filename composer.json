@@ -14,7 +14,8 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "kartik-v/yii2-datecontrol": "@dev",
-        "vova07/yii2-fileapi-widget": "*"
+        "vova07/yii2-fileapi-widget": "*",
+        "yiisoft/yii2-authclient": "*"
     },
     "autoload": {
         "psr-4": {

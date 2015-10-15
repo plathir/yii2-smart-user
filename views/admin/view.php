@@ -86,21 +86,27 @@ $items[] = [
 ?>
 <div class="col-lg-3 well" align="center">
     <?php $bundle = plathir\user\userAsset::register($this); ?>
-    <?php
+        
+    <?php    
     if ($profile) {
-        if ($profile->profile_image == '') {
-            ?>
-            <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
-        <?php } else { ?>
-            <img src=<?php echo yii::getAlias($module->ProfileImagePathPreview) . '/' . $profile->profile_image; ?> alt="..." class="img-circle" width="150" align="center" >
-            <?php
+        if ($profile->profile_image != '') {
+            echo Html::img($module->ProfileImagePathPreview . '/' . $profile->profile_image, ['alt' => '...',
+                'class' => 'img-circle',
+                'width' => '150',
+                'align' => 'center']);
+        } else {
+            echo Html::img($bundle->baseUrl . '/img/user_profile.png', ['alt' => '...',
+                'class' => 'img-circle',
+                'width' => '150',
+                'align' => 'center']);
         }
     } else {
-        ?>
-        <img src=<?php echo $bundle->baseUrl . '/img/user_profile.png'; ?> alt="..." class="img-circle" width="150" align="center" >
-        <?php
+        echo Html::img($bundle->baseUrl . '/img/user_profile.png', ['alt' => '...',
+            'class' => 'img-circle',
+            'width' => '150',
+            'align' => 'center']);
     }
-    ?>
+    ?>        
     <table class="table table-bordered">
         <thead>
             <tr>

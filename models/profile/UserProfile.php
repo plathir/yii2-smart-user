@@ -4,6 +4,8 @@ namespace plathir\user\models\profile;
 
 use yii\behaviors\TimestampBehavior;
 use Yii;
+use vova07\fileapi\behaviors\UploadBehavior;
+use plathir\user\traits\ModuleTrait;
 
 /**
  * This is the model class for table "{{%user_profile}}".
@@ -18,7 +20,9 @@ use Yii;
  * @property integer $updated_by
  */
 class UserProfile extends \yii\db\ActiveRecord {
-   public $file;
+
+    use ModuleTrait;
+
     
     
     /**
@@ -36,7 +40,6 @@ class UserProfile extends \yii\db\ActiveRecord {
             [['id', 'first_name', 'last_name', 'gender', 'birth_date'], 'required'],
             [['id', 'gender', 'updated_at', 'updated_at', 'updated_by'], 'integer'],
             [['birth_date'], 'safe'],
-            [['file'], 'file'],
             [['profile_image'], 'string', 'max' => 200 ],
             [['first_name', 'last_name'], 'string', 'max' => 40]
         ];
@@ -73,6 +76,18 @@ class UserProfile extends \yii\db\ActiveRecord {
     public function behaviors() {
         return [
             TimestampBehavior::className(),
+                        'uploadBehavior' => [
+                'class' => UploadBehavior::className(),
+                'attributes' => [
+                    'profile_image' => [
+                        'path' => $this->module->ProfileImagePath, 
+                        'tempPath' => $this->module->ProfileImageTempPath,
+                        'url' => $this->module->ProfileImagePathPreview
+                    ]
+                ]
+            ]
+
+            
         ];
     }
 

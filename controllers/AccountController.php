@@ -6,13 +6,19 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\models\account\AccountForm;
-//use plathir\user\models\account\UserAccount;
-//use plathir\user\models\account\UserAccountSearch;
 use plathir\user\models\account\User;
 use plathir\user\models\profile\UserProfile;
 use plathir\user\models\registration\ChangePasswordForm;
 
+/**
+ * @property \plathir\user\Module $module
+ * 
+ */
+
 class AccountController extends Controller {
+        public function __construct($id, $module) {
+        parent::__construct($id, $module);
+    }  
 
     /** @inheritdoc */
     public function behaviors() {
@@ -40,6 +46,10 @@ class AccountController extends Controller {
         ];
     }
 
+    
+  
+    
+    
     public function actionMy() {
 
         $account = User::findIdentity(\Yii::$app->user->identity->id);
@@ -53,6 +63,7 @@ class AccountController extends Controller {
         return $this->render('my', [
                     'account' => $account,
                     'profile' => $profile,
+                    'module' => $this->module
         ]);
     }
 

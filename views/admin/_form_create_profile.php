@@ -1,4 +1,4 @@
-<?php
+    <?php
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,10 +16,21 @@ use vova07\fileapi\Widget as FileAPI;
 <div class="row">
     <div class="col-lg-5">
         <?php $form = ActiveForm::begin(['id' => 'form-update', 'options' => ['enctype' => 'multipart/form-data']]); ?>
+        <?php
+        echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
+            'settings' => [
+                'url' => ['user-profile/fileapi-upload'],
+                'autoUpload' => true,
+            ],
+            'crop' => true,
+            'cropResizeWidth' => 200,
+            'cropResizeHeight' => 200
+        ]);
+        ?>
+        
         <?= $form->field($profile, 'first_name') ?>
         <?= $form->field($profile, 'last_name') ?>
         <?= $form->field($profile, 'gender') ?>
-        <?= $form->field($profile, 'file')->fileInput() ?>
         <?=
         $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Enter birth date ...'],
@@ -28,17 +39,7 @@ use vova07\fileapi\Widget as FileAPI;
                 'format' => 'yyyy/mm/dd'
             ]
         ]);
-        ?>
-
-        <?php
-        echo $form->field($model, 'profile_image')->widget(
-                FileAPI::className(), [
-            'settings' => [
-                'url' => ['/controller/fileapi-upload']
-            ]
-                ]
-        );
-        ?>
+        ?>        
         <div class="form-group">
             <?= Html::submitButton('Create', ['class' => 'btn btn-primary']) ?>
         </div>

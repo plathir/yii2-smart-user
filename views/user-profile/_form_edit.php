@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
+use vova07\fileapi\Widget as FileAPI;
 
 /* @var $this yii\web\View */
 /* @var $model common\extensions\user\models\UserProfile */
@@ -13,6 +14,17 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(['options' => ['id' => 'profile-form', 'enableAjaxValidation' => true]]); ?>
 
+            <?php
+        echo $form->field($model, 'profile_image')->widget(FileAPI::className(), [
+            'settings' => [
+                'url' => ['user-profile/fileapi-upload'],
+                'autoUpload' => true,
+            ],
+            'crop' => true,
+            'cropResizeWidth' => 200,
+            'cropResizeHeight' => 200
+        ]);
+        ?>
 
     <?= $form->field($model, 'id')->textInput()->textInput(['readonly' => true]) ?>
 

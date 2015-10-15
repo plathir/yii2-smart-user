@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use vova07\fileapi\Widget as FileAPI;
 
 /* @var $this yii\web\View */
 /* @var $model common\extensions\user\models\UserProfile */
@@ -11,7 +12,18 @@ use yii\widgets\ActiveForm;
 <div class="user-profile-form">
 
 
-    <?php $form = ActiveForm::begin(['options' => ['id' => 'profile-form', 'enableAjaxValidation' => true]]); ?>      
+    <?php $form = ActiveForm::begin(['options' => ['id' => 'profile-form', 'enableAjaxValidation' => true]]); ?>  
+    <?php
+            echo $form->field($model, 'profile_image')->widget(FileAPI::className(), [
+            'settings' => [
+                'url' => ['admin/fileapi-upload'],
+                'autoUpload' => true,
+            ],
+            'crop' => true,
+            'cropResizeWidth' => 200,
+            'cropResizeHeight' => 200
+        ]);
+        ?>
 
     <?= $form->field($model, 'id')->textInput(['readonly' => true]) ?>
 
