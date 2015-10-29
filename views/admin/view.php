@@ -83,18 +83,11 @@ $items[] = [
 //                ]),
     'options' => ['id' => 'ProfileTab'],
 ];
-
-$items[] = [
-    'label' => '<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Permission',
-    'encode' => false,
-    //       'content' =>  $this->renderAjax('@vendor/mdmsoft/yii2-admin/views/assignment/view', ['id' => $account->id]),
-    'options' => ['id' => 'PermissionsTab'],
-];
 ?>
 <div class="col-lg-3 well" align="center">
     <?php $bundle = plathir\user\userAsset::register($this); ?>
-
-    <?php
+        
+    <?php    
     if ($profile) {
         if ($profile->profile_image != '') {
             echo Html::img($module->ProfileImagePathPreview . '/' . $profile->profile_image, ['alt' => '...',
