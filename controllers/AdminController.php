@@ -79,17 +79,21 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreate() {
-        $model = new CreateUserForm();
-        $model->setPassword($model->password);
-        $model->generateAuthKey();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->render('view', ['account' => $this->findModel($model->id),
-                        'profile' => $this->findModelProfile($model->id),
-            ]);
+        if (\yii::$app->user->can('user-admin')) {
+            $model = new CreateUserForm();
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->render('view', ['account' => $this->findModel($model->id),
+                            'profile' => $this->findModelProfile($model->id),
+                ]);
+            } else {
+                return $this->render('create', [
+                            'account' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                        'account' => $model,
-            ]);
+            throw new \yii\web\NotAcceptableHttpException('No Permission to create user');
         }
     }
 
@@ -100,21 +104,23 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreateProfile($id) {
-        $model = new UserProfile();
-        $model->id = $id;
-
-        if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->save()) {
-                Yii::$app->getSession()->setFlash('success', 'Profile created !');
-                return $this->redirect(['view', 'id' => $id]);
+        if (\yii::$app->user->can('user-admin')) {
+            $model = new UserProfile();
+            $model->id = $id;
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Profile created !');
+                    return $this->redirect(['view', 'id' => $id]);
+                } else {
+                    Yii::$app->getSession()->setFlash('danger', 'Profile cannot create !');
+                }
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'Profile cannot create !');
+                return $this->render('create-profile', [
+                            'profile' => $model,
+                ]);
             }
         } else {
-            return $this->render('create-profile', [
-                        'profile' => $model,
-            ]);
+            throw new \yii\web\NotAcceptableHttpException('No Permission to create user profile');
         }
     }
 
@@ -226,10 +232,10 @@ class AdminController extends Controller {
     public function actionDeleteProfile($id) {
         $image = $this->findModelProfile($id)->profile_image;
         if ($this->findModelProfile($id)->delete()) {
-           if (file_exists($this->module->ProfileImagePathPreview . '/' . $image)){
-                  unlink($this->module->ProfileImagePathPreview . '/' . $image);  
+            if (file_exists($this->module->ProfileImagePathPreview . '/' . $image)) {
+                unlink($this->module->ProfileImagePathPreview . '/' . $image);
             }
-           Yii::$app->getSession()->setFlash('success', 'User profile deleted !');
+            Yii::$app->getSession()->setFlash('success', 'User profile deleted !');
         } else {
             Yii::$app->getSession()->setFlash('danger', 'User Profile cannot delete !');
         }
