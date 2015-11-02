@@ -79,7 +79,7 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreate() {
-        if (\yii::$app->user->can('user-admin')) {
+        if (\yii::$app->user->can('admin_user_create')) {
             $model = new CreateUserForm();
             $model->setPassword($model->password);
             $model->generateAuthKey();

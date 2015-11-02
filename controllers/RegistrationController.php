@@ -18,17 +18,12 @@ class RegistrationController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'user-activation', 'login'],
+                'only' => ['signup', 'user-activation'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'user-activation', 'login'],
+                        'actions' => ['signup', 'user-activation'],
                         'allow' => true,
                         'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
                     ],
                 ],
             ],
