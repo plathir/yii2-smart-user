@@ -12,6 +12,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
+
 class RegistrationController extends Controller {
 
     public function behaviors() {

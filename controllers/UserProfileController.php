@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
 
+
 /**
  * UserProfileController implements the CRUD actions for UserProfile model.
  */
@@ -50,32 +51,7 @@ class UserProfileController extends Controller {
             ],
         ];
     }
-    
-    
-    /**
-     * Lists all UserProfile models.
-     * @return mixed
-     */
-    public function actionIndex() {
-        $searchModel = new UserProfileSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single UserProfile model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id) {
-        return $this->render('view', [
-                    'model' => $this->findModel($id),
-        ]);
-    }
 
     /**
      * Creates a new UserProfile model.
@@ -83,6 +59,7 @@ class UserProfileController extends Controller {
      * @return mixed
      */
     public function actionCreateMyProfile() {
+        
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model == null) {
             $model = new UserProfile();

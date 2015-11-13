@@ -65,6 +65,15 @@ use yii\bootstrap\Modal;
 
         $settings_html = 'Tab for User Settings';
 
+    if ($roles != null) {
+        $roles_html .= '<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Role Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>';
 
         $items[] = [
             'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
@@ -207,4 +216,3 @@ use yii\bootstrap\Modal;
 
 
 
-</div>

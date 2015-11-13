@@ -9,6 +9,7 @@ use plathir\user\models\security\LoginForm;
 use plathir\user\models\security\Auth;
 use plathir\user\models\account\User;
 
+
 class SecurityController extends Controller {
 
     public function behaviors() {
