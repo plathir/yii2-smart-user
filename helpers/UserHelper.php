@@ -9,6 +9,9 @@ class UserHelper {
      
     return 'Test';
     
+    
+    
+    
 //        return ->getModule()->ProfileImagePathPreview;
 //        $profile = new UserProfile();
 //        $profile->find()->where(['id' => $id])->one();
