@@ -14,11 +14,11 @@ use plathir\user\models\registration\ChangePasswordForm;
  * @property \plathir\user\Module $module
  * 
  */
-
 class AccountController extends Controller {
-        public function __construct($id, $module) {
+
+    public function __construct($id, $module) {
         parent::__construct($id, $module);
-    }  
+    }
 
     /** @inheritdoc */
     public function behaviors() {
@@ -46,70 +46,78 @@ class AccountController extends Controller {
         ];
     }
 
-    
-  
-    
-    
     public function actionMy() {
+        if (\yii::$app->user->can('UserAccountMy')) {
+            $account = User::findIdentity(\Yii::$app->user->identity->id);
+            $profile = UserProfile::find()
+                    ->where(['id' => \Yii::$app->user->identity->id])
+                    ->one();
 
-        $account = User::findIdentity(\Yii::$app->user->identity->id);
-        $profile = UserProfile::find()
-                ->where(['id' => \Yii::$app->user->identity->id])
-                ->one();
-
-        //        ::search(['id' => \Yii::$app->user->identity->id ]);
+            //        ::search(['id' => \Yii::$app->user->identity->id ]);
 
 
-        return $this->render('my', [
-                    'account' => $account,
-                    'profile' => $profile,
-                    'module' => $this->module
-        ]);
+            return $this->render('my', [
+                        'account' => $account,
+                        'profile' => $profile,
+                        'roles' => \Yii::$app->authManager->getRolesByUser(\Yii::$app->user->identity->id),
+                        'module' => $this->module
+            ]);
+        } else {
+            throw new \yii\web\NotAcceptableHttpException('No Permission to view my data ');
+        }
     }
 
     public function actionEdit() {
-        $model = $this->findModel(\Yii::$app->user->identity->id);
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->ValidateAndSave()) {
-                Yii::$app->getSession()->setFlash('success', 'Account changed !');
-                //  echo 1;
-                return $this->redirect(['account/my']);
-            } elseif (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
+        if (\yii::$app->user->can('UserAccountEdit')) {
+            $model = $this->findModel(\Yii::$app->user->identity->id);
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->ValidateAndSave()) {
+                    Yii::$app->getSession()->setFlash('success', 'Account changed !');
+                    //  echo 1;
+                    return $this->redirect(['account/my']);
+                } elseif (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ActiveForm::validate($model);
+                }
+            } else {
+                if (\Yii::$app->request->isAjax) {
+                    return $this->renderAjax('edit', [
+                                'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('edit', [
+                                'model' => $model,
+                    ]);
+                }
             }
         } else {
-            if (\Yii::$app->request->isAjax) {
-                return $this->renderAjax('edit', [
-                            'model' => $model,
-                ]);
-            } else {
-                return $this->render('edit', [
-                            'model' => $model,
-                ]);
-            }
+            throw new \yii\web\NotAcceptableHttpException('No Permission to edit my data');
         }
     }
 
     public function actionChangePassword() {
-        $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->ChangePassword()) {
-                Yii::$app->getSession()->setFlash('success', 'Password changed !');
-                //  return $this->refresh();
-                return $this->redirect(['account/my']);
-            } else {
-                Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
+        if (\yii::$app->user->can('UserAccountChangePassword')) {
+            $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->ChangePassword()) {
+                    Yii::$app->getSession()->setFlash('success', 'Password changed !');
+                    //  return $this->refresh();
+                    return $this->redirect(['account/my']);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
+                }
             }
-        }
-        if (\Yii::$app->request->isAjax) {
-            return $this->renderAjax('change_password', [
-                        'model' => $model,
-            ]);
+            if (\Yii::$app->request->isAjax) {
+                return $this->renderAjax('change_password', [
+                            'model' => $model,
+                ]);
+            } else {
+                return $this->render('change_password', [
+                            'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('change_password', [
-                        'model' => $model,
-            ]);
+            throw new \yii\web\NotAcceptableHttpException('No Permission to change password');
         }
     }
 
@@ -137,13 +145,18 @@ class AccountController extends Controller {
     }
 
     public function actionIndex() {
-        $searchModel = new UserAccountSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\yii::$app->user->can('UserAccountIndex')) {
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new UserAccountSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new \yii\web\NotAcceptableHttpException('No Permission to view index of accounts');
+        }
     }
 
 }

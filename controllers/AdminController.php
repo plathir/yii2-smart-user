@@ -14,6 +14,7 @@ use plathir\user\models\admin\SetPasswordForm;
 use yii\web\NotFoundHttpException;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
+
 /**
  * @property \plathir\user\Module $module
  * 
@@ -79,11 +80,15 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreate() {
-        if (\yii::$app->user->can('admin_user_create')) {
+        if (\yii::$app->user->can('AdminCreateUser')) {
             $model = new CreateUserForm();
             $model->setPassword($model->password);
             $model->generateAuthKey();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+               $auth = Yii::$app->authManager;
+                $authorRole = $auth->getRole('User');
+                $auth->assign($authorRole, $model->id);
+                
                 return $this->render('view', ['account' => $this->findModel($model->id),
                             'profile' => $this->findModelProfile($model->id),
                 ]);
@@ -104,7 +109,7 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreateProfile($id) {
-        if (\yii::$app->user->can('user-admin')) {
+        if (\yii::$app->user->can('AdminCreateProfile')) {
             $model = new UserProfile();
             $model->id = $id;
             if ($model->load(Yii::$app->request->post())) {
@@ -131,12 +136,16 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionView($id) {
-
-        return $this->render('view', [
-                    'account' => $this->findModel($id),
-                    'profile' => $this->findModelProfile($id),
-                    'module' => $this->module,
-        ]);
+        if (\yii::$app->user->can('AdminViewUser')) {
+            return $this->render('view', [
+                        'account' => $this->findModel($id),
+                        'profile' => $this->findModelProfile($id),
+                        'roles' => \Yii::$app->authManager->getRolesByUser($id),
+                        'module' => $this->module,
+            ]);
+        } else {
+            throw new \yii\web\NotAcceptableHttpException('No Permission to View user');
+        }
     }
 
     /**
@@ -146,12 +155,19 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionUpdate($id) {
-        $model = $this->findModel($id);
+        if (\yii::$app->user->can('AdminUpdateUser')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->update()) {
-                Yii::$app->getSession()->setFlash('success', 'User updated !');
-                return $this->redirect(['view', 'id' => $id]);
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->update()) {
+                    Yii::$app->getSession()->setFlash('success', 'User updated !');
+                    return $this->redirect(['view', 'id' => $id]);
+                } else {
+                    return $this->render('update', [
+                                'account' => $model,
+                                'module' => $this->module,
+                    ]);
+                }
             } else {
                 return $this->render('update', [
                             'account' => $model,
@@ -159,10 +175,7 @@ class AdminController extends Controller {
                 ]);
             }
         } else {
-            return $this->render('update', [
-                        'account' => $model,
-                        'module' => $this->module,
-            ]);
+            throw new \yii\web\NotAcceptableHttpException('No Permission to Update user');
         }
     }
 
@@ -172,20 +185,24 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionUpdateProfile($id) {
-        $model = $this->findModelProfile($id);
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save(false)) {
-                Yii::$app->getSession()->setFlash('success', 'Profile changed !');
-                return $this->redirect(['view', 'id' => $id]);
+        if (\yii::$app->user->can('AdminUpdateUserProfile')) {
+            $model = $this->findModelProfile($id);
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save(false)) {
+                    Yii::$app->getSession()->setFlash('success', 'Profile changed !');
+                    return $this->redirect(['view', 'id' => $id]);
+                } else {
+                    Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
+                    return $this->redirect(['update', 'id' => $id]);
+                }
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
-                return $this->redirect(['update', 'id' => $id]);
+                return $this->render('update-profile', [
+                            'profile' => $model,
+                            'module' => $this->module,
+                ]);
             }
         } else {
-            return $this->render('update-profile', [
-                        'profile' => $model,
-                        'module' => $this->module,
-            ]);
+            throw new \yii\web\NotAcceptableHttpException('No Permission to Update Profile');
         }
     }
 
@@ -194,13 +211,17 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionIndex() {
-        $searchModel = new AdminUsersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\yii::$app->user->can('AdminIndexUser')) {
+            $searchModel = new AdminUsersSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new \yii\web\NotAcceptableHttpException('No Permission to view User Index');
+        }
     }
 
     /**
@@ -210,18 +231,22 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionDelete($id) {
-        if ($this->findModel($id)->delete()) {
-            if ($this->findModelProfile($id) != null) {
-                if ($this->findModelProfile($id)->delete()) {
-                    Yii::$app->getSession()->setFlash('success', 'User Account and profile deleted !');
+        if (\yii::$app->user->can('AdminDeleteUser')) {
+            if ($this->findModel($id)->delete()) {
+                if ($this->findModelProfile($id) != null) {
+                    if ($this->findModelProfile($id)->delete()) {
+                        Yii::$app->getSession()->setFlash('success', 'User Account and profile deleted !');
+                    }
+                } else {
+                    Yii::$app->getSession()->setFlash('success', 'User Account deleted !');
                 }
             } else {
-                Yii::$app->getSession()->setFlash('success', 'User Account deleted !');
+                Yii::$app->getSession()->setFlash('danger', 'User cannot delete !');
             }
+            return $this->redirect(['index']);
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'User cannot delete !');
+            throw new \yii\web\NotAcceptableHttpException('No Permission to Delete User ');
         }
-        return $this->redirect(['index']);
     }
 
     /**

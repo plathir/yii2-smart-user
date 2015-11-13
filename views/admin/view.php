@@ -56,7 +56,24 @@ if ($profile) {
             '<br><br>';
 }
 
+$roles_html = '';
 
+if ($roles != null) {
+    $roles_html .= '<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Role Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($roles as $role) {
+        $roles_html .= '<tr><td>'.$role->name . '</td><td>' . $role->description . '</td></tr>';
+    }
+    $roles_html .= '</tbody>
+    </table>';
+}
 
 
 $items[] = [
@@ -83,11 +100,20 @@ $items[] = [
 //                ]),
     'options' => ['id' => 'ProfileTab'],
 ];
+
+$items[] = [
+    'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Roles',
+    'encode' => false,
+    'content' => '<br>' . Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Roles for user'), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' . '<br><br>' .
+    $roles_html,
+    //   'headerOptions' => ['class'=>"col-lg-3"],
+    'options' => ['id' => 'rolesTab'],
+];
 ?>
 <div class="col-lg-3 well" align="center">
     <?php $bundle = plathir\user\userAsset::register($this); ?>
-        
-    <?php    
+
+    <?php
     if ($profile) {
         if ($profile->profile_image != '') {
             echo Html::img($module->ProfileImagePathPreview . '/' . $profile->profile_image, ['alt' => '...',
