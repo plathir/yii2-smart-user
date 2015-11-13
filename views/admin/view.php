@@ -84,6 +84,7 @@ $items[] = [
     'options' => ['id' => 'ProfileTab'],
 ];
 ?>
+<div class="row">
 <div class="col-lg-3 well" align="center">
     <?php $bundle = plathir\user\userAsset::register($this); ?>
         
@@ -154,3 +155,4 @@ $items[] = [
 </div>
 
 
+</div>
