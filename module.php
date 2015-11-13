@@ -26,5 +26,5 @@ class Module extends \yii\base\Module {
         $view = Yii::$app->getView();
         userAsset::register($view);
     }
-    
+     
 }

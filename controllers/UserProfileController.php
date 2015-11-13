@@ -3,19 +3,26 @@
 namespace plathir\user\controllers;
 
 use Yii;
-use plathir\user\models\profile\UserProfile;
-use plathir\user\models\profile\UserProfileSearch;
 use yii\web\Controller;
+use plathir\user\models\profile\UserProfile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
-
-
 /**
  * UserProfileController implements the CRUD actions for UserProfile model.
  */
+
+/**
+ * @property \plathir\user\Module $module
+ * 
+ */
+
 class UserProfileController extends Controller {
+
+    public function __construct($id, $module) {
+        parent::__construct($id, $module);
+    }
 
     public function behaviors() {
         return [
@@ -43,7 +50,7 @@ class UserProfileController extends Controller {
         ];
     }
 
-        public function actions() {
+    public function actions() {
         return [
             'fileapi-upload' => [
                 'class' => FileAPIUpload::className(),
@@ -52,14 +59,13 @@ class UserProfileController extends Controller {
         ];
     }
 
-
     /**
      * Creates a new UserProfile model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreateMyProfile() {
-        
+
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model == null) {
             $model = new UserProfile();

@@ -64,9 +64,10 @@ use yii\bootstrap\Modal;
         $social_html = 'Tab for Social Data';
 
         $settings_html = 'Tab for User Settings';
+        $roles_html = '';
 
-    if ($roles != null) {
-        $roles_html .= '<table class="table table-bordered">
+        if ($roles != null) {
+            $roles_html .= '<table class="table table-bordered">
         <thead>
             <tr>
                 <th>Role Name</th>
@@ -74,6 +75,13 @@ use yii\bootstrap\Modal;
             </tr>
         </thead>
         <tbody>';
+
+            foreach ($roles as $role) {
+                $roles_html .= '<tr><td>' . $role->name . '</td><td>' . $role->description . '</td></tr>';
+            }
+            $roles_html .= '</tbody>
+    </table>';
+        }
 
         $items[] = [
             'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
@@ -93,6 +101,15 @@ use yii\bootstrap\Modal;
             $profile_html,
             //   'headerOptions' => ['class'=>"col-lg-3"],
             'options' => ['id' => 'profileTab'],
+        ];
+
+        $items[] = [
+            'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Roles',
+            'encode' => false,
+            'content' => '<br>' .
+            $roles_html,
+            //   'headerOptions' => ['class'=>"col-lg-3"],
+            'options' => ['id' => 'rolesTab'],
         ];
 
         $items[] = [
@@ -214,5 +231,5 @@ use yii\bootstrap\Modal;
         ?>
     </div>    
 
-
+</div>
 

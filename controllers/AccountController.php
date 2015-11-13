@@ -55,7 +55,6 @@ class AccountController extends Controller {
 
             //        ::search(['id' => \Yii::$app->user->identity->id ]);
 
-
             return $this->render('my', [
                         'account' => $account,
                         'profile' => $profile,

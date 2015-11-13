@@ -129,6 +129,7 @@ class AdminController extends Controller {
         }
     }
 
+    
     /**
      * View Account and profile data
      * 
@@ -323,9 +324,7 @@ class AdminController extends Controller {
         if ($user = User::findOne($id)) {
             if ($model->load(Yii::$app->request->post()) && $model->SaveNewPassword()) {
                 Yii::$app->getSession()->setFlash('success', 'new password set');
-                return $this->render('view', ['account' => $this->findModel($model->id),
-                            'profile' => $this->findModelProfile($model->id),
-                ]);
+                return $this->redirect(['view', 'id' => $id]);
             } else {
                 return $this->render('set-password', ['model' => $model]);
             }
