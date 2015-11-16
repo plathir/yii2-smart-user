@@ -109,7 +109,7 @@ class AdminController extends Controller {
      * @return type
      */
     public function actionCreateProfile($id) {
-        if (\yii::$app->user->can('AdminCreateProfile')) {
+        if (\yii::$app->user->can('AdminCreateUserProfile')) {
             $model = new UserProfile();
             $model->id = $id;
             if ($model->load(Yii::$app->request->post())) {

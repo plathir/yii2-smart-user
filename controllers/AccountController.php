@@ -143,19 +143,4 @@ class AccountController extends Controller {
         }
     }
 
-    public function actionIndex() {
-        if (\yii::$app->user->can('UserAccountIndex')) {
-
-            $searchModel = new UserAccountSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            return $this->render('index', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
-            ]);
-        } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to view index of accounts');
-        }
-    }
-
-}
+ }

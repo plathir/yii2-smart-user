@@ -22,8 +22,6 @@ use plathir\user\traits\ModuleTrait;
 class UserProfile extends \yii\db\ActiveRecord {
 
     use ModuleTrait;
-
-    
     
     /**
      * @inheritdoc

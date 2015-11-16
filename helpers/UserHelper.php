@@ -1,37 +1,42 @@
 <?php
 
-use plathir\user\helpers;
+namespace plathir\user\helpers;
 
-
+use plathir\user\models\profile\UserProfile;
+use yii\base\View;
 
 class UserHelper {
-   public function getProfileImage($id, $view) {
-     
-    return 'Test';
-    
-    
-    
-    
-//        return ->getModule()->ProfileImagePathPreview;
-//        $profile = new UserProfile();
-//        $profile->find()->where(['id' => $id])->one();
-//        if ( $profile    ) {
-//            if ($profile->profile_image != null) {
-//                print_r($this->getmodule());
-//             //   die();
-//                //return '"'.$this->module["ProfileImagePathPreview"] . '/' . $profile->profile_image .'"';
-//            } else {
-//                $bundle = \plathir\user\userAsset::register($view);
-//                return '"' . $bundle->baseUrl . '/img/user_profile.png"   ';
-//            }
-//        } else {
-//            $bundle = \plathir\user\userAsset::register($view);
-//            return '"' . $bundle->baseUrl . '/img/user_profile.png"   ';
-//        }
-    }    
-    
-    
-    
+
+    public function getProfileImage($id, $view = null) {
+        $profile = UserProfile::find()
+                ->where(['id' => $id])
+                ->one();
+        if ($view != null) {
+
+            if ($profile) {
+                if ($profile->profile_image != null) {
+                    $profile->module->ProfileImagePathPreview;
+                    return $profile->module->ProfileImagePathPreview . '/' . $profile->profile_image;
+                } else {
+                    $bundle = \plathir\user\userAsset::register($view);
+                    return $bundle->baseUrl . '/img/user_profile.png';
+                }
+            } else {
+                $bundle = \plathir\user\userAsset::register($view);
+                return $bundle->baseUrl . '/img/user_profile.png';
+            }
+        } else {
+            if ($profile) {
+                if ($profile->profile_image != null) {
+                    $profile->module->ProfileImagePathPreview;
+                    return $profile->module->ProfileImagePathPreview . '/' . $profile->profile_image;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+    }
+
 }
-
-

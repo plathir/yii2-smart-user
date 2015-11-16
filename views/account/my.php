@@ -132,24 +132,10 @@ use yii\bootstrap\Modal;
         ?>
 
         <?php
-        if ($profile) {
-            if ($profile->profile_image != '') {
-                echo Html::img($module->ProfileImagePathPreview . '/' . $profile->profile_image, ['alt' => '...',
-                    'class' => 'img-circle',
-                    'width' => '150',
-                    'align' => 'center']);
-            } else {
-                echo Html::img($bundle->baseUrl . '/img/user_profile.png', ['alt' => '...',
-                    'class' => 'img-circle',
-                    'width' => '150',
-                    'align' => 'center']);
-            }
-        } else {
-            echo Html::img($bundle->baseUrl . '/img/user_profile.png', ['alt' => '...',
-                'class' => 'img-circle',
-                'width' => '150',
-                'align' => 'center']);
-        }
+        echo Html::img(\plathir\user\helpers\UserHelper::getProfileImage(Yii::$app->user->identity->id, $this), ['alt' => '...',
+            'class' => 'img-circle',
+            'width' => '150',
+            'align' => 'center']);
         ?>
 
         <table class="table table-bordered">
