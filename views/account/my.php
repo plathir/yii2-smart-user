@@ -145,8 +145,8 @@ use yii\bootstrap\Modal;
 
                 </div>
                 <div class="panel-body">
-                    <p><b><?= '('. Yii::$app->user->identity->username. ')' ?> 
-                       <?= \plathir\user\helpers\UserHelper::getProfileFullName(Yii::$app->user->identity->id) ?></b></p>
+                    <p><b><?= '(' . Yii::$app->user->identity->username . ')' ?> 
+                            <?= \plathir\user\helpers\UserHelper::getProfileFullName(Yii::$app->user->identity->id) ?></b></p>
                 </div>
 
                 <!-- List group -->
@@ -161,51 +161,58 @@ use yii\bootstrap\Modal;
     </div>
 
     <div class="col-md-9 col-sm-6 col-xs-12 personal-info">
-        <h3>
-            My User Data 
-        </h3>
-        <div>
-            <?php
-            echo Tabs::widget([
-                'items' => $items,
-            ]);
-            ?>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">        
+                <h3>
+                    My User Data 
+                </h3>
+            </div>
+            <div class="panel-body">     
+                <div>
+                    <?php
+                    echo Tabs::widget([
+                        'items' => $items,
+                    ]);
+                    ?>
+                </div>
+
+                <?php
+                // Display modal Account edit
+                Modal::begin([
+                    'header' => '<h4>Account Edit</h4>',
+                    'id' => 'modalAccount',
+                    'size' => 'modal-sm',
+                    'footer' => 'Footer modal'
+                ]);
+                echo "<div id='modalContentAccount'> </div>";
+                Modal::end();
+                ?>
+                <?php
+                // Display change Password edit
+                Modal::begin([
+                    'header' => '<h4>Change Password</h4>',
+                    'id' => 'modalChangePass',
+                    'size' => 'modal-sm',
+                    'footer' => 'Footer modal'
+                ]);
+                echo "<div id='modalContentChangePass'> </div>";
+                Modal::end();
+                ?>
+
+                <?php
+                Modal::begin([
+                    'header' => '<h4>Edit Profile</h4>',
+                    'id' => 'modalProfile',
+                    'size' => 'modal-md',
+                    'footer' => 'Footer modal'
+                ]);
+                echo "<div id='modalContentProfile'> </div>";
+                Modal::end();
+                ?>
+            </div>    
         </div>
-
-        <?php
-        // Display modal Account edit
-        Modal::begin([
-            'header' => '<h4>Account Edit</h4>',
-            'id' => 'modalAccount',
-            'size' => 'modal-sm',
-            'footer' => 'Footer modal'
-        ]);
-        echo "<div id='modalContentAccount'> </div>";
-        Modal::end();
-        ?>
-        <?php
-        // Display change Password edit
-        Modal::begin([
-            'header' => '<h4>Change Password</h4>',
-            'id' => 'modalChangePass',
-            'size' => 'modal-sm',
-            'footer' => 'Footer modal'
-        ]);
-        echo "<div id='modalContentChangePass'> </div>";
-        Modal::end();
-        ?>
-
-        <?php
-        Modal::begin([
-            'header' => '<h4>Edit Profile</h4>',
-            'id' => 'modalProfile',
-            'size' => 'modal-md',
-            'footer' => 'Footer modal'
-        ]);
-        echo "<div id='modalContentProfile'> </div>";
-        Modal::end();
-        ?>
-    </div>    
+    </div>
 
 </div>
 

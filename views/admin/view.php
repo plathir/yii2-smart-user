@@ -42,6 +42,17 @@ if ($profile) {
                     'id',
                     'first_name',
                     'last_name',
+//                    [
+//                        'attribute' => 'gender',
+//                        'label' => 'Gender',
+//                        'value' => function ($model, $key, $index, $widget) {
+//                            if ($model->gender == 1) {
+//                                return 'Male';
+//                            } elseif ($profile->gender == 2) {
+//                                return 'Female';
+//                            }
+//                        }
+//                    ],
                     'gender',
                     'profile_image',
                     'birth_date',
@@ -127,8 +138,8 @@ $items[] = [
 
                 </div>
                 <div class="panel-body">
-                    <p><b><?= '('. $account->username. ')' ?> 
-                       <?= \plathir\user\helpers\UserHelper::getProfileFullName($account->id) ?></b></p>
+                    <p><b><?= '(' . $account->username . ')' ?> 
+                            <?= \plathir\user\helpers\UserHelper::getProfileFullName($account->id) ?></b></p>
                 </div>
 
                 <!-- List group -->
