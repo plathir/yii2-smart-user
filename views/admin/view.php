@@ -69,7 +69,7 @@ if ($roles != null) {
         <tbody>';
 
     foreach ($roles as $role) {
-        $roles_html .= '<tr><td>'.$role->name . '</td><td>' . $role->description . '</td></tr>';
+        $roles_html .= '<tr><td>' . $role->name . '</td><td>' . $role->description . '</td></tr>';
     }
     $roles_html .= '</tbody>
     </table>';
@@ -111,60 +111,49 @@ $items[] = [
 ];
 ?>
 <div class="row">
-<div class="col-lg-3 well" align="center">
-    <?php $bundle = plathir\user\userAsset::register($this); ?>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <?php $bundle = plathir\user\userAsset::register($this); ?>
 
-    <?php
-         echo Html::img(\plathir\user\helpers\UserHelper::getProfileImage($account->id, $this), ['alt' => '...',
-            'class' => 'img-circle',
-            'width' => '150',
-            'align' => 'center']);
-        ?>      
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th><center><?php echo $account->username; ?></center></th>
-        </tr>
-        </thead>
-        <tbody>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <?php
+                    echo Html::img(\plathir\user\helpers\UserHelper::getProfileImage($account->id, $this), ['alt' => '...',
+                        'class' => 'img-circle',
+                        'width' => '100',
+                        'align' => 'center']);
+                    ?>
 
-            <tr>
-                <td><?php echo '<b>Email : </b>' . $account->email; ?></td>   
-            </tr>
+                </div>
+                <div class="panel-body">
+                    <p><b><?= '('. $account->username. ')' ?> 
+                       <?= \plathir\user\helpers\UserHelper::getProfileFullName($account->id) ?></b></p>
+                </div>
 
-            <tr>
-                <td><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></td>   
-            </tr>
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><?php echo '<b>Email : </b>' . $account->email; ?></li>
+                    <li class="list-group-item"><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></li>
+                    <li class="list-group-item"><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></li>
+                </ul>
+            </div>
 
-            <tr>
-                <td><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></td>   
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary">Facebook</button></td>   
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary">Twitter</button></td>   
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary">Linkedin</button></td>   
-            </tr>
-        </tbody>
-    </table>
-
-</div>
-<div class="col-lg-9">
-    <h3>
-        Data for user : <?= $account->username; ?> 
-    </h3>
-    <div>
-        <?php
-        echo Tabs::widget([
-            'items' => $items,
-        ]);
-        ?>
-        <?php //echo yii::getAlias($module->ProfileImagePath); ?>  
+        </div>
     </div>
-</div>
+    <div class="col-md-9 col-sm-6 col-xs-12 personal-info">
+        <h3>
+            Data for user : <?= $account->username; ?> 
+        </h3>
+        <div>
+            <?php
+            echo Tabs::widget([
+                'items' => $items,
+            ]);
+            ?>
+            <?php //echo yii::getAlias($module->ProfileImagePath); ?>  
+        </div>
+    </div>
 
 
 </div>

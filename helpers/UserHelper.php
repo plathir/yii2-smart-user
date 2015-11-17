@@ -39,4 +39,14 @@ class UserHelper {
         }
     }
 
+    public function getProfileFullName($id) {
+        $profile = UserProfile::find()
+                ->where(['id' => $id])
+                ->one();
+
+        if ($profile) {
+            return $profile->first_name. '&nbsp;'. $profile->last_name;
+        }
+    }
+
 }

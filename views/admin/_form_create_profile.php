@@ -30,7 +30,7 @@ use vova07\fileapi\Widget as FileAPI;
         
         <?= $form->field($profile, 'first_name') ?>
         <?= $form->field($profile, 'last_name') ?>
-        <?= $form->field($profile, 'gender') ?>
+        <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
         <?=
         $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Enter birth date ...'],

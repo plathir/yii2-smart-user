@@ -13,61 +13,62 @@ use yii\bootstrap\Modal;
 ?>
 
 <div class="row">
-    <div class="col-lg-3 well" align="center">
-        <?php $bundle = plathir\user\userAsset::register($this); ?>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <?php $bundle = plathir\user\userAsset::register($this); ?>
 
-        <?php
-        if ($profile != null) {
-            $profile_html = Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/edit-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
-                    '&nbsp' .
-                    Html::a('<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile', ['user-profile/delete-my-profile'], ['class' => 'btn btn-danger',
-                        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                        'id' => 'ButtonProfile1',
-                        'data-method' => 'post',
-                        'data-pjax' => '0'
-                    ]) .
-                    '<br><br>' .
-                    DetailView::widget([
-                        'model' => $profile,
+            <?php
+            if ($profile != null) {
+                $profile_html = Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/edit-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
+                        '&nbsp' .
+                        Html::a('<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile', ['user-profile/delete-my-profile'], ['class' => 'btn btn-danger',
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'id' => 'ButtonProfile1',
+                            'data-method' => 'post',
+                            'data-pjax' => '0'
+                        ]) .
+                        '<br><br>' .
+                        DetailView::widget([
+                            'model' => $profile,
+                            'attributes' => [
+                                'id',
+                                'first_name',
+                                'last_name',
+                                'gender',
+                                'profile_image',
+                                'birth_date:date',
+                                'updated_at:datetime',
+                                'created_at:datetime',
+                                'updated_by',
+                            ],
+                ]);
+            } else {
+                $profile_html = 'Profile not update yet ! <br> <br>' .
+                        Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/create-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
+                        '<br><br>';
+            }
+
+            $account_html = DetailView::widget([
+                        'model' => $account,
                         'attributes' => [
                             'id',
-                            'first_name',
-                            'last_name',
-                            'gender',
-                            'profile_image',
-                            'birth_date:date',
-                            'updated_at:datetime',
+                            'username',
+                            'email:email',
+                            'role',
+                            'status',
                             'created_at:datetime',
-                            'updated_by',
+                            'updated_at:datetime',
                         ],
             ]);
-        } else {
-            $profile_html = 'Profile not update yet ! <br> <br>' .
-                    Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile', ['value' => Url::to(['user-profile/create-my-profile']), 'class' => 'btn btn-success', 'id' => 'modalButtonProfile']) .
-                    '<br><br>';
-        }
-
-        $account_html = DetailView::widget([
-                    'model' => $account,
-                    'attributes' => [
-                        'id',
-                        'username',
-                        'email:email',
-                        'role',
-                        'status',
-                        'created_at:datetime',
-                        'updated_at:datetime',
-                    ],
-        ]);
 
 
-        $social_html = 'Tab for Social Data';
+            $social_html = 'Tab for Social Data';
 
-        $settings_html = 'Tab for User Settings';
-        $roles_html = '';
+            $settings_html = 'Tab for User Settings';
+            $roles_html = '';
 
-        if ($roles != null) {
-            $roles_html .= '<table class="table table-bordered">
+            if ($roles != null) {
+                $roles_html .= '<table class="table table-bordered">
         <thead>
             <tr>
                 <th>Role Name</th>
@@ -76,101 +77,90 @@ use yii\bootstrap\Modal;
         </thead>
         <tbody>';
 
-            foreach ($roles as $role) {
-                $roles_html .= '<tr><td>' . $role->name . '</td><td>' . $role->description . '</td></tr>';
-            }
-            $roles_html .= '</tbody>
+                foreach ($roles as $role) {
+                    $roles_html .= '<tr><td>' . $role->name . '</td><td>' . $role->description . '</td></tr>';
+                }
+                $roles_html .= '</tbody>
     </table>';
-        }
+            }
 
-        $items[] = [
-            'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
-            'encode' => false,
-            'content' => '<br>' .
-            Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Account Edit', ['value' => Url::to(['edit']), 'class' => 'btn btn-success', 'id' => 'modalButtonAccount']) .
-            '&nbsp ' .
-            Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass']) .
-            '<br><br>' . $account_html,
-                //            'headerOptions' => ['class'=>"col-lg-3"],
-        ];
+            $items[] = [
+                'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
+                'encode' => false,
+                'content' => '<br>' .
+                Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Account Edit', ['value' => Url::to(['edit']), 'class' => 'btn btn-success', 'id' => 'modalButtonAccount']) .
+                '&nbsp ' .
+                Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass']) .
+                '<br><br>' . $account_html,
+                    //            'headerOptions' => ['class'=>"col-lg-3"],
+            ];
 
-        $items[] = [
-            'label' => '<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Profile',
-            'encode' => false,
-            'content' => '<br>' .
-            $profile_html,
-            //   'headerOptions' => ['class'=>"col-lg-3"],
-            'options' => ['id' => 'profileTab'],
-        ];
+            $items[] = [
+                'label' => '<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Profile',
+                'encode' => false,
+                'content' => '<br>' .
+                $profile_html,
+                //   'headerOptions' => ['class'=>"col-lg-3"],
+                'options' => ['id' => 'profileTab'],
+            ];
 
-        $items[] = [
-            'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Roles',
-            'encode' => false,
-            'content' => '<br>' .
-            $roles_html,
-            //   'headerOptions' => ['class'=>"col-lg-3"],
-            'options' => ['id' => 'rolesTab'],
-        ];
+            $items[] = [
+                'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Roles',
+                'encode' => false,
+                'content' => '<br>' .
+                $roles_html,
+                //   'headerOptions' => ['class'=>"col-lg-3"],
+                'options' => ['id' => 'rolesTab'],
+            ];
 
-        $items[] = [
-            'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Social',
-            'encode' => false,
-            'content' => '<br>' .
-            $social_html,
-            //   'headerOptions' => ['class'=>"col-lg-3"],
-            'options' => ['id' => 'socialTab'],
-        ];
+            $items[] = [
+                'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Social',
+                'encode' => false,
+                'content' => '<br>' .
+                $social_html,
+                //   'headerOptions' => ['class'=>"col-lg-3"],
+                'options' => ['id' => 'socialTab'],
+            ];
 
-        $items[] = [
-            'label' => '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings',
-            'encode' => false,
-            'content' => '<br>' .
-            $settings_html,
-            //   'headerOptions' => ['class'=>"col-lg-3"],
-            'options' => ['id' => 'settingsTab'],
-        ];
-        ?>
+            $items[] = [
+                'label' => '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings',
+                'encode' => false,
+                'content' => '<br>' .
+                $settings_html,
+                //   'headerOptions' => ['class'=>"col-lg-3"],
+                'options' => ['id' => 'settingsTab'],
+            ];
+            ?>
 
-        <?php
-        echo Html::img(\plathir\user\helpers\UserHelper::getProfileImage(Yii::$app->user->identity->id, $this), ['alt' => '...',
-            'class' => 'img-circle',
-            'width' => '150',
-            'align' => 'center']);
-        ?>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th><center><?php echo $account->username; ?></center></th>
-            </tr>
-            </thead>
-            <tbody>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <?php
+                    echo Html::img(\plathir\user\helpers\UserHelper::getProfileImage(Yii::$app->user->identity->id, $this), ['alt' => '...',
+                        'class' => 'img-circle',
+                        'width' => '100',
+                        'align' => 'center']);
+                    ?>
 
-                <tr>
-                    <td><?php echo '<b>Email : </b>' . $account->email; ?></td>   
-                </tr>
+                </div>
+                <div class="panel-body">
+                    <p><b><?= '('. Yii::$app->user->identity->username. ')' ?> 
+                       <?= \plathir\user\helpers\UserHelper::getProfileFullName(Yii::$app->user->identity->id) ?></b></p>
+                </div>
 
-                <tr>
-                    <td><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></td>   
-                </tr>
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item"><?php echo '<b>Email : </b>' . $account->email; ?></li>
+                    <li class="list-group-item"><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></li>
+                    <li class="list-group-item"><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></li>
+                </ul>
+            </div>
 
-                <tr>
-                    <td><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></td>   
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-primary">Facebook</button></td>   
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-primary">Twitter</button></td>   
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-primary">Linkedin</button></td>   
-                </tr>
-            </tbody>
-        </table>
-
+        </div>
     </div>
-    <div class="col-lg-9">
+
+    <div class="col-md-9 col-sm-6 col-xs-12 personal-info">
         <h3>
             My User Data 
         </h3>

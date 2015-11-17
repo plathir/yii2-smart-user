@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\DatePicker;
 use vova07\fileapi\Widget as FileAPI;
 
 /* @var $this yii\web\View */
@@ -31,11 +32,16 @@ use vova07\fileapi\Widget as FileAPI;
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => 40]) ?>
 
-    <?= $form->field($model, 'gender')->textInput() ?>
+    <?= $form->field($model, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
 
-    <?=
-    $form->field($model, 'birth_date');
-    ?>
+    <?= $form->field($model, 'birth_date')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Enter birth date ...'],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy/mm/dd'
+            ]
+        ]); ?>
+    
     <?php //= $form->field($model, 'updated_at')->textInput() ?>
 
     <?php //= $form->field($model, 'updated_by')->textInput() ?>
