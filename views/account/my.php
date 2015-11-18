@@ -34,12 +34,20 @@ use yii\bootstrap\Modal;
                                 'id',
                                 'first_name',
                                 'last_name',
-                                'gender',
+                                [
+                                    'label' => 'Gender',
+                                    'attribute' => 'gender',
+                                    'value' => $profile->getGenderLabel(),
+                                ],
                                 'profile_image',
                                 'birth_date:date',
                                 'updated_at:datetime',
                                 'created_at:datetime',
-                                'updated_by',
+                                [
+                                    'label' => 'Updated by',
+                                    'attribute' => 'updated_by',
+                                    'value' => $profile->getUpadatedByUserName(),
+                                ],
                             ],
                 ]);
             } else {
@@ -54,8 +62,11 @@ use yii\bootstrap\Modal;
                             'id',
                             'username',
                             'email:email',
-                            'role',
-                            'status',
+                            [
+                                'label' => 'Status',
+                                'attribute' => 'status',
+                                'value' => $account->getStatusText(),
+                            ],
                             'created_at:datetime',
                             'updated_at:datetime',
                         ],
@@ -178,7 +189,7 @@ use yii\bootstrap\Modal;
                 </div>
 
                 <?php
-                // Display modal Account edit
+// Display modal Account edit
                 Modal::begin([
                     'header' => '<h4>Account Edit</h4>',
                     'id' => 'modalAccount',

@@ -19,7 +19,8 @@ use Yii;
  * @property integer $updated_by
  */
 class AdminUsers extends \yii\db\ActiveRecord {
-
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 10;
   
     /**
      * @inheritdoc
@@ -33,7 +34,7 @@ class AdminUsers extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['id', 'username', 'email', 'status', 'role'], 'required'],
+            [['id', 'username', 'email', 'status' ], 'required'],
             [['id', 'status', 'updated_at', 'updated_at'], 'integer'],
         ];
     }
@@ -66,5 +67,15 @@ class AdminUsers extends \yii\db\ActiveRecord {
         return [
             TimestampBehavior::className(),
         ];
+    }
+    
+    
+        public function getStatusText() {
+        if ($this->status == self::STATUS_INACTIVE) {
+            return 'Inactive';
+        }
+        if ($this->status == self::STATUS_ACTIVE) {
+            return 'Active';
+        }
     }
 }

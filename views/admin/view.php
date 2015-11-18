@@ -21,8 +21,11 @@ $user_html = DetailView::widget([
                 'id',
                 'username',
                 'email:email',
-                'role',
-                'status',
+                [
+                    'label' => 'Status',
+                    'attribute' => 'status',
+                    'value' => $account->getStatusText(),
+                ],
                 'created_at:datetime',
                 'updated_at:datetime',
             ],
@@ -42,18 +45,12 @@ if ($profile) {
                     'id',
                     'first_name',
                     'last_name',
-//                    [
-//                        'attribute' => 'gender',
-//                        'label' => 'Gender',
-//                        'value' => function ($model, $key, $index, $widget) {
-//                            if ($model->gender == 1) {
-//                                return 'Male';
-//                            } elseif ($profile->gender == 2) {
-//                                return 'Female';
-//                            }
-//                        }
-//                    ],
-                    'gender',
+                    [
+
+                        'label' => 'Gender',
+                        'attribute' => 'gender',
+                        'value' => $profile->getGenderLabel(),
+                    ],
                     'profile_image',
                     'birth_date',
                     'created_at:datetime',
@@ -153,16 +150,24 @@ $items[] = [
         </div>
     </div>
     <div class="col-md-9 col-sm-6 col-xs-12 personal-info">
-        <h3>
-            Data for user : <?= $account->username; ?> 
-        </h3>
-        <div>
-            <?php
-            echo Tabs::widget([
-                'items' => $items,
-            ]);
-            ?>
-            <?php //echo yii::getAlias($module->ProfileImagePath); ?>  
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">        
+                <h3>
+                    Data for user : <?= $account->username; ?> 
+                </h3>
+            </div>
+            <div class="panel-body">          
+
+                <div>
+                    <?php
+                    echo Tabs::widget([
+                        'items' => $items,
+                    ]);
+                    ?>
+                    <?php //echo yii::getAlias($module->ProfileImagePath); ?>  
+                </div>
+            </div>
         </div>
     </div>
 

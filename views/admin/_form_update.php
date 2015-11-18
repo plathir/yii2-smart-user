@@ -16,8 +16,7 @@ use yii\widgets\ActiveForm;
         <?php $form = ActiveForm::begin(['id' => 'form-update']); ?>
         <?= $form->field($account, 'username') ?>
         <?= $form->field($account, 'email') ?>
-        <?= $form->field($account, 'status') ?>
-        <?= $form->field($account, 'role') ?>
+        <?= $form->field($account, 'status')->dropDownList(['10' => 'Active', '0' => 'Inactive']); ?>
         <div class="form-group">
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
         </div>

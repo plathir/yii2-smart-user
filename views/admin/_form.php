@@ -17,8 +17,7 @@ use yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin(['id' => 'form-create']); ?>
                 <?= $form->field($account, 'username') ?>
                 <?= $form->field($account, 'email') ?>
-                <?= $form->field($account, 'status') ?>
-                <?= $form->field($account, 'role') ?>
+                <?= $form->field($account, 'status')->dropDownList(['10' => 'Active', '0' => 'Inactive']); ?>
                 <?= $form->field($account, 'password')->passwordInput(); ?>
                 <div class="form-group">
                     <?= Html::submitButton('<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Create' , ['class' => 'btn btn-primary']) ?>

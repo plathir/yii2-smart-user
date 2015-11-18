@@ -10,7 +10,9 @@ use Yii;
  * Signup form
  */
 class AccountForm extends Model {
-
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 10;
+    
     public $username;
     public $email;
     public $new_password;

@@ -3,6 +3,7 @@
 namespace plathir\user\helpers;
 
 use plathir\user\models\profile\UserProfile;
+
 use yii\base\View;
 
 class UserHelper {
@@ -48,5 +49,6 @@ class UserHelper {
             return $profile->first_name. '&nbsp;'. $profile->last_name;
         }
     }
+    
 
 }

@@ -19,7 +19,7 @@ class AdminUsersSearch extends AdminUsers
     public function rules()
     {
         return [
-            [['id', 'username', 'email', 'status', 'role'], 'safe'],
+            [['id', 'username', 'email', 'status' ], 'safe'],
             [['id', 'status', 'updated_at', 'updated_at'], 'integer'],
         ];
     }
@@ -60,7 +60,6 @@ class AdminUsersSearch extends AdminUsers
             'id' => $this->id,
             //'username' => $this->username,
             'status' => $this->status,
-            'role' => $this->role,
             'updated_at' => $this->updated_at,
         ]);
 
