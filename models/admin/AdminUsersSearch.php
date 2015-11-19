@@ -7,28 +7,25 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use plathir\user\models\admin\AdminUsers;
 
-
 /**
  * UserProfileSearch represents the model behind the search form about `common\extensions\user\models\UserProfile`.
  */
-class AdminUsersSearch extends AdminUsers
-{
+class AdminUsersSearch extends AdminUsers {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'username', 'email', 'status' ], 'safe'],
-            [['id', 'status', 'updated_at', 'updated_at'], 'integer'],
+            [['id', 'username', 'email', 'status'], 'safe'],
+            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +37,7 @@ class AdminUsersSearch extends AdminUsers
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = AdminUsers::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -60,12 +56,14 @@ class AdminUsersSearch extends AdminUsers
             'id' => $this->id,
             //'username' => $this->username,
             'status' => $this->status,
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'email', $this->email]);
+                ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }
+
 }

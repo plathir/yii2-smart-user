@@ -26,21 +26,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
-            'username',
-            'email',
             [
-                'attribute' => 'status',
+                'header' => 'Image',
+                'format' => 'raw',
                 'value' => function($model, $key, $index, $grid) {
-                    return $model->getStatusText();
+                    return Html::img(\plathir\user\helpers\UserHelper::getProfileImage($model->id, $this), ['alt' => '...',
+                                'class' => 'img-circle',
+                                'width' => '30',
+                                'align' => 'center']);
                 }
-            ],
-            // 'updated_at',
-            // 'updated_by',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]);
-    ?>
+                    ],
+                    'id',
+                    'username',
+                    [
+                        'format' => 'raw',
+                        'value' => function($model, $key, $index, $grid) {
+                            return Html::decode(\plathir\user\helpers\UserHelper::getProfileFullName($model->id));
+                        }
+                    ],
+                    'email',
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model, $key, $index, $grid) {
+                            return $model->getStatusText();
+                        }
+                    ],
+                    'created_at:datetime',
+                    'updated_at:datetime',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]);
+            ?>
 
 
 

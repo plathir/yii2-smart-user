@@ -16,7 +16,8 @@
         "kartik-v/yii2-datecontrol": "@dev",
         "vova07/yii2-fileapi-widget": "*",
         "yiisoft/yii2-authclient": "*",
-        "mdmsoft/yii2-admin": "~2.0"
+        "mdmsoft/yii2-admin": "~2.0",
+        "pheme/yii2-settings": "*"
     },
     "autoload": {
         "psr-4": {
