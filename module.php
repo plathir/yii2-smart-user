@@ -20,9 +20,14 @@ class Module extends \yii\base\Module {
                 'class' => 'pheme\settings\Module',
             ],
         ];
-        
+
         $this->setComponents([
-             'settings' => [
+            'settings' => [
+                'class' => 'pheme\settings\components\Settings'
+            ],
+        ]);
+
+        Yii::$app->setComponents([ 'settings' => [
                 'class' => 'pheme\settings\components\Settings'
             ],
         ]);
