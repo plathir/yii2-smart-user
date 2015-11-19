@@ -18,9 +18,14 @@ class Module extends \yii\base\Module {
         $this->modules = [
             'settings' => [
                 'class' => 'pheme\settings\Module',
-                'sourceLanguage' => 'en'
             ],
         ];
+        
+        $this->setComponents([
+             'settings' => [
+                'class' => 'pheme\settings\components\Settings'
+            ],
+        ]);
 
         if ($this->AdminUserID == '') {
             $this->AdminUserID = '1';
