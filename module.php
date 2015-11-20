@@ -15,11 +15,12 @@ class Module extends \yii\base\Module {
     public function init() {
 
         parent::init();
-//        $this->modules = [
-//            'settings' => [
-//                'class' => 'pheme\settings\Module',
-//            ],
-//        ];
+        $this->modules = [
+            'settings' => [
+                'class' => 'plathir\settings\Module',
+                'modulename' => 'user'
+            ],
+        ];
 //
 //        $this->setComponents([    
 //            'settings' => [
