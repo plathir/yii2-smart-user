@@ -15,22 +15,22 @@ class Module extends \yii\base\Module {
     public function init() {
 
         parent::init();
-        $this->modules = [
-            'settings' => [
-                'class' => 'pheme\settings\Module',
-            ],
-        ];
-
-        $this->setComponents([
-            'settings' => [
-                'class' => 'pheme\settings\components\Settings'
-            ],
-        ]);
-
-        Yii::$app->setComponents([ 'settings' => [
-                'class' => 'pheme\settings\components\Settings'
-            ],
-        ]);
+//        $this->modules = [
+//            'settings' => [
+//                'class' => 'pheme\settings\Module',
+//            ],
+//        ];
+//
+//        $this->setComponents([    
+//            'settings' => [
+//                'class' => 'pheme\settings\components\Settings'
+//            ],
+//        ]);
+//
+//        Yii::$app->setComponents([ 'settings' => [
+//                'class' => 'pheme\settings\components\Settings'
+//            ],
+//        ]);
 
         if ($this->AdminUserID == '') {
             $this->AdminUserID = '1';
