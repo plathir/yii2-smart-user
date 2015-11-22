@@ -15,24 +15,20 @@ class Module extends \yii\base\Module {
     public function init() {
 
         parent::init();
-        $this->modules = [
+        $this->setModules([
             'settings' => [
                 'class' => 'plathir\settings\Module',
+                 'modulename' => 'user'
+            ],
+        ]);
+
+        $this->setComponents([    
+            'settings' => [
+                'class' => 'plathir\settings\components\Settings',
                 'modulename' => 'user'
             ],
-        ];
-//
-//        $this->setComponents([    
-//            'settings' => [
-//                'class' => 'pheme\settings\components\Settings'
-//            ],
-//        ]);
-//
-//        Yii::$app->setComponents([ 'settings' => [
-//                'class' => 'pheme\settings\components\Settings'
-//            ],
-//        ]);
-
+        ]);
+        
         if ($this->AdminUserID == '') {
             $this->AdminUserID = '1';
         }

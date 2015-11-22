@@ -89,9 +89,8 @@ class AdminController extends Controller {
                 $authorRole = $auth->getRole('User');
                 $auth->assign($authorRole, $model->id);
                 
-                return $this->render('view', ['account' => $this->findModel($model->id),
-                            'profile' => $this->findModelProfile($model->id),
-                ]);
+                return $this->redirect(['view', 'id' =>  $model->id]);
+               
             } else {
                 return $this->render('create', [
                             'account' => $model,

@@ -16,7 +16,6 @@ use Yii;
  * @property string $birth_date
  * @property integer $updated_at
  * @property integer $created_at
- * @property integer $updated_by
  */
 class AdminUsers extends \yii\db\ActiveRecord {
     const STATUS_INACTIVE = 0;
@@ -35,7 +34,7 @@ class AdminUsers extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['id', 'username', 'email', 'status' ], 'required'],
-            [['id', 'status', 'updated_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 

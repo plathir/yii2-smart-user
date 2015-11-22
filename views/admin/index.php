@@ -18,9 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Settings'), ['/user/settings'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
+    <?php
+// test for get settings
+//echo plathir\user\Module::getInstance()->settings->test(); 
+//echo  plathir\user\Module::getInstance()->settings->getSettings('key2'); 
+//echo  plathir\user\Module::getInstance()->settings->setSettings('key2','new value');
+//echo '<pre>';
+//print_r(plathir\user\Module::getInstance()->settings->getAllSettings());
+//echo '</pre>';
+    ?>
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -57,7 +66,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
             ?>
-
-
 
 </div>
