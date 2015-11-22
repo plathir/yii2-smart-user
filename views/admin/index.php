@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 // test for get settings
+ 
 //echo plathir\user\Module::getInstance()->settings->test(); 
 //echo  plathir\user\Module::getInstance()->settings->getSettings('key2'); 
 //echo  plathir\user\Module::getInstance()->settings->setSettings('key2','new value');
