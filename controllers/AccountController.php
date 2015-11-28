@@ -75,15 +75,19 @@ class AccountController extends Controller {
                     //  echo 1;
                     return $this->redirect(['account/my']);
                 } elseif (Yii::$app->request->isAjax) {
+
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     return ActiveForm::validate($model);
                 }
             } else {
+              //      echo 'cannot save !';
+              //      die();
                 if (\Yii::$app->request->isAjax) {
                     return $this->renderAjax('edit', [
                                 'model' => $model,
                     ]);
                 } else {
+
                     return $this->render('edit', [
                                 'model' => $model,
                     ]);
