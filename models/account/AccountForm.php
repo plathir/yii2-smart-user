@@ -81,7 +81,7 @@ class AccountForm extends Model {
             $upd_user->email = $this->email;
 //            $upd_user->setPassword($this->password);
             $upd_user->generateAuthKey();
-            if ($upd_user->save()) {
+            if ($upd_user->update()) {
                 return true;
             }
         } 

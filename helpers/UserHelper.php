@@ -3,7 +3,7 @@
 namespace plathir\user\helpers;
 
 use plathir\user\models\profile\UserProfile;
-
+use plathir\user\models\account\User;
 use yii\base\View;
 
 class UserHelper {
@@ -46,9 +46,21 @@ class UserHelper {
                 ->one();
 
         if ($profile) {
-            return $profile->first_name. '&nbsp;'. $profile->last_name;
+            return $profile->first_name . '&nbsp;' . $profile->last_name;
         }
     }
-    
+
+    public function getLatestUsers($numOfUsers) {
+        $users = User::find()
+                ->where(['status' => User::STATUS_ACTIVE])
+                ->orderBy(['created_at' => SORT_DESC])
+                ->limit($numOfUsers)
+                ->all();
+        if ($users) {
+            return $users;
+        } else {
+            return null;
+        }
+    }
 
 }
