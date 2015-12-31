@@ -9,7 +9,6 @@ use plathir\user\models\security\LoginForm;
 use plathir\user\models\security\Auth;
 use plathir\user\models\account\User;
 
-
 class SecurityController extends Controller {
 
     public function behaviors() {
@@ -47,12 +46,18 @@ class SecurityController extends Controller {
     }
 
     public function actionLogin() {
+
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+          //  $user = User::findIdentity(Yii::$app->user->identity->id);
+          //  $user->touch('last_visited');
+            // write code to save visit info
+            // Yii::$app->getRequest()->getUserIP() // Get User ip Address
+
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -124,6 +129,12 @@ class SecurityController extends Controller {
                 $auth->save();
             }
         }
+    }
+
+    public function saveLoginInfo($userID) {
+        
+        
+        
     }
 
 }

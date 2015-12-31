@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $last_visited
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface {
@@ -38,12 +39,24 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public function behaviors() {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+//    public function behaviors() {
+//        return [
+//            TimestampBehavior::className(),
+//        ];
+//    }
 
+        public function behaviors() {
+        return [
+                 'timestamp' => [
+                     'class' => 'yii\behaviors\TimestampBehavior',
+                     'attributes' => [
+                         ActiveRecord::EVENT_AFTER_VALIDATE => ['last_visited', 'last_visited'],
+                     ],
+                 ],   
+            ];
+        }
+    
+    
     /**
      * @inheritdoc
      */
@@ -51,6 +64,7 @@ class User extends ActiveRecord implements IdentityInterface {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
+            ['last_visited', 'integer'],
         ];
     }
 
