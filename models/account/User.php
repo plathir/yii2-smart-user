@@ -45,18 +45,18 @@ class User extends ActiveRecord implements IdentityInterface {
 //        ];
 //    }
 
-        public function behaviors() {
+    public function behaviors() {
         return [
-                 'timestamp' => [
-                     'class' => 'yii\behaviors\TimestampBehavior',
-                     'attributes' => [
-                         ActiveRecord::EVENT_AFTER_VALIDATE => ['last_visited', 'last_visited'],
-                     ],
-                 ],   
-            ];
-        }
-    
-    
+            TimestampBehavior::className(),
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    'last_visited' => 'last_visited',
+                ],
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */

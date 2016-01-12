@@ -23,11 +23,11 @@ class SecurityController extends Controller {
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'logout', 'auth'],
+                        'actions' => ['login', 'backend-login', 'logout', 'auth'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['login', 'logout', 'auth'],
+                        'actions' => ['login', 'backend-login', 'logout', 'auth'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,14 +53,34 @@ class SecurityController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-          //  $user = User::findIdentity(Yii::$app->user->identity->id);
-          //  $user->touch('last_visited');
-            // write code to save visit info
-            // Yii::$app->getRequest()->getUserIP() // Get User ip Address
-
+            $user = User::findIdentity(Yii::$app->user->identity->id);
+            $user->touch('last_visited');
             return $this->goBack();
         } else {
             return $this->render('login', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * use action only for backend login 
+     * Without Oauth login
+     * @return type
+     */
+    public function actionBackendLogin() {
+
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $user = User::findIdentity(Yii::$app->user->identity->id);
+            $user->touch('last_visited');
+            return $this->goBack();
+        } else {
+            return $this->render('backend-login', [
                         'model' => $model,
             ]);
         }
@@ -103,6 +123,10 @@ class SecurityController extends Controller {
                     $user->generatePasswordResetToken();
                     $transaction = $user->getDb()->beginTransaction();
                     if ($user->save()) {
+                        $authManager = Yii::$app->authManager;
+                        $authorRole = $authManager->getRole('User');
+                        $authManager->assign($authorRole, $user->id);
+
                         $auth = new Auth([
                             'user_id' => $user->id,
                             'source' => $client->getId(),
@@ -132,8 +156,6 @@ class SecurityController extends Controller {
     }
 
     public function saveLoginInfo($userID) {
-        
-        
         
     }
 

@@ -165,6 +165,7 @@ use yii\bootstrap\Modal;
                     <li class="list-group-item"><?php echo '<b>Email : </b>' . $account->email; ?></li>
                     <li class="list-group-item"><?php echo '<b>Created : </b>' . Yii::$app->formatter->asDatetime($account->created_at); ?></li>
                     <li class="list-group-item"><?php echo '<b>Updated : </b>' . Yii::$app->formatter->asDatetime($account->updated_at); ?></li>
+                    <li class="list-group-item"><?php echo '<b>Last Login : </b>' . Yii::$app->formatter->asDatetime($account->last_visited); ?></li>
                 </ul>
             </div>
 

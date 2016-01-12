@@ -20,6 +20,7 @@ use Yii;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $last_visited
  * @property string $password write-only password_get_info($hash)
 
  * */
@@ -46,6 +47,7 @@ class CreateUserForm extends ActiveRecord {
             ['email', 'required'],
             ['status', 'required'],
             ['email', 'email'],
+            ['last_visited', 'integer'],
             ['email', 'unique', 'targetClass' => '\plathir\user\models\account\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],

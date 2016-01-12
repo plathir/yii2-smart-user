@@ -4,7 +4,6 @@ namespace plathir\user\models\account;
 
 use plathir\user\models\account\User;
 use yii\base\Model;
-use Yii;
 
 /**
  * Signup form
@@ -73,14 +72,12 @@ class AccountForm extends Model {
      * @return User|null the saved model or null if saving fails
      */
     public function ValidateAndSave() {
-//         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-//         return $this->validate();
+
         if ($this->validate()) {
             $upd_user = \Yii::$app->user->identity;
             $upd_user->username = $this->username;
             $upd_user->email = $this->email;
-//            $upd_user->setPassword($this->password);
-            $upd_user->generateAuthKey();
+                $upd_user->generateAuthKey();
             if ($upd_user->update()) {
                 return true;
             }

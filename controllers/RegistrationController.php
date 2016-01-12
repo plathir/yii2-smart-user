@@ -12,7 +12,6 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
-
 class RegistrationController extends Controller {
 
     public function behaviors() {
@@ -36,6 +35,10 @@ class RegistrationController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if ($model->sendEmail()) {
+                    $auth = Yii::$app->authManager;
+                    $authorRole = $auth->getRole('User');
+                    $auth->assign($authorRole, $model->id);
+
                     Yii::$app->getSession()->setFlash('success', 'Check your email for account Activation.');
                     return $this->goHome();
                 } else {
