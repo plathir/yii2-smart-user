@@ -11,7 +11,8 @@ class Module extends \yii\base\Module {
     public $ProfileImagePath = '';
     public $ProfileImageTempPath = '';
     public $ProfileImagePathPreview = '';
-
+    public $ProfileImageTempPathPreview = '';
+   
     public function init() {
 
         parent::init();

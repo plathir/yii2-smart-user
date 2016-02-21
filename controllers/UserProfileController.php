@@ -30,7 +30,8 @@ class UserProfileController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete-my-profile' => ['post'],
-                ],
+                    'uploadphoto' => ['post'],
+                 ],
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -40,7 +41,8 @@ class UserProfileController extends Controller {
                             'edit-my-profile',
                             'create-my-profile',
                             'delete-my-profile',
-                            'fileapi-upload'
+                            'fileapi-upload',
+                            'uploadphoto'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -56,6 +58,13 @@ class UserProfileController extends Controller {
                 'class' => FileAPIUpload::className(),
                 'path' => $this->module->ProfileImageTempPath,
             ],
+            //Upload cropped image into temp directory
+            'uploadphoto' => [
+                'class' => '\plathir\cropper\actions\UploadAction',
+                'width' => 600,
+                'height' => 600,
+                'temp_path' => $this->module->ProfileImageTempPath,
+            ],            
         ];
     }
 

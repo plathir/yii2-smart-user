@@ -9,6 +9,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
 use vova07\fileapi\Widget as FileAPI;
+use plathir\cropper\Widget as NewWidget;
+use yii\helpers\Url;
 ?>
 
 <p>Please fill out the following fields to update:</p>
@@ -17,15 +19,25 @@ use vova07\fileapi\Widget as FileAPI;
     <div class="col-lg-5">
         <?php $form = ActiveForm::begin(['id' => 'form-update', 'options' => ['enctype' => 'multipart/form-data']]); ?>
         <?php
-        echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
-            'settings' => [
-                'url' => ['admin/fileapi-upload'],
-                'autoUpload' => true,
-            ],
-            'crop' => true,
-            'cropResizeWidth' => 200,
-            'cropResizeHeight' => 200
-        ]);
+//        echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
+//            'settings' => [
+//                'url' => ['admin/fileapi-upload'],
+//                'autoUpload' => true,
+//            ],
+//            'crop' => true,
+//            'cropResizeWidth' => 200,
+//            'cropResizeHeight' => 200
+//        ]);
+        echo  $profile->profile_image. '<br>';
+        //echo $form->field($profile, 'profile_image');
+        echo $form->field($profile, 'profile_image')->widget(NewWidget::className(), [
+            'uploadUrl' => Url::toRoute(['/user/user-profile/uploadphoto']),
+            'previewUrl' => $profile->module->ProfileImagePathPreview,
+            'tempPreviewUrl' => $profile->module->ProfileImageTempPathPreview,
+         //   'KeyFolder' => $profile->id,
+            'width' => 200,
+            'height' => 200,
+             ]);
         ?>
 
         <?= $form->field($profile, 'first_name') ?>

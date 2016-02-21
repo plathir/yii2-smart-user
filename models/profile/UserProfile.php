@@ -2,6 +2,7 @@
 
 namespace plathir\user\models\profile;
 
+use plathir\cropper\behaviors\UploadImageBehavior;
 use yii\behaviors\TimestampBehavior;
 use Yii;
 use vova07\fileapi\behaviors\UploadBehavior;
@@ -75,14 +76,25 @@ class UserProfile extends \yii\db\ActiveRecord {
     public function behaviors() {
         return [
             TimestampBehavior::className(),
-            'uploadBehavior' => [
-                'class' => UploadBehavior::className(),
+//            'uploadBehavior' => [
+//                'class' => UploadBehavior::className(),
+//                'attributes' => [
+//                    'profile_image' => [
+//                        'path' => $this->module->ProfileImagePath,
+//                        'tempPath' => $this->module->ProfileImageTempPath,
+//                        'url' => $this->module->ProfileImagePathPreview
+//                    ]
+//                ]
+//            ],
+            'uploadImageBehavior' => [
+                'class' => UploadImageBehavior::className(),
                 'attributes' => [
                     'profile_image' => [
                         'path' => $this->module->ProfileImagePath,
-                        'tempPath' => $this->module->ProfileImageTempPath,
-                        'url' => $this->module->ProfileImagePathPreview
-                    ]
+                        'temp_path' => $this->module->ProfileImageTempPath,
+                        'url' => $this->module->ProfileImagePathPreview,
+                      //  'key_folder' => 'id'
+                    ],
                 ]
             ]
         ];

@@ -14,7 +14,6 @@ use plathir\user\models\admin\SetPasswordForm;
 use yii\web\NotFoundHttpException;
 use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
-
 /**
  * @property \plathir\user\Module $module
  * 
@@ -52,7 +51,8 @@ class AdminController extends Controller {
                             'create-profile',
                             'delete-profile',
                             'delete-image',
-                            'fileapi-upload'
+                            'fileapi-upload',
+                            'uploadphoto'
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -72,6 +72,13 @@ class AdminController extends Controller {
                 'class' => FileAPIUpload::className(),
                 'path' => $this->module->ProfileImageTempPath,
             ],
+            //Upload cropped image into temp directory
+            'uploadphoto' => [
+                'class' => '\plathir\cropper\actions\UploadAction',
+                'width' => 600,
+                'height' => 600,
+                'temp_path' => $this->module->ProfileImageTempPath,
+            ],
         ];
     }
 
@@ -85,12 +92,11 @@ class AdminController extends Controller {
             $model->setPassword($model->password);
             $model->generateAuthKey();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-               $auth = Yii::$app->authManager;
+                $auth = Yii::$app->authManager;
                 $authorRole = $auth->getRole('User');
                 $auth->assign($authorRole, $model->id);
-                
-                return $this->redirect(['view', 'id' =>  $model->id]);
-               
+
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                             'account' => $model,
@@ -128,7 +134,6 @@ class AdminController extends Controller {
         }
     }
 
-    
     /**
      * View Account and profile data
      * 
@@ -188,6 +193,7 @@ class AdminController extends Controller {
         if (\yii::$app->user->can('AdminUpdateUserProfile')) {
             $model = $this->findModelProfile($id);
             if ($model->load(Yii::$app->request->post())) {
+
                 if ($model->save(false)) {
                     Yii::$app->getSession()->setFlash('success', 'Profile changed !');
                     return $this->redirect(['view', 'id' => $id]);
