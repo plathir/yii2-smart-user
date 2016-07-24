@@ -7,7 +7,7 @@ use yii\web\Controller;
 use plathir\user\models\profile\UserProfile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use vova07\fileapi\actions\UploadAction as FileAPIUpload;
+//use vova07\fileapi\actions\UploadAction as FileAPIUpload;
 
 /**
  * UserProfileController implements the CRUD actions for UserProfile model.
@@ -41,7 +41,7 @@ class UserProfileController extends Controller {
                             'edit-my-profile',
                             'create-my-profile',
                             'delete-my-profile',
-                            'fileapi-upload',
+                      //      'fileapi-upload',
                             'uploadphoto'
                         ],
                         'allow' => true,
@@ -54,10 +54,10 @@ class UserProfileController extends Controller {
 
     public function actions() {
         return [
-            'fileapi-upload' => [
-                'class' => FileAPIUpload::className(),
-                'path' => $this->module->ProfileImageTempPath,
-            ],
+//            'fileapi-upload' => [
+//                'class' => FileAPIUpload::className(),
+//                'path' => $this->module->ProfileImageTempPath,
+//            ],
             //Upload cropped image into temp directory
             'uploadphoto' => [
                 'class' => '\plathir\cropper\actions\UploadAction',

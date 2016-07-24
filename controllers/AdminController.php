@@ -51,7 +51,7 @@ class AdminController extends Controller {
                             'create-profile',
                             'delete-profile',
                             'delete-image',
-                            'fileapi-upload',
+                       //     'fileapi-upload',
                             'uploadphoto'
                         ],
                         'allow' => true,
@@ -68,10 +68,10 @@ class AdminController extends Controller {
 
     public function actions() {
         return [
-            'fileapi-upload' => [
-                'class' => FileAPIUpload::className(),
-                'path' => $this->module->ProfileImageTempPath,
-            ],
+//            'fileapi-upload' => [
+//                'class' => FileAPIUpload::className(),
+//                'path' => $this->module->ProfileImageTempPath,
+//            ],
             //Upload cropped image into temp directory
             'uploadphoto' => [
                 'class' => '\plathir\cropper\actions\UploadAction',
