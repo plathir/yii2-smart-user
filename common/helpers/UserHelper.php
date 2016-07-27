@@ -4,7 +4,7 @@ namespace plathir\user\common\helpers;
 
 use plathir\user\common\models\profile\UserProfile;
 use plathir\user\common\models\account\User;
-use plathir\user\common\userAsset;
+use plathir\user\backend\userAsset;
 use yii\base\View;
 
 class UserHelper {
