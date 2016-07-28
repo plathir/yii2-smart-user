@@ -25,9 +25,10 @@ use Yii;
 
  * */
 class CreateUserForm extends ActiveRecord {
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
-    
+
     public $password;
 
     public static function tableName() {
@@ -41,14 +42,23 @@ class CreateUserForm extends ActiveRecord {
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\plathir\user\common\models\account\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\plathir\user\common\models\account\User', 'message' => 'This username has already been taken.',
+                'when' => function ($model, $attribute) {
+                    return $this->oldAttributes[$attribute] != $model->$attribute;
+                },
+            ],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['status', 'required'],
             ['email', 'email'],
             ['last_visited', 'integer'],
-            ['email', 'unique', 'targetClass' => '\plathir\user\common\models\account\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\plathir\user\common\models\account\User',
+                'message' => 'This email address has already been taken.',
+                'when' => function ($model, $attribute) {
+                    return $this->oldAttributes[$attribute] != $model->$attribute;
+                },
+            ],
             ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],
         ];
@@ -77,7 +87,7 @@ class CreateUserForm extends ActiveRecord {
         ];
     }
 
-        public function getStatusText() {
+    public function getStatusText() {
         if ($this->status == self::STATUS_INACTIVE) {
             return 'Inactive';
         }
@@ -85,4 +95,5 @@ class CreateUserForm extends ActiveRecord {
             return 'Active';
         }
     }
+
 }
