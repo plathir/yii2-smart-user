@@ -44,7 +44,10 @@ class CreateUserForm extends ActiveRecord {
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\plathir\user\common\models\account\User', 'message' => 'This username has already been taken.',
                 'when' => function ($model, $attribute) {
-                    return $this->oldAttributes[$attribute] != $model->$attribute;
+                    if ($this->oldAttributes) {
+                        return $this->oldAttributes[$attribute] != $model->$attribute;
+                    } else
+                        return true;
                 },
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
@@ -56,7 +59,11 @@ class CreateUserForm extends ActiveRecord {
             ['email', 'unique', 'targetClass' => '\plathir\user\common\models\account\User',
                 'message' => 'This email address has already been taken.',
                 'when' => function ($model, $attribute) {
-                    return $this->oldAttributes[$attribute] != $model->$attribute;
+                    if ($this->oldAttributes) {
+                        return $this->oldAttributes[$attribute] != $model->$attribute;
+                    } else {
+                        return true;
+                    }
                 },
             ],
             ['password', 'required', 'on' => 'create'],
