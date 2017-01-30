@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use plathir\user\common\helpers\UserHelper;
+$userHelper = new UserHelper();
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\extensions\user\models\UserProfileSearch */
@@ -34,7 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'header' => 'Image',
                         'format' => 'raw',
                         'value' => function($model, $key, $index, $grid) {
-                            return Html::img(UserHelper::getProfileImage($model->id, $this), ['alt' => '...',
+                             $userHelper = new UserHelper();
+                            return Html::img($userHelper->getProfileImage($model->id, $this), ['alt' => '...',
                                         'class' => 'img-circle',
                                         'width' => '30',
                                         'align' => 'center']);
@@ -45,13 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'format' => 'raw',
                                 'value' => function($model, $key, $index, $grid) {
-                                    return Html::decode(UserHelper::getProfileFullName($model->id));
+                                $userHelper = new UserHelper();
+                                    return Html::decode($userHelper->getProfileFullName($model->id));
                                 }
                             ],
                             'email',
                             [
                                 'attribute' => 'status',
                                 'value' => function($model, $key, $index, $widget) {
+                                $userHelper = new UserHelper();
                                     return $model->status == true ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Inactive</span>';
                                 },
                                 'format' => 'html',

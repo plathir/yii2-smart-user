@@ -11,6 +11,8 @@ use yii\bootstrap\Tabs;
 use plathir\user\common\userAsset;
 use plathir\user\common\helpers\UserHelper;
 
+$userHelper = new UserHelper();
+
 $this->title = Yii::t('app', 'View User');
 $this->params['breadcrumbs'] = [
     ['label' => 'Users', 'url' => ['index']],
@@ -129,7 +131,7 @@ $items[] = [
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <?php
-                    echo Html::img(UserHelper::getProfileImage($account->id, $this), ['alt' => '...',
+                    echo Html::img($userHelper->getProfileImage($account->id, $this), ['alt' => '...',
                         'class' => 'img-circle',
                         'width' => '100',
                         'align' => 'center']);
@@ -138,7 +140,7 @@ $items[] = [
                 </div>
                 <div class="panel-body">
                     <p><b><?= '(' . $account->username . ')' ?> 
-                            <?= UserHelper::getProfileFullName($account->id) ?></b></p>
+                            <?= $userHelper->getProfileFullName($account->id) ?></b></p>
                 </div>
 
                 <!-- List group -->

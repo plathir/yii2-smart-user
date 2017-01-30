@@ -11,6 +11,8 @@ use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\bootstrap\Modal;
 use plathir\user\common\helpers\UserHelper;
+
+$userHelper = new UserHelper();
 ?>
 
 <div class="row">
@@ -149,7 +151,7 @@ use plathir\user\common\helpers\UserHelper;
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <?php
-                    echo Html::img(UserHelper::getProfileImage(Yii::$app->user->identity->id, $this), ['alt' => '...',
+                    echo Html::img($userHelper->getProfileImage(Yii::$app->user->identity->id, $this), ['alt' => '...',
                         'class' => 'img-circle',
                         'width' => '100',
                         'align' => 'center']);
@@ -158,7 +160,7 @@ use plathir\user\common\helpers\UserHelper;
                 </div>
                 <div class="panel-body">
                     <p><b><?= '(' . Yii::$app->user->identity->username . ')' ?> 
-                            <?= UserHelper::getProfileFullName(Yii::$app->user->identity->id) ?></b></p>
+                            <?= $userHelper->getProfileFullName(Yii::$app->user->identity->id) ?></b></p>
                 </div>
 
                 <!-- List group -->
