@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use plathir\user\common\helpers\UserHelper;
+
 $userHelper = new UserHelper();
 
 /* @var $this yii\web\View */
@@ -35,41 +36,41 @@ $this->params['breadcrumbs'][] = $this->title;
                         'header' => 'Image',
                         'format' => 'raw',
                         'value' => function($model, $key, $index, $grid) {
-                             $userHelper = new UserHelper();
+                            $userHelper = new UserHelper();
                             return Html::img($userHelper->getProfileImage($model->id, $this), ['alt' => '...',
                                         'class' => 'img-circle',
                                         'width' => '30',
                                         'align' => 'center']);
                         }
-                            ],
-                            'id',
-                            'username',
-                            [
-                                'format' => 'raw',
-                                'value' => function($model, $key, $index, $grid) {
-                                $userHelper = new UserHelper();
-                                    return Html::decode($userHelper->getProfileFullName($model->id));
-                                }
-                            ],
-                            'email',
-                            [
-                                'attribute' => 'status',
-                                'value' => function($model, $key, $index, $widget) {
-                                $userHelper = new UserHelper();
-                                    return $model->status == true ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Inactive</span>';
-                                },
-                                'format' => 'html',
-                                'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'status', ['0' => 'Inactive', '10' => 'Active'], ['class' => 'form-control', 'prompt' => 'Select...']),
-                                'contentOptions' => ['style' => 'width: 10%;']
-                            ],
-                            'created_at:datetime',
-                            'updated_at:datetime',
-                            ['class' => 'yii\grid\ActionColumn',
-                                'contentOptions' => ['style' => 'min-width: 70px;']
-                            ],
-                        ],
-                    ]);
-                    ?>
+                    ],
+                    'id',
+                    'username',
+                    [
+                        'format' => 'raw',
+                        'value' => function($model, $key, $index, $grid) {
+                            $userHelper = new UserHelper();
+                            return Html::decode($userHelper->getProfileFullName($model->id));
+                        }
+                    ],
+                    'email',
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model, $key, $index, $widget) {
+                            $userHelper = new UserHelper();
+                            return $model->status == true ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Inactive</span>';
+                        },
+                        'format' => 'html',
+                        'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'status', ['0' => 'Inactive', '10' => 'Active'], ['class' => 'form-control', 'prompt' => 'Select...']),
+                        'contentOptions' => ['style' => 'width: 10%;']
+                    ],
+                    'created_at:datetime',
+                    'updated_at:datetime',
+                    ['class' => 'yii\grid\ActionColumn',
+                        'contentOptions' => ['style' => 'min-width: 70px;']
+                    ],
+                ],
+            ]);
+            ?>
 
         </div>      
     </div>
