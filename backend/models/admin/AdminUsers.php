@@ -14,6 +14,7 @@ use Yii;
  * @property string $last_name
  * @property integer $gender
  * @property string $birth_date
+ * @property string $timezone
  * @property integer $updated_at
  * @property integer $created_at
  */
@@ -35,6 +36,7 @@ class AdminUsers extends \yii\db\ActiveRecord {
         return [
             [['id', 'username', 'email', 'status' ], 'required'],
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['timezone' ], 'string'],
         ];
     }
 
@@ -48,6 +50,7 @@ class AdminUsers extends \yii\db\ActiveRecord {
             'email' => Yii::t('app', 'E-Mail'),
             'status' => Yii::t('app', 'Status'),
             'role' => Yii::t('app', 'User Role'),
+            'timezone' => Yii::t('app', 'User Role'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

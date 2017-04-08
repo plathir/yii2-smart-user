@@ -30,6 +30,7 @@ $user_html = DetailView::widget([
                     'attribute' => 'status',
                     'value' => $account->getStatusText(),
                 ],
+                'timezone',
                 'created_at:datetime',
                 'updated_at:datetime',
             ],
@@ -50,7 +51,6 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     [
-
                         'label' => 'Gender',
                         'attribute' => 'gender',
                         'value' => $profile->getGenderLabel(),

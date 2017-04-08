@@ -14,19 +14,29 @@ $userHelper = new UserHelper();
 $this->title = Yii::t('app', 'User Accounts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+echo '<script type="text/javascript">
+  document.write(Intl.DateTimeFormat().resolvedOptions().timeZone);
+ </script>';
 
-<div class="panel panel-primary">
-    <div class="panel-heading"><?= Html::encode($this->title) ?></div>
-    <div class="panel-body">
+?>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+
+    </div><!-- /.box-header -->
+    <div class="box-body">        
         <div class="user-account-index">
-
             <p>
                 <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
                 <?= Html::a(Yii::t('app', 'Settings'), ['/user/settings'], ['class' => 'btn btn-success']) ?>
             </p>
 
-            <?php
-            ?>
+            <?php ?>
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,

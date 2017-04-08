@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Create User Model 
+ * Create User Model
  */
 
 namespace plathir\user\backend\models\admin;
@@ -55,6 +55,7 @@ class CreateUserForm extends ActiveRecord {
             ['email', 'required'],
             ['status', 'required'],
             ['email', 'email'],
+            ['timezone', 'string'],
             ['last_visited', 'integer'],
             ['email', 'unique', 'targetClass' => '\plathir\user\common\models\account\User',
                 'message' => 'This email address has already been taken.',
@@ -101,6 +102,20 @@ class CreateUserForm extends ActiveRecord {
         if ($this->status == self::STATUS_ACTIVE) {
             return 'Active';
         }
+    }
+
+    public function getTimezoneslist() {
+        $items = \DateTimeZone::listIdentifiers();
+        $newItems = [];
+        $key_h = 0;
+
+        foreach ($items as $key => $value) {
+            $key_h = $key_h + 1;
+            $newItems[$key_h]['id'] = $key_h;
+            $newItems[$key_h]['timezone'] = $value;
+        };
+        $timezonesList = \yii\helpers\ArrayHelper::map($newItems, 'timezone', 'timezone');
+        return $timezonesList;
     }
 
 }

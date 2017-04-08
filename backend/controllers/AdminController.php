@@ -84,6 +84,12 @@ class AdminController extends Controller {
             $model = new CreateUserForm();
             $model->setPassword($model->password);
             $model->generateAuthKey();
+//            $tzone = function() {
+//              return '<script type="text/javascript">
+//                       var tZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+//               </script>';
+//            };
+            
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $auth = Yii::$app->authManager;
                 $authorRole = $auth->getRole('User');
