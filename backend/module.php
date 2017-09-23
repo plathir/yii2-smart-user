@@ -12,13 +12,13 @@ class Module extends \yii\base\Module {
     public $ProfileImageTempPath = '';
     public $ProfileImagePathPreview = '';
     public $ProfileImageTempPathPreview = '';
-    public $Theme = 'default';
+    public $Theme = 'smart';
 
     public function init() {
 
         parent::init();
-            $path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/backend/themes/'.$this->Theme.'/views';
-            
+        $path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/backend/themes/' . $this->Theme . '/views';
+
         $this->setViewPath($path);
 
 
