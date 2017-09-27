@@ -38,7 +38,7 @@ class RegistrationController extends Controller {
                     Yii::$app->getSession()->setFlash('success', 'Check your email for account Activation.');
                     return $this->goHome();
                 } else {
-                    Yii::$app->getSession()->setFlash('error', 'problem woth email');
+                    Yii::$app->getSession()->setFlash('error', 'problem with email');
                 }
             }
         }

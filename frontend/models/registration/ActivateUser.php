@@ -29,11 +29,12 @@ class ActivateUser extends Model {
         if (empty($token) || !is_string($token)) {
             throw new InvalidParamException('Activate token cannot be blank.');
         }
+
         $this->user = User::findByActivateToken($token);
+        
         if (!$this->user) {
             throw new InvalidParamException('Wrong activate token.');
         } else {
-
             parent::__construct($config);
         }
     }
@@ -45,6 +46,7 @@ class ActivateUser extends Model {
     public function activate() {
         $user = $this->user;
         $user->removeActivateToken();
+        $user->status = User::STATUS_ACTIVE;
         return $user->save();
     }
 

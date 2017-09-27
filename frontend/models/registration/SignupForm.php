@@ -15,6 +15,7 @@ class SignupForm extends Model {
     public $email;
     public $password;
     public $viewPath = '@vendor/plathir/yii2-smart-user/common/views/mail';
+    public $terms;
 
     /**
      * @inheritdoc
@@ -23,6 +24,7 @@ class SignupForm extends Model {
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
+            ['terms', 'required', 'requiredValue' => 1, 'message' => 'Need to Agree to the terms'],            
             ['username', 'unique', 'targetClass' => '\plathir\user\common\models\account\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'filter', 'filter' => 'trim'],
@@ -42,6 +44,7 @@ class SignupForm extends Model {
     public function signup() {
         if ($this->validate()) {
             $user = new User();
+            $user->status = User::STATUS_INACTIVE;
             $user->username = $this->username;
             $user->email = $this->email;
             $user->setPassword($this->password);
@@ -60,7 +63,8 @@ class SignupForm extends Model {
     public function sendEmail() {
         /* @var $user User */
         $user = User::findOne([
-                    'status' => User::STATUS_ACTIVE,
+                    'status' => User::STATUS_INACTIVE,                    
+                    //'status' => User::STATUS_ACTIVE,                    
                     //               'activate_token' => null,
                     'email' => $this->email,
         ]);
