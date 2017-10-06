@@ -2,39 +2,76 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\web\View;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
-
-//$this->title = 'Login';
-//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h3><?= Html::encode($widget->title) ?></h3>
 
-    <p>Please fill out the following fields to login:</p>
-    <div class="container-fluid">
+<body>
+    <h3><b>Login</b></h3>
+    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>    
+    <div class="register-box-body">
+        <div class="form-group has-feedback">
+            <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => "Enter Username"])->label(false); ?>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>             
+        <div class="form-group has-feedback">
+            <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Enter Password"])->label(false); ?>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div> 
         <div class="row">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-            <?= $form->field($model, 'username') ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            <?=
-            yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['security/auth'],
-                'popupMode' => true,
-            ])
-            ?>
-            <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['user/registration/request-password-reset']) ?>.
+            <div class="col-lg-7">
+                <?=
+                $form->field($model, 'rememberMe', [
+                    'template' => "{input}"])->checkbox(['class' => 'label checkbox icheck pull-left'])->label('Remember Me');
+                ?>      
+            </div>    
+            <!-- /.col -->
+            <div class="col-xs-5">
+                <div class="form-group has-feedback">
+                    <?= Html::submitButton('login', ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
+                </div>
             </div>
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
+            <!-- /.col -->
         </div>
     </div>
-</div>
+    <?php ActiveForm::end(); ?>
+
+    <div class="social-auth-links text-center">
+        <?=
+        yii\authclient\widgets\AuthChoice::widget([
+            'baseAuthUrl' => ['security/auth'],
+            'popupMode' => true,
+        ])
+        ?>
+    </div>
+    <!-- /.social-auth-links -->
+    <div class="container">
+        <div class="row">
+            <?= Html::a('I forgot my password', ['/user/registration/request-password-reset']) ?>
+        </div>
+
+        <div class="row">
+            <?= Html::a('Register a new membership', ['/user/registration/signup']) ?>
+        </div>
+    </div>
 
 
+    <?php
+    $js = "$(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' 
+    });
+  });";
+
+    $this->registerJs(
+            $js, View::POS_READY
+    );
+    ?>
+
+</body>

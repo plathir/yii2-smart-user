@@ -31,10 +31,18 @@ class LoginWidget extends Widget {
         $this->registerClientAssets();
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $user = User::findIdentity(Yii::$app->user->identity->id);
-            $user->touch('last_visited');
-            Yii::$app->getResponse()->redirect(\Yii::$app->getRequest()->getUrl());
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) {
+                $user = User::findIdentity(Yii::$app->user->identity->id);
+                $user->touch('last_visited');
+                Yii::$app->getResponse()->redirect(\Yii::$app->getRequest()->getUrl());
+            } else {
+                Yii::$app->session->setFlash('danger', "Login Failed !");
+                return $this->render('login_widget', [
+                            'model' => $model,
+                            'widget' => $this
+                ]);
+            }
         } else {
             return $this->render('login_widget', [
                         'model' => $model,
