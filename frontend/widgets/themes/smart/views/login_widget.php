@@ -25,8 +25,11 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-lg-7">
                 <?=
-                $form->field($model, 'rememberMe', [
-                    'template' => "{input}"])->checkbox(['class' => 'label checkbox icheck pull-left'])->label('Remember Me');
+                $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
+                    'class' => 'icheck',
+                    'label' => 'Remember Me',
+                    'labelOptions' => ['style' => "padding-left: 0px;"]
+                ]);
                 ?>      
             </div>    
             <!-- /.col -->

@@ -4,6 +4,7 @@ namespace plathir\user\backend\models\admin;
 
 use yii\behaviors\TimestampBehavior;
 use Yii;
+use \plathir\user\common\models\profile\UserProfile;
 
 
 /**
@@ -36,6 +37,8 @@ class AdminUsers extends \yii\db\ActiveRecord {
         return [
             [['id', 'username', 'email', 'status' ], 'required'],
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['first_name'], 'string'],
+            [['full_name'], 'string'],
             [['timezone' ], 'string'],
         ];
     }
@@ -53,6 +56,7 @@ class AdminUsers extends \yii\db\ActiveRecord {
             'timezone' => Yii::t('app', 'User Role'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'full_name' => Yii::t('app', 'Full Name'),
         ];
     }
 
@@ -80,4 +84,12 @@ class AdminUsers extends \yii\db\ActiveRecord {
             return 'Active';
         }
     }
+    
+        public function getUser_profile() {
+        return $this->hasOne(UserProfile::className(), ['id' => 'id']);
+    }
+       public function getRoles() {
+         return  \Yii::$app->authManager->getRolesByUser($this->id);
+
+         }
 }

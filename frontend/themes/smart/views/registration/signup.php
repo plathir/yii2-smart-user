@@ -31,7 +31,11 @@ use yii\web\View;
             <div class="row">
                 <div class="col-lg-8">
                     <?= $form->field($model, 'terms', [
-                        'template' => "{input}"])->checkbox(['class' => 'label checkbox icheck pull-left'])->label('I agree to the <a href="#">terms</a>');
+                        'template' => "{input}"])
+                            ->checkbox(['class' => 'icheck',
+                                'label' => 'I agree to the <a href="#">terms</a>',
+                                'labelOptions' => ['style' => "padding-left: 0px;"]
+                    ]);
                     ?>      
                 </div>    
                 <div class="col-lg-4">   

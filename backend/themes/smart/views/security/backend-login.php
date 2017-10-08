@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -10,21 +11,59 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-        <?= $form->field($model, 'username') ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'rememberMe')->checkbox() ?>
-        <div class="form-group">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>SmartB</b>yii
         </div>
-        <?php ActiveForm::end(); ?>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to Admin Area</p>
 
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>              
+            <div class="form-group has-feedback">
+                <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => "Enter Username"])->label(false); ?>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>             
+            <div class="form-group has-feedback">
+                <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Enter Password"])->label(false); ?>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div> 
+            <div class="row">
+                <div class="col-xs-8">
+                    <?=
+                    $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
+                        'class' => 'icheck',
+                        'label' => 'Remember Me',
+                        'labelOptions' => ['style' => "padding-left: 0px;"]
+                    ]);
+                    ?>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <?= Html::submitButton('login', ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
+                </div>
+                <!-- /.col -->
+            </div>
+            <?php ActiveForm::end(); ?>
+
+        </div>
+        <!-- /.login-box-body -->
     </div>
-</div>
+    <!-- /.login-box -->
+
+    <?php
+    $js = "$(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' ,
+    });
+  });";
+
+    $this->registerJs(
+            $js, View::POS_READY
+    );
+    ?>
+</body>

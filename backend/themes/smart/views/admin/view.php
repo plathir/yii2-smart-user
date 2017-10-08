@@ -13,7 +13,7 @@ use plathir\user\common\helpers\UserHelper;
 
 $userHelper = new UserHelper();
 
-$this->title = Yii::t('app', 'View User');
+$this->title = Yii::t('user', 'View User');
 $this->params['breadcrumbs'] = [
     ['label' => 'Users', 'url' => ['index']],
     $this->title
@@ -40,8 +40,8 @@ $user_html = DetailView::widget([
 
 if ($profile) {
     $profile_html = '<br>' .
-            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) . '&nbsp' .
-            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
+            Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Profile'), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success']) . '&nbsp' .
+            Html::a(Yii::t('user', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete Profile'), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) .
             '<br><br>' .
             DetailView::widget([
@@ -64,7 +64,7 @@ if ($profile) {
 } else {
 //    $profile_html = 'No Profile Data';
     $profile_html = '<br>Profile not update yet ! <br> <br>' .
-            Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success']) .
+            Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Profile'), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success']) .
             '<br><br>';
 }
 
@@ -92,11 +92,11 @@ $items[] = [
     'label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Account',
     'encode' => false,
     'content' => '<br>' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete User'), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
+    Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update User'), ['update', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' .
+    Html::a(Yii::t('user', '<span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> Delete User'), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger', 'data-method' => 'post',
         'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]) . '&nbsp' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Reset Password'), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning']) . '&nbsp' .
-    Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Set Password'), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary']) . '&nbsp' .
+    Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Reset Password'), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning']) . '&nbsp' .
+    Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Set Password'), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary']) . '&nbsp' .
     '<br><br>' .
     $user_html,
     'options' => ['id' => 'AccountTab'],
@@ -116,7 +116,7 @@ $items[] = [
 $items[] = [
     'label' => '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> Roles',
     'encode' => false,
-    'content' => '<br>' . Html::a(Yii::t('app', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Roles for user'), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' . '<br><br>' .
+    'content' => '<br>' . Html::a(Yii::t('user', '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Update Roles for user'), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success']) . '&nbsp' . '<br><br>' .
     $roles_html,
     //   'headerOptions' => ['class'=>"col-lg-3"],
     'options' => ['id' => 'rolesTab'],

@@ -9,7 +9,7 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('app', 'Update User Profile');
+$this->title = Yii::t('user', 'Update User Profile');
 $this->params['breadcrumbs'][] = $this->title;    
 
 ?>

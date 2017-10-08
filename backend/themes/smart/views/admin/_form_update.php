@@ -9,11 +9,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<p>Please fill out the following fields to update:</p>
-
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+        <h3 class="box-title"><?= 'Please fill out the following fields to update user : ' . $account->username; ?></h3>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -26,7 +24,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($account, 'timezone')->dropDownList($account->timezoneslist) ?>   
         <?= $form->field($account, 'status')->dropDownList(['10' => 'Active', '0' => 'Inactive']); ?>
         <div class="form-group">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::submitButton(Html::tag('span', '<i class="fa fa-save"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
+                        'title' => Yii::t('user', 'Upadte Record'),
+                        'data-toggle' => 'tooltip',
+                    ]), ['class' => 'btn btn-primary btn-flat btn-loader'])
+            ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

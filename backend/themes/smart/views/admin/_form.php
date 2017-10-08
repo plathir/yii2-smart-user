@@ -10,7 +10,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 
-<p>Please fill out the following fields to Create:</p>
 <?php
 //$items = DateTimeZone::listIdentifiers();
 //$newItems = [];
@@ -26,7 +25,7 @@ use yii\widgets\ActiveForm;
 
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+        <h3 class="box-title"><?= 'Please fill out the following fields to create User:' ?></h3>
         <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -40,7 +39,13 @@ use yii\widgets\ActiveForm;
         <?= $form->field($account, 'timezone')->dropDownList($account->timezoneslist) ?>            
         <?= $form->field($account, 'password')->passwordInput(); ?>
         <div class="form-group">
-            <?= Html::submitButton('<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Create', ['class' => 'btn btn-primary']) ?>
+                        <?=
+            Html::submitButton(Html::tag('span', '<i class="fa fa-save"></i>' . '&nbsp' . Yii::t('user', 'Create'), [
+                        'title' => Yii::t('user', 'Create Record'),
+                        'data-toggle' => 'tooltip',
+                    ]), ['class' => 'btn btn-primary btn-flat btn-loader'])
+            ?>
+            <?= ''; // Html::submitButton('<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Create', ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>        
     </div>
