@@ -241,4 +241,20 @@ class User extends ActiveRecord implements IdentityInterface {
         }
     }
 
+    public function getActivebadge() {
+        $badge = '';
+        switch ($this->status) {
+            case 0:
+                $badge = '<span class="label label-danger">Inactive</span>';
+                break;
+            case 1:
+                $badge = '<span class="label label-success">Active</span>';
+                break;
+            default:
+                break;
+        }
+
+        return $badge;
+    }    
+    
 }

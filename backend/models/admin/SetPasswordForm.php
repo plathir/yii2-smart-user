@@ -12,6 +12,7 @@ use Yii;
 class SetPasswordForm extends Model {
 
     public $id;
+    public $username;
     public $new_password;
 
     /**

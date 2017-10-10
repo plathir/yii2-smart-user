@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Set Password for user : ' . $model->id;
+$this->title = 'Set Password for user : ' . $model->id. '-'. $model->username;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">

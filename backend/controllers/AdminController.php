@@ -326,6 +326,10 @@ class AdminController extends Controller {
         $model = new SetPasswordForm();
         $model->id = $id;
         if ($user = User::findOne($id)) {
+            $model->username = $user->username;
+        }
+        
+        if ($user = User::findOne($id)) {
             if ($model->load(Yii::$app->request->post()) && $model->SaveNewPassword()) {
                 Yii::$app->getSession()->setFlash('success', 'new password set');
                 return $this->redirect(['view', 'id' => $id]);
