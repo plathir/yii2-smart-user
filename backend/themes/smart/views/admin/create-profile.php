@@ -9,14 +9,17 @@
 
 use yii\helpers\Html;
 
-$this->title = Yii::t('user', 'Update User Profile');
-$this->params['breadcrumbs'][] = $this->title;    
-
+$this->title = Yii::t('user', 'Update User Profile'); 
+$this->params['breadcrumbs'] = [
+    ['label' => Yii::t('user', 'Index Users'), 'url' => ['index']],
+    ['label' => Yii::t('user', 'View User :') . $profile->id,
+        'url' => ['view', 'id' => $profile->id]
+    ],
+    $this->title
+];
 ?>
 
 <div class="user-account-update">
-    <h1><?= Html::encode($this->title) ?></h1>
-
     	<?php echo $this->render('_form_create_profile', [
 		'profile' => $profile,
 	]); ?>

@@ -94,10 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                             return $model->Activebadge;
                         },
-//                        'value' => function($model, $key, $index, $widget) {
-//                            $userHelper = new UserHelper();
-//                            return $model->status == true ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Inactive</span>';
-//                        },
                         'format' => 'html',
                         'filter' => Html::activeDropDownList($searchModel, 'status', ['0' => 'Inactive', '10' => 'Active'], ['class' => 'form-control', 'prompt' => 'Select...']),
                         'contentOptions' => ['style' => 'width: 10%;']

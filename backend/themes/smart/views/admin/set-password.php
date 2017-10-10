@@ -4,11 +4,16 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Set Password for user : ' . $model->id. '-'. $model->username;
-$this->params['breadcrumbs'][] = $this->title;
+
+$this->params['breadcrumbs'] = [
+    ['label' => Yii::t('user', 'Index Users'), 'url' => ['index']],
+    ['label' => Yii::t('user', 'View User :') . $model->id,
+        'url' => ['view', 'id' => $model->id]
+    ],
+    $this->title
+];
 ?>
 <div class="site-signup">
-    <p>Please fill out the following fields to set Password:</p>
-
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
@@ -21,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'form-set-password']); ?>
             <?= $form->field($model, 'new_password')->passwordInput() ?>            
             <div class="form-group">
-                <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button']) ?>
+                <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-flat btn-loading', 'name' => 'update-button btn-flat btn-loading']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

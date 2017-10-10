@@ -1,4 +1,4 @@
-    <?php
+<?php
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,9 +8,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
+use plathir\cropper\Widget as NewWidget;
+use yii\helpers\Url;
 ?>
-
-<p>Please fill out the following fields to update:</p>
 
 <div class="box box-info">
     <div class="box-header with-border">
@@ -22,32 +22,38 @@ use kartik\widgets\DatePicker;
     </div><!-- /.box-header -->
     <div class="box-body">
         <?php $form = ActiveForm::begin(['id' => 'form-update', 'options' => ['enctype' => 'multipart/form-data']]); ?>
-        <?php
-//        echo $form->field($profile, 'profile_image')->widget(FileAPI::className(), [
-//            'settings' => [
-//                'url' => ['user-profile/fileapi-upload'],
-//                'autoUpload' => true,
-//            ],
-//            'crop' => true,
-//            'cropResizeWidth' => 200,
-//            'cropResizeHeight' => 200
-//        ]);
-        ?>
-        
-        <?= $form->field($profile, 'first_name') ?>
-        <?= $form->field($profile, 'last_name') ?>
-        <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
-        <?=
-        $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Enter birth date ...'],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy/mm/dd'
-            ]
-        ]);
-        ?>        
+        <div class="row">
+            <div class="col-sm-6">
+                <?php
+                echo $form->field($profile, 'profile_image')->widget(NewWidget::className(), [
+                    'uploadUrl' => Url::toRoute(['/user/user-profile/uploadphoto']),
+                    'previewUrl' => $profile->module->ProfileImagePathPreview,
+                    'tempPreviewUrl' => $profile->module->ProfileImageTempPathPreview,
+                    //   'KeyFolder' => $profile->id,
+                    'width' => 200,
+                    'height' => 200,
+                ]);
+                ?>             
+            </div>
+            <div class="col-lg-6">
+                <?= $form->field($profile, 'first_name') ?>
+                <?= $form->field($profile, 'last_name') ?>
+                <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
+                <?=
+                $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter birth date ...'],
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy/mm/dd'
+                    ]
+                ]);
+                ?>              
+            </div>
+        </div>
+
+
         <div class="form-group">
-            <?= Html::submitButton('Create', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Create', ['class' => 'btn btn-primary btn-flat btl-loader']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
