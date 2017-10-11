@@ -5,6 +5,7 @@ namespace plathir\user\backend\models\admin;
 use yii\behaviors\TimestampBehavior;
 use Yii;
 use \plathir\user\common\models\profile\UserProfile;
+use \plathir\user\common\models\account\User;
 
 
 /**
@@ -19,7 +20,7 @@ use \plathir\user\common\models\profile\UserProfile;
  * @property integer $updated_at
  * @property integer $created_at
  */
-class AdminUsers extends \yii\db\ActiveRecord {
+class AdminUsers extends User {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
   

@@ -8,7 +8,14 @@
 use yii\helpers\Html;
 
 $this->title = Yii::t('user', 'Update user : ' . $account->username );
-$this->params['breadcrumbs'][] = $this->title;
+
+$this->params['breadcrumbs'] = [
+    ['label' => Yii::t('user', 'Index Users'), 'url' => ['index']],
+    ['label' => Yii::t('user', 'View User :') . $account->id,
+        'url' => ['view', 'id' => $account->id]
+    ],
+    $this->title
+];
 ?>
 
 <div class="user-account-update">

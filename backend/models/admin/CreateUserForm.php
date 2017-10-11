@@ -24,7 +24,7 @@ use Yii;
  * @property string $password write-only password_get_info($hash)
 
  * */
-class CreateUserForm extends ActiveRecord {
+class CreateUserForm extends AdminUsers {
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;

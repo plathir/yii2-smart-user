@@ -2,13 +2,13 @@
 
 namespace plathir\user\common\models\account;
 
-//use plathir\user\models\common\account\User;
+use plathir\user\models\common\account\User;
 use yii\base\Model;
 
 /**
  * Signup form
  */
-class AccountForm extends Model {
+class AccountForm extends User {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
     

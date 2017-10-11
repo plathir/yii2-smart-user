@@ -9,7 +9,7 @@ use Yii;
 /**
  * Signup form
  */
-class SetPasswordForm extends Model {
+class SetPasswordForm extends User {
 
     public $id;
     public $username;

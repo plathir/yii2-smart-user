@@ -41,12 +41,12 @@ $user_html = DetailView::widget([
 //echo $user_html;
 
 if ($profile) {
-    $edit_button = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
+    $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                         'title' => Yii::t('user', 'Update User Profile'),
                         'data-toggle' => 'tooltip',
                     ]), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
 
-    $delete_button = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-trash"></i>' . '&nbsp' . Yii::t('user', 'Delete'), [
+    $delete_button = Html::a(Html::tag('span', '<i class="fa fa-trash-o"></i>' . '&nbsp' . Yii::t('user', 'Delete'), [
                         'title' => Yii::t('user', 'Delete User Profile'),
                         'data-toggle' => 'tooltip',
                     ]), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger btn-flat btn-loader',
@@ -78,7 +78,7 @@ if ($profile) {
     ]);
 } else {
 //    $profile_html = 'No Profile Data';
-    $edit_button = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
+    $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                         'title' => Yii::t('user', 'Update User Profile'),
                         'data-toggle' => 'tooltip',
                     ]), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
@@ -106,22 +106,22 @@ if ($roles != null) {
     $roles_html .= '</tbody>
     </table>';
 }
-$acc_button_edit = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
+$acc_button_edit = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                     'title' => Yii::t('user', 'Update Account'),
                     'data-toggle' => 'tooltip',
                 ]), ['update', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
-$acc_button_delete = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-trash"></i>' . '&nbsp' . Yii::t('user', 'Delete'), [
+$acc_button_delete = Html::a(Html::tag('span', '<i class="fa fa-trash-o"></i>' . '&nbsp' . Yii::t('user', 'Delete'), [
                     'title' => Yii::t('user', 'Delete User Account'),
                     'data-toggle' => 'tooltip',
                 ]), ['delete', 'id' => $account->id], ['class' => 'btn btn-danger btn-flat btn-loader',
             'data-method' => 'post',
             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')
         ]);
-$acc_button_pwd_reset = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Reset Password'), [
+$acc_button_pwd_reset = Html::a(Html::tag('span', '<i class="fa fa-unlock-alt"></i>' . '&nbsp' . Yii::t('user', 'Reset Password'), [
                     'title' => Yii::t('user', 'Reset Password'),
                     'data-toggle' => 'tooltip',
                 ]), ['reset-password', 'id' => $account->id], ['class' => 'btn btn-warning btn-flat btn-loader btn-flat btn-loader']);
-$acc_button_pwd_set = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Set Password'), [
+$acc_button_pwd_set = Html::a(Html::tag('span', '<i class="fa fa-lock"></i>' . '&nbsp' . Yii::t('user', 'Set Password'), [
                     'title' => Yii::t('user', 'Set Password'),
                     'data-toggle' => 'tooltip',
                 ]), ['set-password', 'id' => $account->id], ['class' => 'btn btn-primary btn-flat btn-loader btn-flat btn-loader']);
@@ -129,7 +129,7 @@ $acc_button_pwd_set = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-e
 $user_html = $acc_button_edit . '&nbsp' . $acc_button_delete . '&nbsp' . $acc_button_pwd_reset . '&nbsp' . $acc_button_pwd_set . '&nbsp' .
         '<br><br>' .
         $user_html;
-$roles_button_upd = Html::a(Html::tag('span', '<i class="glyphicon glyphicon-edit"></i>' . '&nbsp' . Yii::t('user', 'Update Roles'), [
+$roles_button_upd = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update Roles'), [
                     'title' => Yii::t('user', 'Update Roles for user'),
                     'data-toggle' => 'tooltip',
                 ]), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);

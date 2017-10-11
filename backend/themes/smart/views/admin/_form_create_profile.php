@@ -44,7 +44,7 @@ use yii\helpers\Url;
                     'options' => ['placeholder' => 'Enter birth date ...'],
                     'pluginOptions' => [
                         'autoclose' => true,
-                        'format' => 'yyyy/mm/dd'
+                        'format' => 'dd/mm/yyyy'
                     ]
                 ]);
                 ?>              
@@ -53,7 +53,7 @@ use yii\helpers\Url;
 
 
         <div class="form-group">
-            <?= Html::submitButton('Create', ['class' => 'btn btn-primary btn-flat btl-loader']) ?>
+            <?= Html::submitButton('<i class="fa fa-save"></i> Create', ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

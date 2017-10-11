@@ -26,7 +26,7 @@ $this->params['breadcrumbs'] = [
             <?php $form = ActiveForm::begin(['id' => 'form-set-password']); ?>
             <?= $form->field($model, 'new_password')->passwordInput() ?>            
             <div class="form-group">
-                <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-flat btn-loading', 'name' => 'update-button btn-flat btn-loading']) ?>
+                <?= Html::submitButton('<i class="fa fa-save"></i> Update', ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button btn-flat btn-loading']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

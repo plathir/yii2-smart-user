@@ -67,7 +67,7 @@ use kartik\datecontrol\DateControl;
             </div>
         </div>
         <div class="form-group">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
+            <?= Html::submitButton('<i class="fa fa-save"></i> Update', ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
