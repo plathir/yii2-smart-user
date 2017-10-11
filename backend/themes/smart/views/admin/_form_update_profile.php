@@ -40,27 +40,40 @@ use kartik\datecontrol\DateControl;
                 <?= $form->field($profile, 'first_name') ?>
                 <?= $form->field($profile, 'last_name') ?>
                 <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
-                <?=
+                <?= //$form->field($profile, 'birth_date'); 
+                
                 $form->field($profile, 'birth_date')->widget(DateControl::classname(), [
-                    'type' => DateControl::FORMAT_DATE,
-                    'ajaxConversion' => true,
-                   // 'saveFormat' => 'php:U',
-                    'options' => [
-                        'layout' => '{picker}{input}',
+                    'displayFormat' => 'php:d-m-Y',
+                    'saveFormat' => 'php:Y-m-d',
+                    'ajaxConversion' => false,
+                    'widgetOptions' => [
                         'pluginOptions' => [
-                            'autoclose' => true,
-                            'todayBtn' => true,
-                            'format' => Yii::$app->settings->getSettings('FilterShortDateFormat'),
+                            'autoclose' => true
                         ]
                     ]
                 ]);
 
-//                $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
-//                    'options' => ['placeholder' => 'Enter birth date ...'],
-//                    'pluginOptions' => [
-//                        //  'language' => 'el',
-//                        'autoclose' => true,
-//                        'format' => 'yyyy/mm/dd'
+//                $form->field($profile, 'birth_date')->widget(DateControl::classname(), [
+//                    'type' => 'date',
+//                    'name' => 'testdate',
+//                    'ajaxConversion' => true,
+//                    'autoWidget' => true,
+//                    'widgetClass' => '',
+////                    'displayFormat' => 'php:Y-m-d',
+////                    'saveFormat' => 'php:Y-m-d',
+//                    'saveTimezone' => 'UTC',
+//                    'displayTimezone' => 'Europe/Athens',
+//                    'saveOptions' => [
+//                        'label' => 'Input saved as: ',
+//                        'type' => 'text',
+//                        'readonly' => true,
+//                        'class' => 'hint-input text-muted'
+//                    ],
+//                    'widgetOptions' => [
+//                        'pluginOptions' => [
+//                            'autoclose' => true,
+////                            'format' => 'php:Y-m-d'
+//                        ]
 //                    ]
 //                ]);
                 ?>
