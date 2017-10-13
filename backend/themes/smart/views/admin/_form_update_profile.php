@@ -7,10 +7,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\DatePicker;
 use plathir\cropper\Widget as NewWidget;
 use yii\helpers\Url;
-use kartik\datecontrol\DateControl;
+use \backend\widgets\SmartDate;
 ?>
 
 <div class="box box-info">
@@ -40,43 +39,7 @@ use kartik\datecontrol\DateControl;
                 <?= $form->field($profile, 'first_name') ?>
                 <?= $form->field($profile, 'last_name') ?>
                 <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
-                <?= //$form->field($profile, 'birth_date'); 
-                
-                $form->field($profile, 'birth_date')->widget(DateControl::classname(), [
-                    'displayFormat' => 'php:d-m-Y',
-                    'saveFormat' => 'php:Y-m-d',
-                    'ajaxConversion' => false,
-                    'widgetOptions' => [
-                        'pluginOptions' => [
-                            'autoclose' => true
-                        ]
-                    ]
-                ]);
-
-//                $form->field($profile, 'birth_date')->widget(DateControl::classname(), [
-//                    'type' => 'date',
-//                    'name' => 'testdate',
-//                    'ajaxConversion' => true,
-//                    'autoWidget' => true,
-//                    'widgetClass' => '',
-////                    'displayFormat' => 'php:Y-m-d',
-////                    'saveFormat' => 'php:Y-m-d',
-//                    'saveTimezone' => 'UTC',
-//                    'displayTimezone' => 'Europe/Athens',
-//                    'saveOptions' => [
-//                        'label' => 'Input saved as: ',
-//                        'type' => 'text',
-//                        'readonly' => true,
-//                        'class' => 'hint-input text-muted'
-//                    ],
-//                    'widgetOptions' => [
-//                        'pluginOptions' => [
-//                            'autoclose' => true,
-////                            'format' => 'php:Y-m-d'
-//                        ]
-//                    ]
-//                ]);
-                ?>
+                <?= $form->field($profile, 'birth_date')->widget(SmartDate::classname(),['type' => 'inputDate', 'model' => $profile, 'attribute' => 'birth_date']);?>
             </div>
         </div>
         <div class="form-group">

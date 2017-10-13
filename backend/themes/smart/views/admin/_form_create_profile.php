@@ -7,9 +7,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\DatePicker;
 use plathir\cropper\Widget as NewWidget;
 use yii\helpers\Url;
+use \backend\widgets\SmartDate;
 ?>
 
 <div class="box box-info">
@@ -39,15 +39,7 @@ use yii\helpers\Url;
                 <?= $form->field($profile, 'first_name') ?>
                 <?= $form->field($profile, 'last_name') ?>
                 <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
-                <?=
-                $form->field($profile, 'birth_date')->widget(DatePicker::classname(), [
-                    'options' => ['placeholder' => 'Enter birth date ...'],
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd/mm/yyyy'
-                    ]
-                ]);
-                ?>              
+                <?= $form->field($profile, 'birth_date')->widget(SmartDate::classname(),['type' => 'inputDate', 'model' => $profile, 'attribute' => 'birth_date']);?>                
             </div>
         </div>
 
