@@ -13,6 +13,10 @@ class Module extends \yii\base\Module {
     public $ProfileImagePathPreview = '';
     public $ProfileImageTempPathPreview = '';
     public $Theme = 'smart';
+    public $mediaUrl = '';
+    public $mediaPath = '';
+    public $DefaultRoles = '';
+    
 
     public function init() {
 
@@ -21,6 +25,21 @@ class Module extends \yii\base\Module {
 
         $this->setViewPath($path);
 
+        $this->controllerMap = [
+            'elfinder' => [
+                'class' => 'mihaildev\elfinder\Controller',
+                'access' => ['@'],
+                'disabledCommands' => ['netmount'],
+                'roots' => [
+                    [
+                        'baseUrl' => $this->mediaUrl,
+                        'basePath' => $this->mediaPath,
+                        'path' => '',
+                        'name' => 'Global'
+                    ],
+                ],
+            ],
+        ];
 
         $this->setModules([
             'settings' => [

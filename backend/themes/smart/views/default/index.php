@@ -6,12 +6,10 @@ $positionHelper = new PositionHelper();
 
 ?>
 
-<div class="uset-default-index">
-
+<div class="user-default-index">
     <div class="row">
         <div class="col-lg-12">        
-            <?php echo 'Default Index' //$positionHelper->LoadPosition('be_recipes_dashboard'); ?>
+            <?= $positionHelper->LoadPosition('be_user_dashboard'); ?>
         </div>
     </div>
-</div>
-    
+</div>  

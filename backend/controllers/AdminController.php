@@ -20,7 +20,7 @@ class AdminController extends Controller {
 
     public function __construct($id, $module) {
         parent::__construct($id, $module);
-       $this->layout = "main";        
+        $this->layout = "main";
     }
 
     /** @inheritdoc */
@@ -90,11 +90,17 @@ class AdminController extends Controller {
 //                       var tZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 //               </script>';
 //            };
-            
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $auth = Yii::$app->authManager;
-                $authorRole = $auth->getRole('User');
-                $auth->assign($authorRole, $model->id);
+                $defaultRoles = explode(',', $this->module->settings->getSettings('DefaultRoles'));
+                foreach ($defaultRoles as $role) {
+                    // Hard Code for extra securiry  
+                    if ($role != 'sysadmin' && $role != 'UserAdmin') {
+                        $newRole = $auth->getRole($role);
+                        $auth->assign($newRole, $model->id);
+                    }
+                }
 
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -329,7 +335,7 @@ class AdminController extends Controller {
         if ($user = User::findOne($id)) {
             $model->username = $user->username;
         }
-        
+
         if ($user = User::findOne($id)) {
             if ($model->load(Yii::$app->request->post()) && $model->SaveNewPassword()) {
                 Yii::$app->getSession()->setFlash('success', 'new password set');

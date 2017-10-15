@@ -14,6 +14,8 @@ if (\Yii::$app->view->theme) {
 
 <?php $this->beginContent($layoutFile); ?>
 <?php
+backend\assets\AdminLtePluginAsset::register($this);
+//backend\assets\AdminLteBowerAsset::register($this);
 ?>     
 
 <div class="box box-danger">
@@ -26,7 +28,7 @@ if (\Yii::$app->view->theme) {
     </div><!-- /.box-header -->
     <div class="box-body">
         <?= Html::a(Yii::t('user', '<i class="fa fa-folder-open"></i>File Manager'), ['/user/default/filemanager'], ['class' => 'btn btn-app']) ?>
-        <?= Html::a(Yii::t('user', '<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings')), ['/recipes/settings'], ['class' => 'btn btn-app']) ?>
+        <?= Html::a(Yii::t('user', '<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings')), ['/user/settings'], ['class' => 'btn btn-app']) ?>
         <?= Html::a(Yii::t('user', '<i class="fa fa-users"></i>' . Yii::t('user', 'Manage Users')), ['/user/admin'], ['class' => 'btn btn-app']) ?>
     </div>
 </div>

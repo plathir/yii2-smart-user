@@ -13,7 +13,7 @@ class DefaultController extends Controller {
     public function __construct($id, $module) {
         parent::__construct($id, $module);
         // code for check installed application
-       $this->layout = "main";
+        $this->layout = "main";
     }
 
     public function behaviors() {
@@ -26,7 +26,7 @@ class DefaultController extends Controller {
                         'allow' => true,
                     ],
                     [
-                        'actions' => [ 
+                        'actions' => [
                             'index',
                             'filemanager',
                         ],
@@ -38,7 +38,6 @@ class DefaultController extends Controller {
         ];
     }
 
-
     /**
      * Lists all Apps models.
      * @return mixed
@@ -46,6 +45,11 @@ class DefaultController extends Controller {
     public function actionIndex() {
 
         return $this->render('index');
+    }
+
+    public function actionFilemanager() {
+
+        return $this->render('filemanager');
     }
 
 }

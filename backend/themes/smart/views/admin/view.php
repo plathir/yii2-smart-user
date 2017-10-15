@@ -175,7 +175,7 @@ $roles_html = $roles_button_upd . '&nbsp' . $roles_html;
     </div>
     <!-- /.col -->
     <div class="col-md-8">
-        <div class="nav-tabs-custom">
+        <div id="user_tabs" class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#account" data-toggle="tab">Account</a></li>
                 <li><a href="#profile" data-toggle="tab">Profile</a></li>
