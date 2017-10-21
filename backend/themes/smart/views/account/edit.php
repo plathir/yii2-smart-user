@@ -11,52 +11,22 @@ use yii\widgets\Pjax;
 $this->title = 'Edit Account';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to edit account:</p>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
-            <?= $form->field($model, 'username') ?>
-            <?= $form->field($model, 'email') ?>
-            <div class="form-group">
-                <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= 'Please fill out the following fields to edit my User Data:' ?></h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
+        <?= $form->field($model, 'username') ?>
+        <?= $form->field($model, 'email') ?>
+        <?= ''; //$form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
+        <div class="form-group">
+            <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>        
     </div>
 </div>
-<?php
-$script = <<< JS
-
-$('form#{$model->formName()}').on('beforeSubmit', function(e) {
- 
-  var \$form = $(this);
-//post ajax url
-   $.post(\$form.attr("action"), \$form.serialize())
-      .done(function(result) 
-          { 
-           
-             $('#modalAccount').modal('hide');
-         })
-      .fail(function(result)
-           {
-             
-            console.log(result)
-           });
-
-     return false;
-   });   
-        
-JS;
-
-
-//echo '<pre>';
-//print_r($script);
-//echo '</pre>';
-$this->registerjs($script);
-?>
-
-

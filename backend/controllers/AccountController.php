@@ -37,7 +37,7 @@ class AccountController extends Controller {
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [ 'actions' => ['index'],
+                    ['actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,29 +72,19 @@ class AccountController extends Controller {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->ValidateAndSave()) {
                     Yii::$app->getSession()->setFlash('success', 'Account changed !');
-                    //  echo 1;
-                    return $this->redirect(['account/my']);
-                } elseif (Yii::$app->request->isAjax) {
-
-                    Yii::$app->response->format = Response::FORMAT_JSON;
-                    return ActiveForm::validate($model);
-                }
-            } else {
-              //      echo 'cannot save !';
-              //      die();
-                if (\Yii::$app->request->isAjax) {
-                    return $this->renderAjax('edit', [
-                                'model' => $model,
-                    ]);
+                    return $this->redirect(['/user/account/my']);
                 } else {
-
                     return $this->render('edit', [
                                 'model' => $model,
                     ]);
                 }
+            } else {
+                return $this->render('edit', [
+                            'model' => $model,
+                ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to edit my data');
+            throw new \yii\web\NotAcceptableHttpException('No Permission to edit Account data');
         }
     }
 
@@ -108,12 +98,10 @@ class AccountController extends Controller {
                     return $this->redirect(['account/my']);
                 } else {
                     Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
+                    return $this->render('change_password', [
+                                'model' => $model,
+                    ]);
                 }
-            }
-            if (\Yii::$app->request->isAjax) {
-                return $this->renderAjax('change_password', [
-                            'model' => $model,
-                ]);
             } else {
                 return $this->render('change_password', [
                             'model' => $model,
@@ -147,4 +135,4 @@ class AccountController extends Controller {
         }
     }
 
- }
+}

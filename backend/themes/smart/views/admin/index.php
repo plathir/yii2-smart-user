@@ -38,13 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-toggle' => 'tooltip',
                         ]), ['create'], ['class' => 'btn btn-success btn-flat btn-loader'])
                 ?>                
-
-                <?=
-                Html::a(Html::tag('span', '<i class="fa fa-fw fa-cog"></i>' . '&nbsp' . Yii::t('user', 'Settings'), [
-                            'title' => Yii::t('user', 'Edit Settings for Users'),
-                            'data-toggle' => 'tooltip',
-                        ]), ['/user/settings'], ['class' => 'btn btn-primary btn-flat btn-loader'])
-                ?>                   
             </p>
 
             <?php ?>

@@ -27,13 +27,18 @@ backend\assets\AdminLtePluginAsset::register($this);
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
-        <?= Html::a(Yii::t('user', '<i class="fa fa-folder-open"></i>File Manager'), ['/user/default/filemanager'], ['class' => 'btn btn-app']) ?>
-        <?= Html::a(Yii::t('user', '<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings')), ['/user/settings'], ['class' => 'btn btn-app']) ?>
-        <?= Html::a(Yii::t('user', '<i class="fa fa-users"></i>' . Yii::t('user', 'Manage Users')), ['/user/admin'], ['class' => 'btn btn-app']) ?>
+        <?php
+         $htmlFileManager = Html::a(Yii::t('user', '<i class="fa fa-folder-open"></i>File Manager'), ['/user/default/filemanager'], ['class' => 'btn btn-app']); 
+         $htmlSettings = Html::a(Yii::t('user', '<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings')), ['/user/settings'], ['class' => 'btn btn-app']);
+         $htmlUserManage = Html::a(Yii::t('user', '<i class="fa fa-users"></i>' . Yii::t('user', 'Manage Users')), ['/user/admin'], ['class' => 'btn btn-app']);
+         ?>
+
+        <?=  Html::tag('span', $htmlFileManager , ['title' => Yii::t('user', 'Open File Manager'),'data-toggle' => 'tooltip' ]) ?>
+        <?=  Html::tag('span', $htmlSettings , ['title' => Yii::t('user', 'Edit Settings for Users'),'data-toggle' => 'tooltip' ]) ?>
+        <?=  Html::tag('span', $htmlUserManage , ['title' => Yii::t('user', 'Open User Manager'),'data-toggle' => 'tooltip' ]) ?>
     </div>
 </div>
-<?php
-?>
+<?php ?>
 
 <?= $content ?>
 

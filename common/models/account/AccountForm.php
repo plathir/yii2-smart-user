@@ -2,13 +2,13 @@
 
 namespace plathir\user\common\models\account;
 
-use plathir\user\models\common\account\User;
+//use plathir\user\models\common\account\User;
 use yii\base\Model;
 
 /**
  * Signup form
  */
-class AccountForm extends User {
+class AccountForm extends Model {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
     
@@ -16,6 +16,7 @@ class AccountForm extends User {
     public $email;
     public $new_password;
     public $password;
+    public $timezone;
     public $viewPath = '@vendor/plathir/yii2-smart-user/common/views/mail';
 
     /**
@@ -45,6 +46,7 @@ class AccountForm extends User {
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
+            ['timezone', 'string'],
             ['username', 'unique',
                 'targetClass' => '\plathir\user\common\models\account\User',
                 'message' => 'This username already been taken.',
