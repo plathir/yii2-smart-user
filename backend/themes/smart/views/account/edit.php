@@ -8,8 +8,8 @@ use yii\widgets\Pjax;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
-$this->title = 'Edit Account';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Edit My Account';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box box-info">
     <div class="box-header with-border">
@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
         <?= $form->field($model, 'username') ?>
         <?= $form->field($model, 'email') ?>
+        <?= $form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
         <?= ''; //$form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
         <div class="form-group">
             <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>

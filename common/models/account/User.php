@@ -247,7 +247,7 @@ class User extends ActiveRecord implements IdentityInterface {
             case 0:
                 $badge = '<span class="label label-danger">Inactive</span>';
                 break;
-            case 1:
+            case 10:
                 $badge = '<span class="label label-success">Active</span>';
                 break;
             default:

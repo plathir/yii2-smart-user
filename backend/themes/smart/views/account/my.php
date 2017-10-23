@@ -11,11 +11,11 @@ use plathir\user\common\helpers\UserHelper;
 
 $userHelper = new UserHelper();
 
-$this->title = Yii::t('user', 'View User');
-$this->params['breadcrumbs'] = [
-    ['label' => 'Users', 'url' => ['index']],
-    $this->title
-];
+$this->title = Yii::t('user', 'My Account Profile');
+//$this->params['breadcrumbs'] = [
+//    ['label' => 'Users', 'url' => ['index']],
+//    $this->title
+//];
 
 $user_html = DetailView::widget([
             'model' => $account,
@@ -44,13 +44,13 @@ if ($profile) {
     $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                         'title' => Yii::t('user', 'Update User Profile'),
                         'data-toggle' => 'tooltip',
-                    ]), ['update-profile', 'id' => $profile->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
+                    ]), ['user-profile/edit-my-profile'], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
 
 
     $delete_button = Html::a(Html::tag('span', '<i class="fa fa-trash-o"></i>' . '&nbsp' . Yii::t('user', 'Delete'), [
                         'title' => Yii::t('user', 'Delete User Profile'),
                         'data-toggle' => 'tooltip',
-                    ]), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger btn-flat btn-loader',
+                    ]), ['user-profile/delete-my-profile'], ['class' => 'btn btn-danger btn-flat btn-loader',
                 'data-method' => 'post',
                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')
     ]);
@@ -63,7 +63,6 @@ if ($profile) {
                     'class' => 'table table-striped',
                 ],
                 'attributes' => [
-                    'id',
                     'first_name',
                     'last_name',
                     [
@@ -84,7 +83,7 @@ if ($profile) {
     $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                         'title' => Yii::t('user', 'Update User Profile'),
                         'data-toggle' => 'tooltip',
-                    ]), ['create-profile', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
+                    ]), ['user-profile/create-my-profile'], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
 
     $profile_html = '<br>' . Yii::t('user', 'Profile not update yet !') . ' <br> <br>' .
             $edit_button .
@@ -129,8 +128,11 @@ $roles_button_upd = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o">
                     'title' => Yii::t('user', 'Update Roles for user'),
                     'data-toggle' => 'tooltip',
                 ]), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
-
-$roles_html = $roles_button_upd . '&nbsp' . $roles_html;
+if (\yii::$app->user->can('AdminPermissions')) {
+    $roles_html = $roles_button_upd . '&nbsp' . $roles_html;
+} else {
+    $roles_html = $roles_html;
+}
 ?>
 
 <div class="row">

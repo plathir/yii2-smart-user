@@ -117,6 +117,7 @@ class AccountController extends Controller {
             $new_model = new AccountForm();
             $new_model->username = $model->username;
             $new_model->email = $model->email;
+            $new_model->timezone = $model->timezone;
 
             return $new_model;
         } else {

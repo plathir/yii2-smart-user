@@ -61,6 +61,7 @@ class AccountForm extends Model {
                     return $this->user->$attribute != $model->$attribute;
                 },
             ],
+            ['timezone', 'string'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -79,7 +80,8 @@ class AccountForm extends Model {
             $upd_user = \Yii::$app->user->identity;
             $upd_user->username = $this->username;
             $upd_user->email = $this->email;
-                $upd_user->generateAuthKey();
+            $upd_user->timezone = $this->timezone;
+            $upd_user->generateAuthKey();
             if ($upd_user->update()) {
                 return true;
             }
@@ -87,5 +89,18 @@ class AccountForm extends Model {
         return null;
     }
 
+        public function getTimezoneslist() {
+        $items = \DateTimeZone::listIdentifiers();
+        $newItems = [];
+        $key_h = 0;
+
+        foreach ($items as $key => $value) {
+            $key_h = $key_h + 1;
+            $newItems[$key_h]['id'] = $key_h;
+            $newItems[$key_h]['timezone'] = $value;
+        };
+        $timezonesList = \yii\helpers\ArrayHelper::map($newItems, 'timezone', 'timezone');
+        return $timezonesList;
+    }
 }
 

@@ -21,12 +21,17 @@ $this->params['breadcrumbs'][] = $this->title;
         </div><!-- /.box-header -->
         <div class="box-body">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            
+            <div class="col-lg-5 col-md-5 col-sm-12" style="padding: 0px">
                 <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
             </div>    
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-12" style="padding: 0px">
+                
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12" style="padding: 0px">
                 <?= $form->field($model, 'email')->textInput(['readonly' => true]) ?>
             </div>    
+
             <?= $form->field($model, 'password')->passwordInput() ?>            
             <?= $form->field($model, 'new_password')->passwordInput() ?>            
             <?= $form->field($model, 'new_password_repeat')->passwordInput() ?>            
