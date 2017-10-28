@@ -13,8 +13,6 @@ $(function () {
         }
     }
 });
-//
-//
 //$(function () {
 //    $('#modalButtonAccount').click(function () {
 //        $('#modalAccount').modal('show')

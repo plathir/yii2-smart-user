@@ -14,7 +14,7 @@ if (\Yii::$app->view->theme) {
 
 <?php $this->beginContent($layoutFile); ?>
 <?php
-backend\assets\AdminLtePluginAsset::register($this);
+//backend\assets\AdminLtePluginAsset::register($this);
 //backend\assets\AdminLteBowerAsset::register($this);
 ?>     
 

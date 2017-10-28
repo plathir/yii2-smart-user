@@ -173,9 +173,9 @@ if (\yii::$app->user->can('AdminPermissions')) {
     <div class="col-md-8">
         <div id="user_tabs" class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#account" data-toggle="tab">Account</a></li>
-                <li><a href="#profile" data-toggle="tab">Profile</a></li>
-                <li><a href="#roles" data-toggle="tab">Roles</a></li>
+                <li class="active"><a href="#account" data-toggle="tab"><i class="fa fa-user"></i> <?= Yii::t('user', 'Account') ?></a></li>
+                <li><a href="#profile" data-toggle="tab"><i class="fa fa-navicon"></i> <?= Yii::t('user', 'Profile') ?></a></li>
+                <li><a href="#roles" data-toggle="tab"><i class="fa fa-flag"></i> <?= Yii::t('user', 'Roles') ?></a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="account">
@@ -198,3 +198,4 @@ if (\yii::$app->user->can('AdminPermissions')) {
     <!-- /.col -->
 </div>
 <!-- /.row -->
+

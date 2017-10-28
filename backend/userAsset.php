@@ -12,13 +12,11 @@ class userAsset extends AssetBundle {
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-    //    'yii\web\JqueryAsset',
     ];
 
     public function init() {
-        parent::init();        
+        parent::init();
         $this->setSourcePath('@vendor/plathir/yii2-smart-user/common/assets');
-
     }
 
     protected function setSourcePath($path) {
