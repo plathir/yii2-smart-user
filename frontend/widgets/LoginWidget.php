@@ -21,8 +21,9 @@ class LoginWidget extends Widget {
 
     public function init() {
         parent::init();
+        $this->registerTranslations();
         $this->selection_parameters = [
-            'title' => 'Login',
+            'title' => Yii::t('user', 'Login'),
             'Theme' => 'smart',
         ];
     }
@@ -37,7 +38,7 @@ class LoginWidget extends Widget {
                 $user->touch('last_visited');
                 Yii::$app->getResponse()->redirect(\Yii::$app->getRequest()->getUrl());
             } else {
-                Yii::$app->session->setFlash('danger', "Login Failed !");
+                Yii::$app->session->setFlash('danger', Yii::t('user', "Login Failed !"));
                 return $this->render('login_widget', [
                             'model' => $model,
                             'widget' => $this
@@ -59,6 +60,15 @@ class LoginWidget extends Widget {
     public function getViewPath() {
 
         return Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/widgets/themes/' . $this->Theme . '/views';
+    }
+
+    public function registerTranslations() {
+        /* This registers translations for the widgets module * */
+        Yii::$app->i18n->translations['user'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en',
+            'basePath' => Yii::getAlias('@vendor/plathir/yii2-smart-user/frontend/messages'),
+        ];
     }
 
 }

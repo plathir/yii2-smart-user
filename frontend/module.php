@@ -43,6 +43,19 @@ class Module extends \yii\base\Module {
     public function registerAssets() {
         $view = Yii::$app->getView();
         userAsset::register($view);
+        $this->registerTranslations();        
     }
 
+    
+    
+    public function registerTranslations() {
+        /* This registers translations for the widgets module * */
+        Yii::$app->i18n->translations['user'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en',
+            'basePath' => Yii::getAlias('@vendor/plathir/yii2-smart-user/frontend/messages'),
+        ];
+    }    
+    
+    
 }

@@ -18,16 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 <a href="../../index2.html"><b>SmartB</b>yii</a>
             </div>
             <div class="login-box-body">
-                <p class="login-box-msg">Fill out the following fields to login:</p>
+                <p class="login-box-msg"><?= Yii::t('user', 'Fill out the following fields to login:') ?></p>
                 <div class="row">
                     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                     <div class="register-box-body">
                         <div class="form-group has-feedback">
-                            <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => "Enter Username"])->label(false); ?>
+                            <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => Yii::t('user', "Enter Username")])->label(false); ?>
                             <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Enter Password"])->label(false); ?>
+                            <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => Yii::t('user', "Enter Password")])->label(false); ?>
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div class="row">
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?=
                                 $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
                                     'class' => 'icheck',
-                                    'label' => 'Remember Me',
+                                    'label' => Yii::t('user', 'Remember Me'),
                                     'labelOptions' => ['style' => "padding-left: 0px;"]
                                 ]);
                                 ?>
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <!-- /.col -->
                             <div class="col-xs-5">
                                 <div class="form-group has-feedback">
-                                    <?= Html::submitButton('login', ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
+                                    <?= Html::submitButton(Yii::t('user', 'login'), ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
                                 </div>
                             </div>
                             <!-- /.col -->
@@ -60,12 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <!-- /.social-auth-links -->
                     <div class="container">
-                        <div class="row">
-                            <?= Html::a('I forgot my password', ['/user/registration/request-password-reset']) ?>
+                        <div>
+                            <?= Html::a(Yii::t('user', 'I forgot my password'), ['/user/registration/request-password-reset']) ?>
                         </div>
 
-                        <div class="row">
-                            <?= Html::a('Register a new membership', ['/user/registration/signup']) ?>
+                        <div>
+                            <?= Html::a(Yii::t('user', 'Register a new membership'), ['/user/registration/signup']) ?>
                         </div>
                     </div>
 

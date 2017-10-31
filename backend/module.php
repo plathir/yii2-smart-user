@@ -72,7 +72,7 @@ class Module extends \yii\base\Module {
         Yii::$app->i18n->translations['user'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => Yii::getAlias('@vendor/plathir/yii2-smart-user/backend/messages'),
+            'basePath' => Yii::getAlias('@vendor/plathir/yii2-smart-user/frontend/messages'),
         ];
     }
 

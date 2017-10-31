@@ -27,13 +27,13 @@ class ActivateUser extends Model {
      */
     public function __construct($token, $config = []) {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Activate token cannot be blank.');
+            throw new InvalidParamException(Yii::t('user','Activate token cannot be blank.'));
         }
 
         $this->user = User::findByActivateToken($token);
         
         if (!$this->user) {
-            throw new InvalidParamException('Wrong activate token.');
+            throw new InvalidParamException(Yii::t('user','Wrong activate token.'));
         } else {
             parent::__construct($config);
         }

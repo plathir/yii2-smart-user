@@ -18,12 +18,12 @@ $userHelper = new UserHelper();
             <table class="table no-margin">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Created Date</th>
-                        <th>Last Login</th>
+                        <th><?=Yii::t('user','Image'); ?></th>
+                        <th><?=Yii::t('user','User ID'); ?></th>
+                        <th><?=Yii::t('user','Username'); ?></th>
+                        <th><?=Yii::t('user','Email'); ?></th>
+                        <th><?=Yii::t('user','Created Date');?></th>
+                        <th><?=Yii::t('user','Last Login'); ?></th>
                         
                     </tr>
                 </thead>
@@ -55,7 +55,7 @@ $userHelper = new UserHelper();
         </div><!-- /.table-responsive -->
     </div><!-- /.box-body -->
     <div class="box-footer clearfix">
-        <?= Html::a(Yii::t('app', 'Create New User'), ['/user/admin/create'], ['class' => 'btn btn-sm btn-info btn-flat pull-left']) ?>  
-        <?= Html::a(Yii::t('app', 'View All Users'), ['/user/admin'], ['class' => 'btn btn-sm btn-default btn-flat pull-right']) ?>
+        <?= Html::a(Yii::t('user', 'Create New User'), ['/user/admin/create'], ['class' => 'btn btn-sm btn-info btn-flat pull-left']) ?>  
+        <?= Html::a(Yii::t('user', 'View All Users'), ['/user/admin'], ['class' => 'btn btn-sm btn-default btn-flat pull-right']) ?>
     </div><!-- /.box-footer -->
 </div><!-- /.box -->        

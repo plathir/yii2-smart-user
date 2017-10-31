@@ -43,5 +43,5 @@ class LatestUsers extends Widget {
 
         return Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/backend/widgets/themes/' . $this->Theme . '/views';
     }
-
+    
 }

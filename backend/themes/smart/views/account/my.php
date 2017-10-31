@@ -12,10 +12,6 @@ use plathir\user\common\helpers\UserHelper;
 $userHelper = new UserHelper();
 
 $this->title = Yii::t('user', 'My Account Profile');
-//$this->params['breadcrumbs'] = [
-//    ['label' => 'Users', 'url' => ['index']],
-//    $this->title
-//];
 
 $user_html = DetailView::widget([
             'model' => $account,
@@ -37,8 +33,6 @@ $user_html = DetailView::widget([
                 'updated_at:datetime',
             ],
         ]);
-
-//echo $user_html;
 
 if ($profile) {
     $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [

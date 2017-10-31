@@ -18,6 +18,7 @@ class AccountController extends Controller {
 
     public function __construct($id, $module) {
         parent::__construct($id, $module);
+        $this->layout = "main";
     }
 
     /** @inheritdoc */
@@ -37,7 +38,7 @@ class AccountController extends Controller {
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [ 'actions' => ['index'],
+                    ['actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -80,8 +81,8 @@ class AccountController extends Controller {
                     return ActiveForm::validate($model);
                 }
             } else {
-              //      echo 'cannot save !';
-              //      die();
+                //      echo 'cannot save !';
+                //      die();
                 if (\Yii::$app->request->isAjax) {
                     return $this->renderAjax('edit', [
                                 'model' => $model,
@@ -147,4 +148,4 @@ class AccountController extends Controller {
         }
     }
 
- }
+}

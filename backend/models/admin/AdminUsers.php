@@ -7,7 +7,6 @@ use Yii;
 use \plathir\user\common\models\profile\UserProfile;
 use \plathir\user\common\models\account\User;
 
-
 /**
  * This is the model class for table "{{%user_profile}}".
  *
@@ -21,9 +20,10 @@ use \plathir\user\common\models\account\User;
  * @property integer $created_at
  */
 class AdminUsers extends User {
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 10;
-  
+
     /**
      * @inheritdoc
      */
@@ -36,11 +36,11 @@ class AdminUsers extends User {
      */
     public function rules() {
         return [
-            [['id', 'username', 'email', 'status' ], 'required'],
+            [['id', 'username', 'email', 'status'], 'required'],
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['first_name'], 'string'],
             [['full_name'], 'string'],
-            [['timezone' ], 'string'],
+            [['timezone'], 'string'],
         ];
     }
 
@@ -49,15 +49,15 @@ class AdminUsers extends User {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'User Name'),
-            'email' => Yii::t('app', 'E-Mail'),
-            'status' => Yii::t('app', 'Status'),
-            'role' => Yii::t('app', 'User Role'),
-            'timezone' => Yii::t('app', 'User Role'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'full_name' => Yii::t('app', 'Full Name'),
+            'id' => Yii::t('user', 'ID'),
+            'username' => Yii::t('user', 'User Name'),
+            'email' => Yii::t('user', 'E-Mail'),
+            'status' => Yii::t('user', 'Status'),
+            'role' => Yii::t('user', 'User Role'),
+            'timezone' => Yii::t('user', 'User Role'),
+            'created_at' => Yii::t('user', 'Created At'),
+            'updated_at' => Yii::t('user', 'Updated At'),
+            'full_name' => Yii::t('user', 'Full Name'),
         ];
     }
 
@@ -75,39 +75,38 @@ class AdminUsers extends User {
             TimestampBehavior::className(),
         ];
     }
-    
-    
-        public function getStatusText() {
+
+    public function getStatusText() {
         if ($this->status == self::STATUS_INACTIVE) {
-            return 'Inactive';
+            return Yii::t('user', 'Inactive');
         }
         if ($this->status == self::STATUS_ACTIVE) {
-            return 'Active';
+            return Yii::t('user', 'Active');
         }
     }
-    
-        public function getUser_profile() {
+
+    public function getUser_profile() {
         return $this->hasOne(UserProfile::className(), ['id' => 'id']);
     }
-       public function getRoles() {
-         return  \Yii::$app->authManager->getRolesByUser($this->id);
 
-         }
-         
+    public function getRoles() {
+        return \Yii::$app->authManager->getRolesByUser($this->id);
+    }
+
     public function getActivebadge() {
         $badge = '';
         switch ($this->status) {
             case 0:
-                $badge = '<span class="label label-danger">Inactive</span>';
+                $badge = '<span class="label label-danger">' . Yii::t('user', 'Inactive') . '</span>';
                 break;
             case 10:
-                $badge = '<span class="label label-success">Active</span>';
+                $badge = '<span class="label label-success">' . Yii::t('user', 'Active') . '</span>';
                 break;
             default:
                 break;
         }
 
         return $badge;
-    }    
-             
+    }
+
 }

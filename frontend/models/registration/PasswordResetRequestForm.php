@@ -4,6 +4,7 @@ namespace plathir\user\frontend\models\registration;
 
 use plathir\user\common\models\account\User;
 use yii\base\Model;
+use Yii;
 
 /**
  * Password reset request form
@@ -24,10 +25,9 @@ class PasswordResetRequestForm extends Model {
             ['email', 'exist',
                 'targetClass' => '\plathir\user\common\models\account\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with such email.'
+                'message' => Yii::t('user', 'There is no user with such email.')
             ],
         ];
-        
     }
 
     /**
@@ -53,7 +53,7 @@ class PasswordResetRequestForm extends Model {
                 return $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
                                 ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
                                 ->setTo($this->email)
-                                ->setSubject('Password reset for ' . \Yii::$app->name)
+                                ->setSubject(Yii::t('user', 'Password reset for ') . \Yii::$app->name)
                                 ->send();
             }
         }

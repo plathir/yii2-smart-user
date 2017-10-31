@@ -38,14 +38,14 @@ use \backend\widgets\SmartDate;
             <div class="col-lg-6">
                 <?= $form->field($profile, 'first_name') ?>
                 <?= $form->field($profile, 'last_name') ?>
-                <?= $form->field($profile, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female']); ?>
-                <?= $form->field($profile, 'birth_date')->widget(SmartDate::classname(),['type' => 'inputDate', 'model' => $profile, 'attribute' => 'birth_date']);?>                
+                <?= $form->field($profile, 'gender')->dropDownList(['1' => Yii::t('user', 'Male'), '2' => Yii::t('user', 'Female')]); ?>
+                <?= $form->field($profile, 'birth_date')->widget(SmartDate::classname(), ['type' => 'inputDate', 'model' => $profile, 'attribute' => 'birth_date']); ?>                
             </div>
         </div>
 
 
         <div class="form-group">
-            <?= Html::submitButton('<i class="fa fa-save"></i> Create', ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
+            <?= Html::submitButton('<i class="fa fa-save"></i>' . Yii::t('user', 'Create'), ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

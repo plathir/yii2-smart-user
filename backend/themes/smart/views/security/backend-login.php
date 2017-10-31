@@ -8,7 +8,7 @@ use yii\web\View;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = Yii::t('user', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,15 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to Admin Area</p>
+            <p class="login-box-msg"><?= Yii::t('user', 'Sign in to Admin Area') ?></p>
 
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>              
             <div class="form-group has-feedback">
-                <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => "Enter Username"])->label(false); ?>
+                <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => Yii::t('user', "Enter Username")])->label(false); ?>
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>             
             <div class="form-group has-feedback">
-                <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => "Enter Password"])->label(false); ?>
+                <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => Yii::t('user', "Enter Password")])->label(false); ?>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div> 
             <div class="row">
@@ -35,14 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?=
                     $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
                         'class' => 'icheck',
-                        'label' => 'Remember Me',
+                        'label' => Yii::t('user', 'Remember Me'),
                         'labelOptions' => ['style' => "padding-left: 0px;"]
                     ]);
                     ?>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <?= Html::submitButton('login', ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton(Yii::t('user', 'login'), ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
                 </div>
                 <!-- /.col -->
             </div>

@@ -97,10 +97,10 @@ class CreateUserForm extends AdminUsers {
 
     public function getStatusText() {
         if ($this->status == self::STATUS_INACTIVE) {
-            return 'Inactive';
+            return Yii::t('user', 'Inactive');
         }
         if ($this->status == self::STATUS_ACTIVE) {
-            return 'Active';
+            return Yii::t('user', 'Active');
         }
     }
 
@@ -118,20 +118,20 @@ class CreateUserForm extends AdminUsers {
         return $timezonesList;
     }
 
-        public function getActivebadge() {
+    public function getActivebadge() {
         $badge = '';
         switch ($this->status) {
             case 0:
-                $badge = '<span class="label label-danger">Inactive</span>';
+                $badge = '<span class="label label-danger">' . Yii::t('user', 'Inactive') . '</span>';
                 break;
             case 10:
-                $badge = '<span class="label label-success">Active</span>';
+                $badge = '<span class="label label-success">'.Yii::t('user', 'Active').'</span>';
                 break;
             default:
                 break;
         }
 
         return $badge;
-    } 
-    
+    }
+
 }

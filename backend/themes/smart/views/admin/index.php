@@ -14,11 +14,7 @@ $userHelper = new UserHelper();
 $this->title = Yii::t('user', 'User Accounts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php
-//echo '<script type="text/javascript">
-//  document.write(Intl.DateTimeFormat().resolvedOptions().timeZone);
-// </script>';
-?>
+
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title"><?= Html::encode($this->title) ?></h3>

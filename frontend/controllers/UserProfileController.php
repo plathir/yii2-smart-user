@@ -16,11 +16,11 @@ use yii\filters\VerbFilter;
  * @property \plathir\user\common\Module $module
  * 
  */
-
 class UserProfileController extends Controller {
 
     public function __construct($id, $module) {
         parent::__construct($id, $module);
+        $this->layout = "main";
     }
 
     public function behaviors() {
@@ -30,7 +30,7 @@ class UserProfileController extends Controller {
                 'actions' => [
                     'delete-my-profile' => ['post'],
                     'uploadphoto' => ['post'],
-                 ],
+                ],
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -58,7 +58,7 @@ class UserProfileController extends Controller {
                 'width' => 600,
                 'height' => 600,
                 'temp_path' => $this->module->ProfileImageTempPath,
-            ],            
+            ],
         ];
     }
 

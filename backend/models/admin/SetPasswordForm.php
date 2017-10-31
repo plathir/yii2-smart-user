@@ -3,7 +3,6 @@
 namespace plathir\user\backend\models\admin;
 
 use plathir\user\common\models\account\User;
-use yii\base\Model;
 use Yii;
 
 /**
@@ -39,21 +38,4 @@ class SetPasswordForm extends User {
         }
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
-     */
-//    public function ChangePassword() {
-//        if ($this->validate()) {
-//            $upd_user = \Yii::$app->user->identity;
-//            if (Yii::$app->security->validatePassword($this->password, $upd_user->password_hash)) {
-//                $upd_user->password_hash = Yii::$app->security->generatePasswordHash($this->new_password);
-//                if ($upd_user->save()) {
-//                    return $upd_user;
-//                }
-//            }
-//        }
-//        return null;
-//    }
 }

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Set Password for user : ' . $model->id. '-'. $model->username;
+$this->title = Yii::t('user', 'Set Password for user : ') . $model->id . '-' . $model->username;
 
 $this->params['breadcrumbs'] = [
     ['label' => Yii::t('user', 'Index Users'), 'url' => ['index']],
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'] = [
             <?php $form = ActiveForm::begin(['id' => 'form-set-password']); ?>
             <?= $form->field($model, 'new_password')->passwordInput() ?>            
             <div class="form-group">
-                <?= Html::submitButton('<i class="fa fa-save"></i> Update', ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button btn-flat btn-loading']) ?>
+                <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Update'), ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button btn-flat btn-loading']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

@@ -51,7 +51,7 @@ if ($profile) {
                         'data-toggle' => 'tooltip',
                     ]), ['delete-profile', 'id' => $profile->id], ['class' => 'btn btn-danger btn-flat btn-loader',
                 'data-method' => 'post',
-                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')
+                'data-confirm' => Yii::t('user', 'Are you sure you want to delete this item?')
     ]);
 
     $profile_html = $edit_button . '&nbsp' . $delete_button .
@@ -79,7 +79,6 @@ if ($profile) {
                 ],
     ]);
 } else {
-//    $profile_html = 'No Profile Data';
     $edit_button = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update'), [
                         'title' => Yii::t('user', 'Update User Profile'),
                         'data-toggle' => 'tooltip',
@@ -96,8 +95,8 @@ if ($roles != null) {
     $roles_html .= '<table class="table table-striped">
         <thead>
             <tr>
-                <th>Role Name</th>
-                <th>Description</th>
+                <th>'. Yii::t('user', 'Role Name').'</th>
+                <th>'. Yii::t('user','Description').'</th>
             </tr>
         </thead>
         <tbody>';
