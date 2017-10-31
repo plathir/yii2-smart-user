@@ -18,7 +18,6 @@ if (\Yii::$app->view->theme) {
 <?php $this->beginContent($layoutFile); ?>
 <div class="col-lg-12">
     <?= $content ?>
-
 </div>
 
 <?php $this->endContent(); ?>

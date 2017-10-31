@@ -14,6 +14,7 @@ class ChangePasswordForm extends Model {
     public $username;
     public $email;
     public $new_password;
+    public $new_password_repeat;
     public $password;
     public $viewPath = '@vendor/plathir/yii2-smart-user/common/views/mail';
 
@@ -46,9 +47,22 @@ class ChangePasswordForm extends Model {
             ['password', 'string', 'min' => 6],
             ['new_password', 'required'],
             ['new_password', 'string', 'min' => 6],
+            ['new_password_repeat', 'required'],
+            ['new_password_repeat', 'string', 'min' => 6],
+            ['new_password_repeat', 'compare', 'compareAttribute' => 'new_password'],            
         ];
     }
+    public function attributeLabels() {
+        return [
+            'password' => Yii::t('user', 'Current Password'),
+            'new_password' => Yii::t('user', 'New Password'),
+            'new_password_repeat' => Yii::t('user', 'Repeat New Password'),
+            
 
+            
+        ];
+    }
+    
     /**
      * Signs user up.
      *
@@ -67,4 +81,5 @@ class ChangePasswordForm extends Model {
         }
         return null;
     }
+
 }
