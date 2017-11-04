@@ -13,7 +13,7 @@ use yii\helpers\Url;
 <body>
     <h3><b>Login</b></h3>
     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>    
-    <div class="register-box-body">
+    <div class="register-box-body" style="padding:unset">
         <div class="form-group has-feedback">
             <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => Yii::t('user',"Enter Username")])->label(false); ?>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
