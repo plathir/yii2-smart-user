@@ -10,12 +10,11 @@ use plathir\user\common\models\security\Auth;
 use plathir\user\common\models\account\User;
 
 class SecurityController extends Controller {
-    
-        public function __construct($id, $module) {
+
+    public function __construct($id, $module) {
         parent::__construct($id, $module);
         $this->layout = "main";
     }
-
 
     public function behaviors() {
         return [
@@ -69,7 +68,6 @@ class SecurityController extends Controller {
         }
     }
 
-
     public function actionLogout() {
         Yii::$app->user->logout();
 
@@ -108,8 +106,15 @@ class SecurityController extends Controller {
                     $transaction = $user->getDb()->beginTransaction();
                     if ($user->save()) {
                         $authManager = Yii::$app->authManager;
-                        $authorRole = $authManager->getRole('User');
-                        $authManager->assign($authorRole, $user->id);
+
+                        $defaultRoles = explode(',', $this->module->settings->getSettings('DefaultRoles'));
+                        foreach ($defaultRoles as $role) {
+                            // Hard Code for extra securiry  
+                            if ($role != 'sysadmin' && $role != 'UserAdmin') {
+                                $newRole = $auth->getRole($role);
+                                $authManager->assign($newRole, $user->id);
+                            }
+                        }
 
                         $auth = new Auth([
                             'user_id' => $user->id,

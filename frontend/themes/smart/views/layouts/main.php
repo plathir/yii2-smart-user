@@ -1,11 +1,3 @@
-<?php
-
-use yii\helpers\Html;
-use plathir\widgets\common\helpers\PositionHelper;
-
-$positionHelper = new PositionHelper();
-?>
-
 
 <?php
 if (\Yii::$app->view->theme) {

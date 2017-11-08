@@ -40,10 +40,10 @@ class RegistrationController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if ($model->sendEmail()) {
-                    Yii::$app->getSession()->setFlash('success', 'Check your email for account Activation.');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Check your email for account Activation.'));
                     return $this->goHome();
                 } else {
-                    Yii::$app->getSession()->setFlash('error', 'problem with email');
+                    Yii::$app->getSession()->setFlash('error', Yii::t('user', 'problem with email'));
                 }
             }
         }
@@ -61,14 +61,14 @@ class RegistrationController extends Controller {
         }
 
         if ($model->activate()) {
-            Yii::$app->getSession()->setFlash('success', 'User activated !');
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User activated !'));
 
             if (Yii::$app->getUser()->login($model->user)) {
                 return $this->goHome();
             }
         }
 
-        Yii::$app->getSession()->setFlash('error', 'activation incomplete !.');
+        Yii::$app->getSession()->setFlash('error', Yii::t('user', 'activation incomplete !.'));
         return $this->goHome();
     }
 
@@ -76,11 +76,11 @@ class RegistrationController extends Controller {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Check your email for further instructions.'));
 
                 return $this->goHome();
             } else {
-                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Sorry, we are unable to reset password for email provided.'));
             }
         }
 
@@ -97,7 +97,7 @@ class RegistrationController extends Controller {
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'New password was saved.'));
 
             return $this->redirect('../security/login');
             //  return $this->goHome();

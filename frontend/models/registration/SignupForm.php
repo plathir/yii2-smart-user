@@ -51,8 +51,14 @@ class SignupForm extends Model {
             $user->generateAuthKey();
             if ($user->save()) {
                 $auth = Yii::$app->authManager;
-                $authorRole = $auth->getRole('User');
-                $auth->assign($authorRole, $user->getId());
+                $defaultRoles = explode(',', $this->module->settings->getSettings('DefaultRoles'));
+                foreach ($defaultRoles as $role) {
+                    // Hard Code for extra securiry  
+                    if ($role != 'sysadmin' && $role != 'UserAdmin') {
+                        $newRole = $auth->getRole($role);
+                        $auth->assign($newRole, $user->getId());
+                    }
+                }                
                 return $user;
             }
         }

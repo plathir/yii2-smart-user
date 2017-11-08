@@ -118,15 +118,7 @@ $acc_button_ch_pass = Html::a(Html::tag('span', '<i class="fa fa-lock"></i>' . '
 $user_html = $acc_button_edit . '&nbsp' . $acc_button_ch_pass . // . '&nbsp' . $acc_button_pwd_reset . '&nbsp' . $acc_button_pwd_set . '&nbsp' .
         '<br><br>' .
         $user_html;
-$roles_button_upd = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"></i>' . '&nbsp' . Yii::t('user', 'Update Roles'), [
-                    'title' => Yii::t('user', 'Update Roles for user'),
-                    'data-toggle' => 'tooltip',
-                ]), ['/admin/assignment/view', 'id' => $account->id], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
-if (\yii::$app->user->can('AdminPermissions')) {
-    $roles_html = $roles_button_upd . '&nbsp' . $roles_html;
-} else {
-    $roles_html = $roles_html;
-}
+
 ?>
 
 <div class="row">

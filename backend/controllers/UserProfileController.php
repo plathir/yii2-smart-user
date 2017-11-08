@@ -16,7 +16,6 @@ use yii\filters\VerbFilter;
  * @property \plathir\user\common\Module $module
  * 
  */
-
 class UserProfileController extends Controller {
 
     public function __construct($id, $module) {
@@ -30,7 +29,7 @@ class UserProfileController extends Controller {
                 'actions' => [
                     'delete-my-profile' => ['post'],
                     'uploadphoto' => ['post'],
-                 ],
+                ],
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -58,7 +57,7 @@ class UserProfileController extends Controller {
                 'width' => 600,
                 'height' => 600,
                 'temp_path' => $this->module->ProfileImageTempPath,
-            ],            
+            ],
         ];
     }
 
@@ -68,27 +67,30 @@ class UserProfileController extends Controller {
      * @return mixed
      */
     public function actionCreateMyProfile() {
-
-        $model = $this->findModel(\Yii::$app->user->identity->id);
-        if ($model == null) {
-            $model = new UserProfile();
-            $model->id = \Yii::$app->user->identity->id;
-            if ($model->load(Yii::$app->request->post()) && ($user = $model->save())) {
-                return $this->redirect(['account/my']);
-            } else {
-                if (\Yii::$app->request->isAjax) {
-                    return $this->renderAjax('create-my-profile', [
-                                'model' => $model,
-                    ]);
+        if (\yii::$app->user->can('UserProfileEdit')) {
+            $model = $this->findModel(\Yii::$app->user->identity->id);
+            if ($model == null) {
+                $model = new UserProfile();
+                $model->id = \Yii::$app->user->identity->id;
+                if ($model->load(Yii::$app->request->post()) && ($user = $model->save())) {
+                    return $this->redirect(['account/my']);
                 } else {
-                    return $this->render('create-my-profile', [
-                                'model' => $model,
-                    ]);
+                    if (\Yii::$app->request->isAjax) {
+                        return $this->renderAjax('create-my-profile', [
+                                    'model' => $model,
+                        ]);
+                    } else {
+                        return $this->render('create-my-profile', [
+                                    'model' => $model,
+                        ]);
+                    }
                 }
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'profile already created!');
+                return $this->actionEditMyProfile();
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'profile already created!');
-            return $this->actionEditMyProfile();
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to Edit my Profile '));
         }
     }
 
@@ -97,25 +99,29 @@ class UserProfileController extends Controller {
      * 
      */
     public function actionEditMyProfile() {
-        $model = $this->findModel(\Yii::$app->user->identity->id);
-        if ($model != null) {
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->getSession()->setFlash('success', 'profile changed !');
-                return $this->redirect(['account/my']);
-            } else {
-                if (\Yii::$app->request->isAjax) {
-                    return $this->renderAjax('edit-my-profile', [
-                                'model' => $model,
-                    ]);
+        if (\yii::$app->user->can('UserProfileEdit')) {
+            $model = $this->findModel(\Yii::$app->user->identity->id);
+            if ($model != null) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'profile changed !');
+                    return $this->redirect(['account/my']);
                 } else {
-                    return $this->render('edit-my-profile', [
-                                'model' => $model,
-                    ]);
+                    if (\Yii::$app->request->isAjax) {
+                        return $this->renderAjax('edit-my-profile', [
+                                    'model' => $model,
+                        ]);
+                    } else {
+                        return $this->render('edit-my-profile', [
+                                    'model' => $model,
+                        ]);
+                    }
                 }
+            } else {
+                Yii::$app->getSession()->setFlash('danger', 'profile not exist !');
+                return $this->actionCreateMyProfile();
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'profile not exist !');
-            return $this->actionCreateMyProfile();
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to Edit my Profile '));
         }
     }
 
@@ -126,9 +132,13 @@ class UserProfileController extends Controller {
      * @return mixed
      */
     public function actionDeleteMyProfile() {
-        $this->findModel(\Yii::$app->user->identity->id)->delete();
-        Yii::$app->getSession()->setFlash('success', 'Deleted !');
-        return $this->redirect(['account/my']);
+        if (\yii::$app->user->can('UserProfileEdit')) {
+            $this->findModel(\Yii::$app->user->identity->id)->delete();
+            Yii::$app->getSession()->setFlash('success', 'Deleted !');
+            return $this->redirect(['account/my']);
+        } else {
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to Delete my Profile '));
+        }
     }
 
     /**
