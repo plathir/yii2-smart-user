@@ -13,6 +13,9 @@ class Module extends \yii\base\Module {
     public $ProfileImagePathPreview = '';
     public $ProfileImageTempPathPreview = '';
     public $Theme = 'smart';
+    public $mediaUrl = '';
+    public $mediaPath = '';
+    public $DefaultRoles = '';    
 
     public function init() {
         $path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/themes/' . $this->Theme . '/views';
