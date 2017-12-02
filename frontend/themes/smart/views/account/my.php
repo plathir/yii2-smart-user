@@ -107,7 +107,6 @@ $acc_button_edit = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"><
                     'data-toggle' => 'tooltip',
                 ]), ['edit'], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
 
-//Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass'])
 
 $acc_button_ch_pass = Html::a(Html::tag('span', '<i class="fa fa-lock"></i>' . '&nbsp' . Yii::t('user', 'Change Password'), [
                     'title' => Yii::t('user', 'Change User Password'),
@@ -118,70 +117,77 @@ $acc_button_ch_pass = Html::a(Html::tag('span', '<i class="fa fa-lock"></i>' . '
 $user_html = $acc_button_edit . '&nbsp' . $acc_button_ch_pass . // . '&nbsp' . $acc_button_pwd_reset . '&nbsp' . $acc_button_pwd_set . '&nbsp' .
         '<br><br>' .
         $user_html;
-
 ?>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="profile-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="panel panel-default user-profile-box">
+                    <div class="panel-body panel-heading">
+                        <div class="row">
+                            <img class="img-circle profile-img " src="<?= $userHelper->getProfileImage($account->id, $this) ?>" alt="">
+                        </div>
+                        <div class="row">
+                            <h3 class="text-center"><?= $account->username ?></h3> 
+                            <p class="text-center"><?= $userHelper->getProfileFullName($account->id) ?></p>
+                        </div>
 
-        <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="<?= $userHelper->getProfileImage($account->id, $this) ?>" alt="User profile picture">
-                <h3 class="profile-username text-center"><?= $account->username ?></h3>
+                        <ul class="list-group ">
+                            <li class="list-group-item profile-item">
+                                <b>Email</b> <a class="pull-right"><?= $account->email ?></a>
+                            </li>
+                            <li class="list-group-item profile-item">
+                                <b>Created</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
+                            </li>
+                            <li class="list-group-item profile-item">
+                                <b>Updated</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
+                            </li>
+                            <li class="list-group-item profile-item">
+                                <b>Last Login</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>   
 
-                <p class="text-muted text-center"><?= $userHelper->getProfileFullName($account->id) ?></p>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="panel panel-default user-profile-tabs">
+                    <div id="profile-tabs" class="container">	
+                        <div class="row">
+                            <ul  class="nav nav-tabs profile-tab">
+                                <li class="active head-tab">
+                                    <a href="#account" data-toggle="tab"><i class="fa fa-user"></i> <?= Yii::t('user', 'Account') ?></a>
+                                </li>
+                                <li class="head-tab" ><a href="#profile" data-toggle="tab"><i class="fa fa-navicon"></i> <?= Yii::t('user', 'Profile') ?></a>
+                                </li>
+                                <li class="head-tab"><a href="#permissions" data-toggle="tab"><i class="fa fa-flag"></i> <?= Yii::t('user', 'Roles') ?></a>
+                                </li>
+                            </ul>
+                        </div> 
 
-                <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-                        <b>Email</b> <a class="pull-right"><?= $account->email ?></a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>Created</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>Updated</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>Last Login</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
-                    </li>
+                        <div class="tab-content clearfix">
+                            <div class="tab-pane active" id="account">
+                                <br>
+                                <?= $user_html; ?>
+                                <br>
+                            </div>
+                            <div class="tab-pane" id="profile">
+                                <br>
+                                <?= $profile_html; ?>
+                                <br>
+                            </div>
+                            <div class="tab-pane" id="permissions">
+                                <br>
+                                <?= $roles_html; ?>
+                                <br>
+                            </div>
+                        </div>
+                    </div>        
+                </div>
+            </div>           
 
-                </ul>
-
-            </div>
-            <!-- /.box-body -->
         </div>
-        <!-- /.box -->
-
-        <!-- /.box -->
     </div>
-    <!-- /.col -->
-    <div class="col-md-8">
-        <div id="user_tabs" class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#account" data-toggle="tab"><i class="fa fa-user"></i> <?= Yii::t('user', 'Account') ?></a></li>
-                <li><a href="#profile" data-toggle="tab"><i class="fa fa-navicon"></i> <?= Yii::t('user', 'Profile') ?></a></li>
-                <li><a href="#roles" data-toggle="tab"><i class="fa fa-flag"></i> <?= Yii::t('user', 'Roles') ?></a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="active tab-pane" id="account">
-                    <?= $user_html; ?>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="profile">
-                    <?= $profile_html; ?>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="roles">
-                    <?= $roles_html; ?>
-                </div>
-                <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-        </div>
-        <!-- /.nav-tabs-custom -->
-    </div>
-    <!-- /.col -->
 </div>
-<!-- /.row -->
 

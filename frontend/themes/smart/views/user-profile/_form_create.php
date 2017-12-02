@@ -7,15 +7,11 @@ use yii\helpers\Url;
 use \backend\widgets\SmartDate;
 ?>
 
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
-        <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <?= Html::encode($this->title) ?>
     </div><!-- /.box-header -->
-    <div class="box-body">
+    <div class="panel-body">
         <?php $form = ActiveForm::begin(['id' => 'form-update', 'options' => ['enctype' => 'multipart/form-data']]); ?>
         <div class="row">
             <div class="col-sm-6">
@@ -40,7 +36,8 @@ use \backend\widgets\SmartDate;
 
 
         <div class="form-group">
-            <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Create'), ['class' => 'btn btn-primary btn-flat btn-loader']) ?>
+            <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Create'), ['class' => 'btn btn-success btn-flat btn-loader']) ?>
+            <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Back', Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

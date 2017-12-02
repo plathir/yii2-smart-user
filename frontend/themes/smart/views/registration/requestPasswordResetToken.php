@@ -8,32 +8,33 @@ use yii\bootstrap\ActiveForm;
 /* @var $model \frontend\models\PasswordResetRequestForm */
 ?>
 
-<div class="site-request-password-reset">
 
-    <body class="hold-transition register-page">
-        <div class="register-box" style="margin:auto">
-            <div class="register-logo">
-                <a href="../../index2.html"><b>SmartB</b>yii</a>
-            </div>
-            <div class="register-box-body">
-                <p class="login-box-msg"><?= Yii::t('user', 'Please fill out your email. A link to reset password will be sent there') ?></p>
+<div class="container">
+    <div class="row">
+        <div id="site-request-password-reset-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
+            <div class="panel panel-default">
+                <div class="panel-heading">Request Password Reset</div>
+                <div class="panel-body">                    
+                    <div class="row">
+                        <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+                        <div class="col-sm-12">
+                            <?=
+                            $form->field($model, 'email', [
+                                'inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>{input}</div>'
+                            ])->textInput()->input('email', ['placeholder' => Yii::t('user', "Enter Email")])->label(false);
+                            ?> 
+                        </div>                            
 
-                <div class="row">
-                    <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-                    <?= $form->field($model, 'email')->textInput()->input('email', ['placeholder' => Yii::t('user', "Enter Email")])->label(false); ?>
-                    <div class="form-group">
-                        <?= Html::submitButton('Send', ['class' => 'btn btn-primary btn-flat pull-right']) ?>
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <?= Html::submitButton('<i class="fa fa-envelope-o"></i> '.Yii::t('user', 'Send'), ['class' => 'btn btn-success btn-block', 'name' => 'login-button']) ?>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end(); ?>    
                     </div>
-
                 </div>
-                <?php ActiveForm::end(); ?>            
-            </div>
+            </div>                
         </div>
-    </body>
+    </div>
 </div>
-
-
-
-
-
-

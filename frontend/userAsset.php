@@ -7,11 +7,14 @@ use yii\web\AssetBundle;
 class userAsset extends AssetBundle {
 
     public $js = [
-        'js/main.js'
+        'js/main.js',
+        //'js/moment-timezone.min.js',
+        'js/moment.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 
     public function init() {

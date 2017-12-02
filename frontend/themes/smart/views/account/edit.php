@@ -11,23 +11,32 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('user', 'Edit My Account');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title"><?= Yii::t('user', 'Please fill out the following fields to edit my User Data:') ?></h3>
-        <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+<div id="site-login-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <?= Yii::t('user', 'Please fill out the following fields to edit my User Data:') ?>
+        </div><!-- /.box-header -->
+        <div class="panel-body">
+            <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
+            <?= $form->field($model, 'username') ?>
+            <?= $form->field($model, 'email') ?>
+            <?= $form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
+            <?= ''; //$form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
+            <div class="form-group">
+                <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Save'), ['class' => 'btn btn-success btn-flat btn-loader', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>
+                <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Back', Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
+            </div>
+            <?php ActiveForm::end(); ?>        
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-        <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
-        <?= $form->field($model, 'username') ?>
-        <?= $form->field($model, 'email') ?>
-        <?= $form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
-        <?= ''; //$form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-primary btn-flat btn-loader', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>
-        </div>
-        <?php ActiveForm::end(); ?>        
     </div>
 </div>
+
+    <!--
+Get Default time zone by client
+    -->
+    <script type="text/javascript">
+    //   if (document.load().getElementById("accountform-timezone").value == null) {
+             document.getElementById("accountform-timezone").value =  Intl.DateTimeFormat().resolvedOptions().timeZone;            
+    //    }
+    //     document.getElementById("signupform-timezone").value = moment.tz.guess();
+    </script>

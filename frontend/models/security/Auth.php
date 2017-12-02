@@ -1,5 +1,5 @@
 <?php
-namespace plathir\user\backend\models\security;
+namespace plathir\user\frontend\models\security;
 
 /**
  * This is the model class for table "{{%user_profile}}".

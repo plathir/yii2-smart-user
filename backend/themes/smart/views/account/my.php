@@ -107,7 +107,6 @@ $acc_button_edit = Html::a(Html::tag('span', '<i class="fa fa-pencil-square-o"><
                     'data-toggle' => 'tooltip',
                 ]), ['edit'], ['class' => 'btn btn-success btn-flat btn-loader btn-flat btn-loader']);
 
-//Html::button('<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Change Password', ['value' => Url::to(['change-password']), 'class' => 'btn btn-danger', 'id' => 'modalButtonChangePass'])
 
 $acc_button_ch_pass = Html::a(Html::tag('span', '<i class="fa fa-lock"></i>' . '&nbsp' . Yii::t('user', 'Change Password'), [
                     'title' => Yii::t('user', 'Change User Password'),

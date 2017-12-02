@@ -39,18 +39,35 @@ class RegistrationController extends Controller {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if ($model->sendEmail()) {
-                    Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Check your email for account Activation.'));
-                    return $this->goHome();
-                } else {
-                    Yii::$app->getSession()->setFlash('error', Yii::t('user', 'problem with email'));
+                if ($this->assignPermissions($user)) {
+                    if ($model->sendEmail()) {
+                        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Check your email for account Activation.'));
+                        return $this->goHome();
+                    } else {
+                        Yii::$app->getSession()->setFlash('error', Yii::t('user', 'problem with email'));
+                    }
                 }
+            } else {
+                Yii::$app->getSession()->setFlash('error', Yii::t('user', ' Signup Error !'));
             }
         }
 
         return $this->render('signup', [
                     'model' => $model,
         ]);
+    }
+
+    public function assignPermissions($user) {
+        $auth = Yii::$app->authManager;
+        $defaultRoles = explode(',', $this->module->settings->getSettings('DefaultRoles'));
+        foreach ($defaultRoles as $role) {
+            // Hard Code for extra securiry  
+            if ($role != 'sysadmin' && $role != 'UserAdmin') {
+                $newRole = $auth->getRole($role);
+                $auth->assign($newRole, $user->getId());
+            }
+        }
+        return true;
     }
 
     public function actionUserActivation($token) {

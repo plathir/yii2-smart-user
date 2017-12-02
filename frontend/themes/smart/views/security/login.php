@@ -9,83 +9,101 @@ use yii\web\View;
 /* @var $model \common\models\LoginForm */
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <body class="hold-transition login-page">
-        <div class="login-box" style="margin:auto">
-            <div class="login-logo">
-                <a href="../../index2.html"><b>SmartB</b>yii</a>
-            </div>
-            <div class="login-box-body">
-                <p class="login-box-msg"><?= Yii::t('user', 'Fill out the following fields to login:') ?></p>
+
+
+<div class="row">
+    <div id="site-login-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
+        <div class="panel panel-default">
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">                    
                 <div class="row">
+
                     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-                    <div class="register-box-body">
-                        <div class="form-group has-feedback">
-                            <?= $form->field($model, 'username')->textInput()->input('username', ['placeholder' => Yii::t('user', "Enter Username")])->label(false); ?>
-                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <?= $form->field($model, 'password')->passwordInput()->input('password', ['placeholder' => Yii::t('user', "Enter Password")])->label(false); ?>
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <?=
-                                $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
-                                    'class' => 'icheck',
-                                    'label' => Yii::t('user', 'Remember Me'),
-                                    'labelOptions' => ['style' => "padding-left: 0px;"]
-                                ]);
-                                ?>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-xs-5">
-                                <div class="form-group has-feedback">
-                                    <?= Html::submitButton(Yii::t('user', 'login'), ['class' => 'btn btn-primary btn-block btn-flat pull-right', 'name' => 'login-button']) ?>
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </div>
-                    <?php ActiveForm::end(); ?>
-                    <div class="social-auth-links text-center">
+
+                    <div class="col-sm-12">
                         <?=
-                        yii\authclient\widgets\AuthChoice::widget([
-                            'baseAuthUrl' => ['security/auth'],
-                            'popupMode' => true,
-                        ])
+                        $form->field($model, 'username', [
+                            'inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>{input}</div>'
+                        ])->textInput()->input('username', ['placeholder' => Yii::t('user', "Username")])->label(false);
                         ?>
                     </div>
-                    <!-- /.social-auth-links -->
-                    <div class="container">
+
+                    <div class="col-sm-12">
+                        <?=
+                        $form->field($model, 'password', [
+                            'inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>{input}</div>'
+                        ])->passwordInput()->input('password', ['placeholder' => Yii::t('user', "Enter Password")])->label(false);
+                        ?>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <?=
+                        $form->field($model, 'rememberMe', ['template' => "{input}"])->checkbox([
+                            //'class' => 'icheck',
+                            'label' => Yii::t('user', 'Remember Me'),
+                                //  'labelOptions' => ['style' => "padding-left: 0px;"]
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <!-- Button -->
+                    <div class="col-sm-12 controls">
+                        <?= Html::submitButton('<i class="fa fa-sign-in"></i> ' . Yii::t('user', 'Login'), ['class' => 'btn btn-success btn-block', 'name' => 'login-button']) ?>
+                        <?=
+                        ''
+//                        yii\authclient\widgets\AuthChoice::widget([
+//                            'baseAuthUrl' => ['security/auth'],
+//                            'popupMode' => true,
+//                        ])
+                        ?>
+
+                    </div>
+                </div>
+
+                <?php
+                $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
+                            'baseAuthUrl' => ['security/auth'],
+                            'popupMode' => true,
+                ]);
+                ?>
+
+                <?php foreach ($authAuthChoice->getClients() as $client): ?>
+                    <div class="row form-group">
+                        <div class="col-sm-12 controls">
+                            <?=
+                            $authAuthChoice->clientLink($client, '<span class="fa fa-' . $client->getName() . '"></span> Sign in with ' . $client->getTitle(), [
+                                'class' => 'btn btn-primary btn-block btn-social btn-' . $client->getName(),
+                            ]);
+                            ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+
+                <?php yii\authclient\widgets\AuthChoice::end(); ?>  
+                <?php ActiveForm::end(); ?>  
+
+                <div class="row">
+                    <div class="col-md-12 control">
                         <div>
                             <?= Html::a(Yii::t('user', 'I forgot my password'), ['/user/registration/request-password-reset']) ?>
                         </div>
-
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12 control">
                         <div>
-                            <?= Html::a(Yii::t('user', 'Register a new membership'), ['/user/registration/signup']) ?>
+                            Don't have an account! 
+                            <?= Html::a(Yii::t('user', 'Sign Up Here'), ['/user/registration/signup']) ?>
                         </div>
                     </div>
-
-
-                    <?php
-                    $js = "$(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' 
-    });
-  });";
-
-                    $this->registerJs(
-                            $js, View::POS_READY
-                    );
-                    ?>
-
-                </div>
+                </div>  
             </div>
         </div>
-    </body>
+    </div>        
 </div>
+
+

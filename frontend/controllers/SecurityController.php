@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use plathir\user\frontend\models\security\LoginForm;
-use plathir\user\common\models\security\Auth;
+use plathir\user\frontend\models\security\Auth;
 use plathir\user\common\models\account\User;
 
 class SecurityController extends Controller {
@@ -111,7 +111,7 @@ class SecurityController extends Controller {
                         foreach ($defaultRoles as $role) {
                             // Hard Code for extra securiry  
                             if ($role != 'sysadmin' && $role != 'UserAdmin') {
-                                $newRole = $auth->getRole($role);
+                                $newRole = $authManager->getRole($role);
                                 $authManager->assign($newRole, $user->id);
                             }
                         }

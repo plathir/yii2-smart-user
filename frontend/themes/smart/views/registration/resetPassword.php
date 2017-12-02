@@ -1,27 +1,35 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\ResetPasswordForm */
-
-$this->title = 'Reset password';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-reset-password">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please choose your new password:</p>
-
+<div class="container">
     <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+        <div id="reset_pwd-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
+            <div class="panel panel-default">
+                <div class="panel-heading">Reset Password</div>
+                <div class="panel-body">      
+                    <div class="row">
+                        <?php $form = ActiveForm::begin(['id' => 'reset_pwd-form']); ?>
+                        <div class="col-sm-12">
+                            <?=
+                            $form->field($model, 'password', [
+                                'inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>{input}</div>'
+                            ])->passwordInput()->input('password', ['placeholder' => Yii::t('user', "Enter Password")])->label(false);
+                            ?>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <?= Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-success btn-block', 'name' => 'save-button']) ?>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end() ?>
+                    </div>
                 </div>
-            <?php ActiveForm::end(); ?>
+            </div>                
         </div>
     </div>
 </div>
