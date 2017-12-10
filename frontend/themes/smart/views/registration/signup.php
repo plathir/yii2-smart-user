@@ -57,7 +57,7 @@ use yii\bootstrap\ActiveForm;
                             <?=
                             $form->field($model, 'terms', ['template' => "{input}"])->checkbox([
                                 //'class' => 'icheck',
-                                'label' => Yii::t('user', 'I Agree with the terms'),
+                                'label' => Yii::t('user', 'I Agree with the '). Html::a(Yii::t('user', 'Terms'), ['/site/terms']),
                                     //  'labelOptions' => ['style' => "padding-left: 0px;"]
                             ]);
                             ?>
