@@ -41,6 +41,11 @@ class UserHelper {
         }
     }
 
+    /*
+     * Get Profile Full Name 
+     * if profile data is not exist returns username
+     */
+
     public function getProfileFullName($id) {
         $profile = UserProfile::find()
                 ->where(['id' => $id])
@@ -48,6 +53,11 @@ class UserHelper {
 
         if ($profile) {
             return $profile->first_name . '&nbsp;' . $profile->last_name;
+        } else {
+            $user = User::find()->where(['id' => $id])->one();
+            if ($user) {
+                return $user->username;
+            }
         }
     }
 
