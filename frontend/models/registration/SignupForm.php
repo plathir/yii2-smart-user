@@ -87,6 +87,8 @@ class SignupForm extends Model {
             }
             if ($user->save()) {
                 $mailer = \Yii::$app->mailer;
+                if ( !Yii::$app->settings->getSettings('RegistrationTemplate')) {
+
                 $mailer->viewPath = $this->viewPath;
                 $mailer->getView()->theme = \Yii::$app->view->theme;
                 return $mailer->compose(['html' => 'ActivateToken-html', 'text' => 'ActivateToken-text'], ['user' => $user])
@@ -94,6 +96,17 @@ class SignupForm extends Model {
                                 ->setTo($this->email)
                                 ->setSubject('Activate Account for ' . \Yii::$app->name)
                                 ->send();
+                    
+                } else {
+                  return $mailer->compose()
+                                ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                ->setTo($this->email)
+                                ->setSubject('Activate Account for ' . \Yii::$app->name)
+                                ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->settings->getSettings('RegistrationTemplate')))
+                                ->send();
+                                 
+                }
+                    
             }
         }
 
