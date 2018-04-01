@@ -42,7 +42,7 @@ class SignupForm extends Model {
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
             ['password_repeat', 'string', 'min' => 6],
-            ['password_repeat', 'compare', 'compareAttribute' => 'password'],     
+            ['password_repeat', 'compare', 'compareAttribute' => 'password'],
         ];
     }
 
@@ -87,26 +87,29 @@ class SignupForm extends Model {
             }
             if ($user->save()) {
                 $mailer = \Yii::$app->mailer;
-                if ( !Yii::$app->settings->getSettings('RegistrationTemplate')) {
+                if (!Yii::$app->settings->getSettings('RegistrationTemplate')) {
 
-                $mailer->viewPath = $this->viewPath;
-                $mailer->getView()->theme = \Yii::$app->view->theme;
-                return $mailer->compose(['html' => 'ActivateToken-html', 'text' => 'ActivateToken-text'], ['user' => $user])
-                                ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                                ->setTo($this->email)
-                                ->setSubject('Activate Account for ' . \Yii::$app->name)
-                                ->send();
-                    
+                    $mailer->viewPath = $this->viewPath;
+                    $mailer->getView()->theme = \Yii::$app->view->theme;
+                    return $mailer->compose(['html' => 'ActivateToken-html', 'text' => 'ActivateToken-text'], ['user' => $user])
+                                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                    ->setTo($this->email)
+                                    ->setSubject('Activate Account for ' . \Yii::$app->name)
+                                    ->send();
                 } else {
-                  return $mailer->compose()
-                                ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                                ->setTo($this->email)
-                                ->setSubject('Activate Account for ' . \Yii::$app->name)
-                                ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->settings->getSettings('RegistrationTemplate')))
-                                ->send();
-                                 
+                    $activateLink = Yii::$app->urlManager->createAbsoluteUrl(['user/registration/user-activation', 'token' => $user->activate_token]);
+                    return $mailer->compose()
+                                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                    ->setTo($this->email)
+                                    ->setSubject('Activate Account for ' . \Yii::$app->name)
+                                    ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->settings->getSettings('RegistrationTemplate'), [
+                                                '{user}' => $user->username,
+                                                '{activate_link}' => $activateLink,
+                                                    ]
+                                            )
+                                    )
+                                    ->send();
                 }
-                    
             }
         }
 

@@ -48,13 +48,28 @@ class PasswordResetRequestForm extends Model {
             }
             if ($user->save()) {
                 $mailer = \Yii::$app->mailer;
-                $mailer->viewPath = $this->viewPath;
-                $mailer->getView()->theme = \Yii::$app->view->theme;
-                return $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
-                                ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                                ->setTo($this->email)
-                                ->setSubject(Yii::t('user', 'Password reset for ') . \Yii::$app->name)
-                                ->send();
+                if (!Yii::$app->settings->getSettings('ResetPasswordTemplate')) {
+                    $mailer->viewPath = $this->viewPath;
+                    $mailer->getView()->theme = \Yii::$app->view->theme;
+                    return $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
+                                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                    ->setTo($this->email)
+                                    ->setSubject(Yii::t('user', 'Password reset for ') . \Yii::$app->name)
+                                    ->send();
+                } else {
+                    $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['user/registration/reset-password', 'token' => $user->password_reset_token]);
+                    return $mailer->compose()
+                                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
+                                    ->setTo($this->email)
+                                    ->setSubject(Yii::t('user', 'Password reset for ') . \Yii::$app->name)
+                                    ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->settings->getSettings('ResetPasswordTemplate'), [
+                                                '{user}' => $user->username,
+                                                '{reset_link}' => $resetLink,
+                                                    ]
+                                            )
+                                    )
+                                    ->send();
+                }
             }
         }
 
