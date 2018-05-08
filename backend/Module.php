@@ -1,22 +1,20 @@
 <?php
-
 namespace plathir\user\backend;
 
 use Yii;
 
 class Module extends \yii\base\Module {
 
-    public $controllerNamespace = 'plathir\user\backend\controllers';
-    public $AdminUserID = '';
-    public $ProfileImagePath = '';
-    public $ProfileImageTempPath = '';
-    public $ProfileImagePathPreview = '';
+    public $controllerNamespace         = 'plathir\user\backend\controllers';
+    public $AdminUserID                 = '';
+    public $ProfileImagePath            = '';
+    public $ProfileImageTempPath        = '';
+    public $ProfileImagePathPreview     = '';
     public $ProfileImageTempPathPreview = '';
-    public $Theme = 'smart';
-    public $mediaUrl = '';
-    public $mediaPath = '';
-    public $DefaultRoles = '';
-    
+    public $Theme                       = 'smart';
+    public $mediaUrl                    = '';
+    public $mediaPath                   = '';
+    public $DefaultRoles                = '';
 
     public function init() {
 
@@ -27,15 +25,15 @@ class Module extends \yii\base\Module {
 
         $this->controllerMap = [
             'elfinder' => [
-                'class' => 'mihaildev\elfinder\Controller',
-                'access' => ['@'],
+                'class'            => 'mihaildev\elfinder\Controller',
+                'access'           => ['@'],
                 'disabledCommands' => ['netmount'],
-                'roots' => [
+                'roots'            => [
                     [
-                        'baseUrl' => $this->mediaUrl,
+                        'baseUrl'  => $this->mediaUrl,
                         'basePath' => $this->mediaPath,
-                        'path' => '',
-                        'name' => 'Global'
+                        'path'     => '',
+                        'name'     => 'Global'
                     ],
                 ],
             ],
@@ -43,14 +41,14 @@ class Module extends \yii\base\Module {
 
         $this->setModules([
             'settings' => [
-                'class' => 'plathir\settings\Module',
+                'class'      => 'plathir\settings\Module',
                 'modulename' => 'user'
             ],
         ]);
 
         $this->setComponents([
             'settings' => [
-                'class' => 'plathir\settings\components\Settings',
+                'class'      => 'plathir\settings\components\Settings',
                 'modulename' => 'user'
             ],
         ]);
@@ -70,9 +68,9 @@ class Module extends \yii\base\Module {
     public function registerTranslations() {
         /* This registers translations for the widgets module * */
         Yii::$app->i18n->translations['user'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
+            'class'          => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => Yii::getAlias('@vendor/plathir/yii2-smart-user/backend/messages'),
+            'basePath'       => Yii::getAlias('@vendor/plathir/yii2-smart-user/backend/messages'),
         ];
     }
 
