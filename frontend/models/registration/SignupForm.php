@@ -87,7 +87,7 @@ class SignupForm extends Model {
             }
             if ($user->save()) {
                 $mailer = \Yii::$app->mailer;
-                if (!Yii::$app->settings->getSettings('RegistrationTemplate')) {
+                if (!Yii::$app->controller->module->settings->getSettings('RegistrationTemplate')) {
 
                     $mailer->viewPath = $this->viewPath;
                     $mailer->getView()->theme = \Yii::$app->view->theme;
@@ -102,7 +102,7 @@ class SignupForm extends Model {
                                     ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
                                     ->setTo($this->email)
                                     ->setSubject('Activate Account for ' . \Yii::$app->name)
-                                    ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->settings->getSettings('RegistrationTemplate'), [
+                                    ->setHtmlBody(Yii::$app->templates->getTemplate(Yii::$app->controller->module->settings->getSettings('RegistrationTemplate'), [
                                                 '{user}' => $user->username,
                                                 '{activate_link}' => $activateLink,
                                                     ]
