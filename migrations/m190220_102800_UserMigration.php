@@ -14,16 +14,20 @@ class m190220_102800_UserMigration extends Migration {
         $this->CreateUserProfileTable();
 
         $this->CreateAuthTable();
+        $this->CreateAuthRuleTable();
         $this->CreateAuthItemTable();
         $this->CreateAuthItemChildTable();
         $this->CreateAuthAssingmentTable();
+        $this->CreateMenuTable();
     }
 
     public function down() {
 
+        $this->dropIfExist('menu');
         $this->dropIfExist('auth_assignment');
         $this->dropIfExist('auth_item_child');
         $this->dropIfExist('auth_item');
+        $this->dropIfExist('auth_rule');
         $this->dropIfExist('auth');
         $this->dropIfExist('user_profile');
         $this->dropIfExist('user');
@@ -89,17 +93,17 @@ class m190220_102800_UserMigration extends Migration {
         $this->createTable('auth_item', [
             'name' => $this->string(64)->notNull(),
             'type' => $this->integer(11)->notNull(),
-            'description' => $this->integer(11)->notNull(),
-            'rule_name' => $this->integer(11)->notNull(),
-            'data' => $this->integer(11)->notNull(),
+            'description' => $this->text(),
+            'rule_name' => $this->string(64),
+            'data' => $this->text(),
             'created_at' => $this->integer(11)->defaultValue(NULL),
             'updated_at' => $this->integer(11)->defaultValue(NULL),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
         $this->addPrimaryKey('pk_auth_assin', 'auth_item', ['name']);
 
-        $this->createIndex('idx_rule_name', 'auth_item', ['rule_name'], true);
-        $this->createIndex('idx_type', 'auth_item', ['type'], true);
+        $this->createIndex('idx_rule_name', 'auth_item', ['rule_name'], false);
+        $this->createIndex('idx_type', 'auth_item', ['type'], false);
     }
 
     public function CreateAuthItemChildTable() {
@@ -114,7 +118,7 @@ class m190220_102800_UserMigration extends Migration {
         $this->addForeignKey('auth_item_child_ibfk_1', 'auth_item_child', 'parent', 'auth_item', 'name', 'CASCADE', 'CASCADE');
         $this->addForeignKey('auth_item_child_ibfk_2', 'auth_item_child', 'child', 'auth_item', 'name', 'CASCADE', 'CASCADE');
 
-        $this->createIndex('idx_child', 'auth_item_child', ['child'], true);
+        $this->createIndex('idx_child', 'auth_item_child', ['child'], false);
     }
 
     public function CreateAuthAssingmentTable() {
@@ -135,31 +139,30 @@ class m190220_102800_UserMigration extends Migration {
 
         $this->createTable('auth_rule', [
             'name' => $this->string(64)->notNull(),
-            'data' => $this->string(64)->notNull(),
-            'created_at' => $this->integer(11)->notNull(),
-            'updated_at' => $this->integer(11)->notNull(),
+            'data' => $this->text(),
+            'created_at' => $this->integer(11),
+            'updated_at' => $this->integer(11),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
         $this->addPrimaryKey('fk_auth_rule', 'auth_rule', ['name']);
-        $this->addForeignKey('auth_item_ibfk_1', 'auth_rule', 'name', 'auth_item', 'name', 'CASCADE', 'CASCADE');
+        //$this->addForeignKey('auth_item_ibfk_1', 'auth_rule', 'name', 'auth_item', 'name', 'CASCADE', 'CASCADE');
     }
 
     public function CreateMenuTable() {
         $this->dropIfExist('menu');
 
         $this->createTable('menu', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->PrimaryKey(),
             'name' => $this->string(128)->notNull(),
-            'parent' => $this->integer(11)->notNull(),
-            'route' => $this->string(255)->notNull(),
-            'order' => $this->integer(11)->notNull(),
-            'data' => $this->string()->notNull(),
+            'parent' => $this->integer(11),
+            'route' => $this->string(255),
+            'order' => $this->integer(11),
+            'data' => $this->text(),
             'app' => $this->string(50)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('fk_id', 'menu', ['id']);
         $this->addForeignKey('fk_parent', 'menu', 'parent', 'menu', 'id', 'CASCADE', 'CASCADE');
-        $this->createIndex('idx_child', 'menu', ['parent'], true);
+        $this->createIndex('idx_child', 'menu', ['parent'], false);
     }
 
     public function dropIfExist($tableName) {
