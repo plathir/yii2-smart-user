@@ -44,7 +44,7 @@ class AdminUsersSearch extends AdminUsers {
      */
     public function search($params) {
         $query = AdminUsers::find();
-        $query->join('LEFT OUTER JOIN', 'user_profile', 'user.id = user_profile.id');
+        $query->join('LEFT OUTER JOIN', 'user_profile', '{{%user.id}} = user_profile.id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -75,17 +75,17 @@ class AdminUsersSearch extends AdminUsers {
         }
 
         $query->andFilterWhere([
-            'user.id' => $this->id,
+            '{{%user}}.id' => $this->id,
             'username' => $this->username,
             'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
                 ->andFilterWhere(['like', 'email', $this->email])
-                ->andFilterWhere(['like', "( FROM_UNIXTIME(user.created_at, '" . Yii::$app->settings->getSettings('DBShortDateFormat') . " %h:%i:%s %p' ))", $this->created_at])
-                ->andFilterWhere(['like', "( FROM_UNIXTIME(user.updated_at, '" . Yii::$app->settings->getSettings('DBShortDateFormat') . " %h:%i:%s %p' ))", $this->updated_at])
-                ->andFilterWhere(['like', 'user_profile.first_name', $this->full_name])
-                ->orFilterWhere(['like', 'user_profile.last_name', $this->full_name]);
+                ->andFilterWhere(['like', "( FROM_UNIXTIME({{%user}}.created_at, '" . Yii::$app->settings->getSettings('DBShortDateFormat') . " %h:%i:%s %p' ))", $this->created_at])
+                ->andFilterWhere(['like', "( FROM_UNIXTIME({{%user}}.updated_at, '" . Yii::$app->settings->getSettings('DBShortDateFormat') . " %h:%i:%s %p' ))", $this->updated_at])
+                ->andFilterWhere(['like', '{{%user_profile}}.first_name', $this->full_name])
+                ->orFilterWhere(['like', '{{%user_profile}}.last_name', $this->full_name]);
 
         return $dataProvider;
     }

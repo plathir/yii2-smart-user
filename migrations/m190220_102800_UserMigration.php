@@ -36,7 +36,7 @@ class m190220_102800_UserMigration extends Migration {
     public function CreateUserTable() {
         $this->dropIfExist('user');
 
-        $this->createTable('user', [
+        $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string(255)->notNull(),
             'auth_key' => $this->string(32)->notNull(),
@@ -55,7 +55,7 @@ class m190220_102800_UserMigration extends Migration {
     public function CreateUserProfileTable() {
         $this->dropIfExist('user_profile');
 
-        $this->createTable('user_profile', [
+        $this->createTable('{{%user_profile}}', [
             'id' => $this->integer(11)->notNull(),
             'first_name' => $this->string(40)->notNull(),
             'last_name' => $this->string(40)->notNull(),
@@ -68,29 +68,29 @@ class m190220_102800_UserMigration extends Migration {
             'updated_by' => $this->integer(11)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('pk_user_id', 'user_profile', ['id']);
+        $this->addPrimaryKey('pk_user_id', '{{%user_profile}}', ['id']);
         //  Add foreing key
-        $this->addForeignKey('fk_user_id', 'user_profile', 'id', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_user_id', '{{%user_profile}}', 'id', '{{%user}}', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function CreateAuthTable() {
-        $this->dropIfExist('auth');
+        $this->dropIfExist('%auth');
 
-        $this->createTable('auth', [
+        $this->createTable('{{%auth}}', [
             'id' => $this->integer(11)->notNull(),
             'user_id' => $this->integer(11)->notNull(),
             'source' => $this->string(255)->notNull(),
             'source_id' => $this->string(255)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('pk_auth_user_id', 'auth', ['id']);
-        $this->addForeignKey('fk_auth_user_id', 'auth', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addPrimaryKey('pk_auth_user_id', '{{%auth}}', ['id']);
+        $this->addForeignKey('fk_auth_user_id', '{{%auth}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function CreateAuthItemTable() {
         $this->dropIfExist('auth_item');
 
-        $this->createTable('auth_item', [
+        $this->createTable('{{%auth_item}}', [
             'name' => $this->string(64)->notNull(),
             'type' => $this->integer(11)->notNull(),
             'description' => $this->text(),
@@ -100,58 +100,58 @@ class m190220_102800_UserMigration extends Migration {
             'updated_at' => $this->integer(11)->defaultValue(NULL),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('pk_auth_assin', 'auth_item', ['name']);
+        $this->addPrimaryKey('pk_auth_assin', '{{%auth_item}}', ['name']);
 
-        $this->createIndex('idx_rule_name', 'auth_item', ['rule_name'], false);
-        $this->createIndex('idx_type', 'auth_item', ['type'], false);
+        $this->createIndex('idx_rule_name', '{{%auth_item}}', ['rule_name'], false);
+        $this->createIndex('idx_type', '{{%auth_item}}', ['type'], false);
     }
 
     public function CreateAuthItemChildTable() {
         $this->dropIfExist('auth_item_child');
 
-        $this->createTable('auth_item_child', [
+        $this->createTable('{{%auth_item_child}}', [
             'parent' => $this->string(64)->notNull(),
             'child' => $this->string(64)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('fk_auth_item_child', 'auth_item_child', ['parent', 'child']);
-        $this->addForeignKey('auth_item_child_ibfk_1', 'auth_item_child', 'parent', 'auth_item', 'name', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('auth_item_child_ibfk_2', 'auth_item_child', 'child', 'auth_item', 'name', 'CASCADE', 'CASCADE');
+        $this->addPrimaryKey('fk_auth_item_child', '{{%auth_item_child}}', ['parent', 'child']);
+        $this->addForeignKey('auth_item_child_ibfk_1', '{{%auth_item_child}}', 'parent', '{{%auth_item}}', 'name', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('auth_item_child_ibfk_2', '{{%auth_item_child}}', 'child', '{{%auth_item}}', 'name', 'CASCADE', 'CASCADE');
 
-        $this->createIndex('idx_child', 'auth_item_child', ['child'], false);
+        $this->createIndex('idx_child', '{{%auth_item_child}}', ['child'], false);
     }
 
     public function CreateAuthAssingmentTable() {
         $this->dropIfExist('auth_assignment');
 
-        $this->createTable('auth_assignment', [
+        $this->createTable('{{%auth_assignment}}', [
             'item_name' => $this->string(64)->notNull(),
             'user_id' => $this->string(64)->notNull(),
             'created_at' => $this->integer(11)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('fk_auth_assin', 'auth_assignment', ['item_name', 'user_id']);
-        $this->addForeignKey('auth_assignment_ibfk_1', 'auth_assignment', 'item_name', 'auth_item', 'name', 'CASCADE', 'CASCADE');
+        $this->addPrimaryKey('fk_auth_assin', '{{%auth_assignment}}', ['item_name', 'user_id']);
+        $this->addForeignKey('auth_assignment_ibfk_1', '{{%auth_assignment}}', 'item_name', '{{%auth_item}}', 'name', 'CASCADE', 'CASCADE');
     }
 
     public function CreateAuthRuleTable() {
         $this->dropIfExist('auth_rule');
 
-        $this->createTable('auth_rule', [
+        $this->createTable('{{%auth_rule}}', [
             'name' => $this->string(64)->notNull(),
             'data' => $this->text(),
             'created_at' => $this->integer(11),
             'updated_at' => $this->integer(11),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addPrimaryKey('fk_auth_rule', 'auth_rule', ['name']);
+        $this->addPrimaryKey('fk_auth_rule', '{{%auth_rule}}', ['name']);
         //$this->addForeignKey('auth_item_ibfk_1', 'auth_rule', 'name', 'auth_item', 'name', 'CASCADE', 'CASCADE');
     }
 
     public function CreateMenuTable() {
         $this->dropIfExist('menu');
 
-        $this->createTable('menu', [
+        $this->createTable('{{%menu}}', [
             'id' => $this->PrimaryKey(),
             'name' => $this->string(128)->notNull(),
             'parent' => $this->integer(11),
@@ -161,13 +161,13 @@ class m190220_102800_UserMigration extends Migration {
             'app' => $this->string(50)->notNull(),
                 ], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
-        $this->addForeignKey('fk_parent', 'menu', 'parent', 'menu', 'id', 'CASCADE', 'CASCADE');
-        $this->createIndex('idx_child', 'menu', ['parent'], false);
+        $this->addForeignKey('fk_parent', '{{%menu}}', 'parent', '{{%menu}}', 'id', 'CASCADE', 'CASCADE');
+        $this->createIndex('idx_child', '{{%menu}}', ['parent'], false);
     }
 
     public function dropIfExist($tableName) {
-        if (in_array($tableName, $this->getDb()->schema->tableNames)) {
-            $this->dropTable($tableName);
+        if (in_array($this->db->tablePrefix .$tableName, $this->getDb()->schema->tableNames)) {
+            $this->dropTable($this->db->tablePrefix .$tableName);
         }
     }
 
