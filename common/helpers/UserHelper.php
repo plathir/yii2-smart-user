@@ -1,5 +1,4 @@
 <?php
-
 namespace plathir\user\common\helpers;
 
 use plathir\user\common\models\profile\UserProfile;
@@ -72,6 +71,11 @@ class UserHelper {
         } else {
             return null;
         }
+    }
+
+    public function getAddUserImage($id, $view = null) {
+        $bundle = userAsset::register($view);
+        return $bundle->baseUrl . '/img/add_user.png';
     }
 
 }
