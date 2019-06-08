@@ -15,11 +15,14 @@ class Module extends \yii\base\Module {
     public $mediaUrl                    = '';
     public $mediaPath                   = '';
     public $DefaultRoles                = '';
+    public $themePath = '';
 
     public function init() {
-        $path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/themes/' . $this->Theme . '/views';
-        $this->setViewPath($path);
-
+        $themeHelper = new \frontend\helpers\ThemesHelper();
+        $this->themePath = $themeHelper->ModuleThemePath('user', __FILE__);
+        //$path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/themes/' . $this->Theme . '/views';
+        
+        $this->setViewPath($this->themePath);
 
         parent::init();
         $this->setModules([
