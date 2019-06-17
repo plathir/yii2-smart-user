@@ -2,6 +2,7 @@
 namespace plathir\user\frontend;
 
 use Yii;
+use \common\helpers\ThemesHelper;
 
 class Module extends \yii\base\Module {
 
@@ -17,16 +18,11 @@ class Module extends \yii\base\Module {
     public $DefaultRoles = '';
 
     public function init() {
-//        $themeHelper = new \frontend\helpers\ThemesHelper();
-//        $this->themePath = $themeHelper->ModuleThemePath('user','frontend', __FILE__);
-        //$path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/themes/' . $this->Theme . '/views';
 
-        if (Yii::$app->settings->getSettings('FrontEndTheme') != null) {
-            $path = Yii::getAlias('@realAppPath') . '/themes/site/' . Yii::$app->settings->getSettings('FrontendTheme') . '/module/user/views';
-        } else {
-            $path = Yii::getAlias('@vendor') . '/plathir/yii2-smart-user/frontend/themes/' . $this->Theme . '/views';
-        }
-
+        $helper = new ThemesHelper();
+        $path = $helper->ModuleThemePath('user', 'frontend', dirname(__FILE__) . "/themes/$this->Theme");
+        $path = $path . '/views';
+        
         $this->setViewPath($path);
 
         parent::init();
