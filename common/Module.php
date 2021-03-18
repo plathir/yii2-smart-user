@@ -34,6 +34,7 @@ class Module extends \yii\base\Module {
             $this->AdminUserID = '1';
         }
         $this->registerAssets();
+        $this->registerTranslations();
     }
 
     public function registerAssets() {
@@ -41,4 +42,15 @@ class Module extends \yii\base\Module {
         userAsset::register($view);
     }
 
+
+    public function registerTranslations() {
+        /* This registers translations for the widgets module * */
+        Yii::$app->i18n->translations['user'] = [
+            'class'          => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en',
+            'basePath'       => Yii::getAlias('@vendor/plathir/yii2-smart-user/backend/messages'),
+        ];
+    }
+    
+    
 }

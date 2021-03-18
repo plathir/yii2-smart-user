@@ -245,10 +245,10 @@ class User extends ActiveRecord implements IdentityInterface {
         $badge = '';
         switch ($this->status) {
             case 0:
-                $badge = '<span class="label label-danger">Inactive</span>';
+                $badge = '<span class="label label-danger">' . Yii::t('user', 'Inactive') . '</span>';
                 break;
             case 10:
-                $badge = '<span class="label label-success">Active</span>';
+                $badge = '<span class="label label-success">' . Yii::t('user', 'Active') . '</span>';
                 break;
             default:
                 break;
@@ -256,5 +256,5 @@ class User extends ActiveRecord implements IdentityInterface {
 
         return $badge;
     }
-           
+
 }

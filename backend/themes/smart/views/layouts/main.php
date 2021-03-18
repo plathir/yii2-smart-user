@@ -26,9 +26,9 @@ if (\Yii::$app->view->theme) {
     </div><!-- /.box-header -->
     <div class="box-body">
         <?php
-         $htmlFileManager = Html::a(Yii::t('user', '<i class="fa fa-folder-open"></i>File Manager'), ['/user/default/filemanager'], ['class' => 'btn btn-app']); 
-         $htmlSettings = Html::a(Yii::t('user', '<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings')), ['/user/settings'], ['class' => 'btn btn-app']);
-         $htmlUserManage = Html::a(Yii::t('user', '<i class="fa fa-users"></i>' . Yii::t('user', 'Manage Users')), ['/user/admin'], ['class' => 'btn btn-app']);
+         $htmlFileManager = Html::a('<i class="fa fa-folder-open"></i>'.Yii::t('user', 'File Manager'), ['/user/default/filemanager'], ['class' => 'btn btn-app']); 
+         $htmlSettings = Html::a('<i class="fa fa-gears"></i>' . Yii::t('user', 'Settings'), ['/user/settings'], ['class' => 'btn btn-app']);
+         $htmlUserManage = Html::a('<i class="fa fa-users"></i>' . Yii::t('user', 'Manage Users'), ['/user/admin'], ['class' => 'btn btn-app']);
          ?>
 
         <?=  Html::tag('span', $htmlFileManager , ['title' => Yii::t('user', 'Open File Manager'),'data-toggle' => 'tooltip' ]) ?>

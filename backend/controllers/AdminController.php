@@ -85,6 +85,8 @@ class AdminController extends Controller {
             $model = new CreateUserForm();
             $model->setPassword($model->password);
             $model->generateAuthKey();
+            $model->activate_token = '';
+            $model->last_visited = gmmktime();
 //            $tzone = function() {
 //              return '<script type="text/javascript">
 //                       var tZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

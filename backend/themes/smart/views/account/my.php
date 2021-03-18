@@ -23,7 +23,7 @@ $user_html = DetailView::widget([
                 'username',
                 'email:email',
                 [
-                    'label' => 'Status',
+                 //   'label' => 'Status',
                     'attribute' => 'status',
                     'value' => $account->Activebadge,
                     'format' => 'html',
@@ -60,7 +60,7 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     [
-                        'label' => 'Gender',
+                   //     'label' => 'Gender',
                         'attribute' => 'gender',
                         'value' => $profile->getGenderLabel(),
                     ],
@@ -141,16 +141,16 @@ if (\yii::$app->user->can('AdminPermissions')) {
 
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Email</b> <a class="pull-right"><?= $account->email ?></a>
+                        <b><?= Yii::t('user', 'Email') ?></b> <a class="pull-right"><?= $account->email ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Created</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
+                        <b><?= Yii::t('user', 'Created') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Updated</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
+                        <b><?= Yii::t('user', 'Updated') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Last Login</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
+                        <b><?= Yii::t('user', 'Last Login') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
                     </li>
 
                 </ul>

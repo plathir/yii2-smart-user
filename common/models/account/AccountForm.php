@@ -25,7 +25,7 @@ class AccountForm extends Model {
 
     /** @var User */
     private $_user;
-
+   
     /** @return User */
     public function getUser() {
         if ($this->_user == null) {

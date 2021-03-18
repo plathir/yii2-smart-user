@@ -49,16 +49,16 @@ class UserProfile extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'first_name' => Yii::t('app', 'First Name'),
-            'last_name' => Yii::t('app', 'Last Name'),
-            'gender' => Yii::t('app', 'Gender'),
-            'file' => Yii::t('app', 'File for Profile Image'),
-            'profile_image' => Yii::t('app', 'Profile Image'),
-            'birth_date' => Yii::t('app', 'Birth Date'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'id' => Yii::t('user', 'ID'),
+            'first_name' => Yii::t('user', 'First Name'),
+            'last_name' => Yii::t('user', 'Last Name'),
+            'gender' => Yii::t('user', 'Gender'),
+            'file' => Yii::t('user', 'File for Profile Image'),
+            'profile_image' => Yii::t('user', 'Profile Image'),
+            'birth_date' => Yii::t('user', 'Birth Date'),
+            'created_at' => Yii::t('user', 'Created At'),
+            'updated_at' => Yii::t('user', 'Updated At'),
+            'updated_by' => Yii::t('user', 'Updated By'),
         ];
     }
 
@@ -100,7 +100,7 @@ class UserProfile extends \yii\db\ActiveRecord {
     }
 
     public function getGenderLabel() {
-        return $this->gender == 1 ? 'Male' : 'Female';
+        return $this->gender == 1 ? Yii::t('user','Male') : Yii::t('user','Female');
     }
 
     public function getUpadatedByUserName() {

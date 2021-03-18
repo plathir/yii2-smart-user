@@ -11,10 +11,10 @@ use plathir\user\common\helpers\UserHelper;
 
 $userHelper = new UserHelper();
 
-$this->title = Yii::t('user', 'View User');
+$this->title = Yii::t('user', 'View User'). ' : '. $account->id . '-' .$account->username;
 $this->params['breadcrumbs'] = [
-    ['label' => 'Users', 'url' => ['index']],
-    $this->title
+    ['label' => Yii::t('user', 'Users'), 'url' => ['index']],
+    $this->title 
 ];
 
 $user_html = DetailView::widget([
@@ -27,7 +27,7 @@ $user_html = DetailView::widget([
                 'username',
                 'email:email',
                 [
-                    'label' => 'Status',
+                    //   'label' => 'Status',
                     'attribute' => 'status',
                     'value' => $account->Activebadge,
                     'format' => 'html',
@@ -66,14 +66,14 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     [
-                        'label' => 'Gender',
+                       // 'label' => 'Gender',
                         'attribute' => 'gender',
                         'value' => $profile->getGenderLabel(),
                     ],
                     'profile_image',
-                    [ 'attribute' => 'birth_date',
-                      'format' =>['date' , 'php:d-m-Y'],  
-                        ],
+                    ['attribute' => 'birth_date',
+                        'format' => ['date', 'php:d-m-Y'],
+                    ],
                     'created_at:datetime',
                     'updated_at:datetime',
                 ],
@@ -95,8 +95,8 @@ if ($roles != null) {
     $roles_html .= '<table class="table table-striped">
         <thead>
             <tr>
-                <th>'. Yii::t('user', 'Role Name').'</th>
-                <th>'. Yii::t('user','Description').'</th>
+                <th>' . Yii::t('user', 'Role Name') . '</th>
+                <th>' . Yii::t('user', 'Description') . '</th>
             </tr>
         </thead>
         <tbody>';
@@ -151,18 +151,17 @@ $roles_html = $roles_button_upd . '&nbsp' . $roles_html;
 
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Email</b> <a class="pull-right"><?= $account->email ?></a>
+                        <b><?= Yii::t('user', 'Email') ?></b> <a class="pull-right"><?= $account->email ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Created</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
+                        <b><?= Yii::t('user', 'Created') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Updated</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
+                        <b><?= Yii::t('user', 'Updated') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
                     </li>
                     <li class="list-group-item">
-                        <b>Last Login</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
+                        <b><?= Yii::t('user', 'Last Login') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
                     </li>
-
                 </ul>
 
             </div>

@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->Activebadge;
                         },
                         'format' => 'html',
-                        'filter' => Html::activeDropDownList($searchModel, 'status', ['0' => 'Inactive', '10' => 'Active'], ['class' => 'form-control', 'prompt' => 'Select...']),
+                        'filter' => Html::activeDropDownList($searchModel, 'status', ['0' => Yii::t('user','Inactive'), '10' => Yii::t('user','Active')], ['class' => 'form-control', 'prompt' => 'Select...']),
                         'contentOptions' => ['style' => 'width: 10%;']
                     ],
                     [

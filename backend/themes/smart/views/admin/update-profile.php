@@ -18,12 +18,12 @@ $this->params['breadcrumbs'] = [
 ?>
 
 <div class="user-account-update">
-    
-<?php
-echo $this->render('_form_update_profile', [
-    'profile' => $profile,
-    'module' => $module,
-]);
-?>
+
+    <?php
+    echo $this->render('_form_update_profile', [
+        'profile' => $profile,
+        'module' => $module,
+    ]);
+    ?>
 
 </div>
