@@ -23,4 +23,5 @@ return [
     'Widget Name' => 'Όνομα Widget',
     'Widget class' => 'Widget class',
     'Description' => 'Περιγραφή',
+    
 ];

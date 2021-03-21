@@ -29,7 +29,7 @@ return [
     'Created Date' => 'Ημερομηνία Δημιουργίας',
     'Created At' => 'Ημερομηνία Δημιουργίας',
     'Created By' => 'Δημιουργία χρήστης',
-    'Updated At' => 'Ημερομηνία αλλαγής',
+    'Updated At' => 'Ημερομηνία Αλλαγής',
     'Updated By' => 'Αλλαγή Χρήστης',
     'Title' => 'Τίτλος',
     'Update {modelClass}: ' => 'Αλλαγή {modelClass}: ',
@@ -74,5 +74,8 @@ return [
     'Female' => 'Γυναίκα',
     'Active' => 'Ενεργός',
     'Inactive' => 'Ανενεργός',
+    'Change Password' => 'Αλλαγή Password',
+    'Latest Members' => 'Πρόσφατοι χρήστες',
+    'My Account Profile' => 'O Λογαριασμός μου',
    
 ];

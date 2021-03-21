@@ -90,8 +90,8 @@ if ($roles != null) {
     $roles_html .= '<table class="table table-striped">
         <thead>
             <tr>
-                <th>Role Name</th>
-                <th>Description</th>
+                <th>'.Yii::t('user', 'Role Name') .'</th>
+                <th>'.Yii::t('user', 'Description').'</th>
             </tr>
         </thead>
         <tbody>';
