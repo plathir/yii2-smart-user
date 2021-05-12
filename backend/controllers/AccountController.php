@@ -62,7 +62,7 @@ class AccountController extends Controller {
                         'module' => $this->module
             ]);
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to view my data ');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to view my data '));
         }
     }
 
@@ -71,7 +71,7 @@ class AccountController extends Controller {
             $model = $this->findModel(\Yii::$app->user->identity->id);
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->ValidateAndSave()) {
-                    Yii::$app->getSession()->setFlash('success', 'Account changed !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Account changed !'));
                     return $this->redirect(['/user/account/my']);
                 } else {
                     return $this->render('edit', [
@@ -84,7 +84,7 @@ class AccountController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to edit Account data');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to edit Account data'));
         }
     }
 
@@ -93,11 +93,11 @@ class AccountController extends Controller {
             $model = $this->findModelChangePassword(\Yii::$app->user->identity->id);
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->ChangePassword()) {
-                    Yii::$app->getSession()->setFlash('success', 'Password changed !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Password changed !'));
                     //  return $this->refresh();
                     return $this->redirect(['account/my']);
                 } else {
-                    Yii::$app->getSession()->setFlash('error', 'Password cannot change ! check your entries ');
+                    Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Password cannot change ! check your entries '));
                     return $this->render('change_password', [
                                 'model' => $model,
                     ]);
@@ -108,7 +108,7 @@ class AccountController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to change password');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to change password'));
         }
     }
 
@@ -121,7 +121,7 @@ class AccountController extends Controller {
 
             return $new_model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('user', 'The requested page does not exist.'));
         }
     }
 
@@ -132,7 +132,7 @@ class AccountController extends Controller {
             $new_model->email = $model->email;
             return $new_model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('user', 'The requested page does not exist.'));
         }
     }
 

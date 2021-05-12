@@ -3,6 +3,7 @@
 namespace plathir\user\backend\controllers;
 
 use yii\web\Controller;
+use Yii;
 
 /**
  * AppsController implements the CRUD actions for Apps model.
@@ -43,13 +44,19 @@ class DefaultController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-
-        return $this->render('index');
+        if (\yii::$app->user->can('AdminIndexUser')) {
+            return $this->render('index');
+        } else {
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to View Users'));
+        }
     }
 
     public function actionFilemanager() {
-
+        if (\yii::$app->user->can('AdminIndexUser')) {
         return $this->render('filemanager');
+        } else {
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user', 'No Permission to File Manager'));
+        }        
     }
 
 }

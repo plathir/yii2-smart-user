@@ -14,7 +14,7 @@ $this->title = Yii::t('user', 'Edit My Account');
 <div id="site-login-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
     <div class="panel panel-default">
         <div class="panel-heading">
-            <?= Yii::t('user', 'Please fill out the following fields to edit my User Data:') ?>
+            <?= Yii::t('user', 'Please fill out the following fields to change my User Data:') ?>
         </div><!-- /.box-header -->
         <div class="panel-body">
             <?php $form = ActiveForm::begin(['options' => ['id' => $model->formName(), 'enableAjaxValidation' => true, 'enableClientValidation' => true],]); ?>
@@ -24,7 +24,7 @@ $this->title = Yii::t('user', 'Edit My Account');
             <?= ''; //$form->field($model, 'timezone')->dropDownList($model->timezoneslist) ?>            
             <div class="form-group">
                 <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Save'), ['class' => 'btn btn-success btn-flat btn-loader', 'name' => 'update-button', 'id' => 'accountSubmit']) ?>
-                <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Back', Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
+                <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> ' . Yii::t('user', 'Back'), Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
             </div>
             <?php ActiveForm::end(); ?>        
         </div>

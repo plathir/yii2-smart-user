@@ -108,7 +108,7 @@ class AccountController extends Controller {
                     //  return $this->refresh();
                     return $this->redirect(['account/my']);
                 } else {
-                    Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Password cannot change ! check your entries '));
+                    Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Password cannot changed ! check your entries '));
                 }
             }
             if (\Yii::$app->request->isAjax) {

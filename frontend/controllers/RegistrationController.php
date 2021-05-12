@@ -48,7 +48,7 @@ class RegistrationController extends Controller {
                     }
                 }
             } else {
-                Yii::$app->getSession()->setFlash('error', Yii::t('user', ' Signup Error !'));
+                Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Signup Error !'));
             }
         }
 
@@ -85,7 +85,7 @@ class RegistrationController extends Controller {
             }
         }
 
-        Yii::$app->getSession()->setFlash('error', Yii::t('user', 'activation incomplete !.'));
+        Yii::$app->getSession()->setFlash('error', Yii::t('user', 'Αctivation incomplete !'));
         return $this->goHome();
     }
 

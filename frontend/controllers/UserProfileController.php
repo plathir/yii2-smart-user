@@ -87,7 +87,7 @@ class UserProfileController extends Controller {
                 }
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', Yii::t('user','profile already created!'));
+            Yii::$app->getSession()->setFlash('danger', Yii::t('user','Profile already created !'));
             return $this->actionEditMyProfile();
         }
     }
@@ -100,7 +100,7 @@ class UserProfileController extends Controller {
         $model = $this->findModel(\Yii::$app->user->identity->id);
         if ($model != null) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('user','profile changed !'));
+                Yii::$app->getSession()->setFlash('success', Yii::t('user','Profile changed !'));
                 return $this->redirect(['account/my']);
             } else {
                 if (\Yii::$app->request->isAjax) {
@@ -114,7 +114,7 @@ class UserProfileController extends Controller {
                 }
             }
         } else {
-            Yii::$app->getSession()->setFlash('danger', Yii::t('user','profile not exist !'));
+            Yii::$app->getSession()->setFlash('danger', Yii::t('user','Profile not exist !'));
             return $this->actionCreateMyProfile();
         }
     }

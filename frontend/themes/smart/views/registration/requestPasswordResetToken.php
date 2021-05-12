@@ -13,7 +13,7 @@ use yii\bootstrap\ActiveForm;
     <div class="row">
         <div id="site-request-password-reset-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
             <div class="panel panel-default">
-                <div class="panel-heading">Request Password Reset</div>
+                <div class="panel-heading"><?= Yii::t('user','Request Password Reset') ?></div>
                 <div class="panel-body">                    
                     <div class="row">
                         <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>

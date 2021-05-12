@@ -23,7 +23,7 @@ $user_html = DetailView::widget([
                 'username',
                 'email:email',
                 [
-                    'label' => 'Status',
+ //                   'label' => 'Status',
                     'attribute' => 'status',
                     'value' => $account->Activebadge,
                     'format' => 'html',
@@ -60,7 +60,6 @@ if ($profile) {
                     'first_name',
                     'last_name',
                     [
-                        'label' => 'Gender',
                         'attribute' => 'gender',
                         'value' => $profile->getGenderLabel(),
                     ],
@@ -90,8 +89,8 @@ if ($roles != null) {
     $roles_html .= '<table class="table table-striped">
         <thead>
             <tr>
-                <th>Role Name</th>
-                <th>Description</th>
+                <th>'.Yii::t('user', 'Role Name').'</th>
+                <th>'.Yii::t('user', 'Description').'</th>
             </tr>
         </thead>
         <tbody>';
@@ -135,16 +134,16 @@ $user_html = $acc_button_edit . '&nbsp' . $acc_button_ch_pass . // . '&nbsp' . $
 
                         <ul class="list-group ">
                             <li class="list-group-item profile-item">
-                                <b>Email</b> <a class="pull-right"><?= $account->email ?></a>
+                                <b><?= Yii::t('user', 'Email') ?></b> <a class="pull-right"><?= $account->email ?></a>
                             </li>
                             <li class="list-group-item profile-item">
-                                <b>Created</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
+                                <b><?= Yii::t('user', 'Created') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->created_at); ?></a>
                             </li>
                             <li class="list-group-item profile-item">
-                                <b>Updated</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
+                                <b><?= Yii::t('user', 'Updated') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->updated_at); ?></a>
                             </li>
                             <li class="list-group-item profile-item">
-                                <b>Last Login</b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
+                                <b><?= Yii::t('user', 'Last Login') ?></b> <a class="pull-right"><?= Yii::$app->formatter->asDatetime($account->last_visited); ?></a>
                             </li>
                         </ul>
                     </div>

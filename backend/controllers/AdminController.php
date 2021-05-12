@@ -111,7 +111,7 @@ class AdminController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to create user');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to create user'));
         }
     }
 
@@ -127,10 +127,10 @@ class AdminController extends Controller {
             $model->id = $id;
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
-                    Yii::$app->getSession()->setFlash('success', 'Profile created !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user','Profile created !'));
                     return $this->redirect(['view', 'id' => $id]);
                 } else {
-                    Yii::$app->getSession()->setFlash('danger', 'Profile cannot create !');
+                    Yii::$app->getSession()->setFlash('danger', Yii::t('user','Profile cannot create !'));
                 }
             } else {
                 return $this->render('create-profile', [
@@ -138,7 +138,7 @@ class AdminController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to create user profile');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to create user profile'));
         }
     }
 
@@ -157,7 +157,7 @@ class AdminController extends Controller {
                         'module' => $this->module,
             ]);
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to View user');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to View user'));
         }
     }
 
@@ -173,7 +173,7 @@ class AdminController extends Controller {
 
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->update()) {
-                    Yii::$app->getSession()->setFlash('success', 'User updated !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user','User updated !'));
                     return $this->redirect(['view', 'id' => $id]);
                 } else {
                     return $this->render('update', [
@@ -188,7 +188,7 @@ class AdminController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to Update user');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to Update user'));
         }
     }
 
@@ -203,10 +203,10 @@ class AdminController extends Controller {
             if ($model->load(Yii::$app->request->post())) {
 
                 if ($model->save(false)) {
-                    Yii::$app->getSession()->setFlash('success', 'Profile changed !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user','Profile changed !'));
                     return $this->redirect(['view', 'id' => $id]);
                 } else {
-                    Yii::$app->getSession()->setFlash('danger', 'Profile cannot change !');
+                    Yii::$app->getSession()->setFlash('danger', Yii::t('user','Profile cannot change !'));
                     return $this->redirect(['update', 'id' => $id]);
                 }
             } else {
@@ -216,7 +216,7 @@ class AdminController extends Controller {
                 ]);
             }
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to Update Profile');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to Update Profile'));
         }
     }
 
@@ -234,7 +234,7 @@ class AdminController extends Controller {
                         'dataProvider' => $dataProvider,
             ]);
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to view User Index');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to view User Index'));
         }
     }
 
@@ -249,17 +249,17 @@ class AdminController extends Controller {
             if ($this->findModel($id)->delete()) {
                 if ($this->findModelProfile($id) != null) {
                     if ($this->findModelProfile($id)->delete()) {
-                        Yii::$app->getSession()->setFlash('success', 'User Account and profile deleted !');
+                        Yii::$app->getSession()->setFlash('success', Yii::t('user','User Account and profile deleted !'));
                     }
                 } else {
-                    Yii::$app->getSession()->setFlash('success', 'User Account deleted !');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('user','User Account deleted !'));
                 }
             } else {
-                Yii::$app->getSession()->setFlash('danger', 'User cannot delete !');
+                Yii::$app->getSession()->setFlash('danger', Yii::t('user','User cannot delete !'));
             }
             return $this->redirect(['index']);
         } else {
-            throw new \yii\web\NotAcceptableHttpException('No Permission to Delete User ');
+            throw new \yii\web\NotAcceptableHttpException(Yii::t('user','No Permission to Delete User '));
         }
     }
 
@@ -274,9 +274,9 @@ class AdminController extends Controller {
             if (file_exists($this->module->ProfileImagePathPreview . '/' . $image)) {
                 unlink($this->module->ProfileImagePathPreview . '/' . $image);
             }
-            Yii::$app->getSession()->setFlash('success', 'User profile deleted !');
+            Yii::$app->getSession()->setFlash('success', Yii::t('user','User profile deleted !'));
         } else {
-            Yii::$app->getSession()->setFlash('danger', 'User Profile cannot delete !');
+            Yii::$app->getSession()->setFlash('danger', Yii::t('user','User Profile cannot delete !'));
         }
         return $this->redirect(['view', 'id' => $id]);
     }
@@ -298,14 +298,14 @@ class AdminController extends Controller {
             }
 
             if ($model->activate()) {
-                Yii::$app->getSession()->setFlash('success', 'User activated !');
+                Yii::$app->getSession()->setFlash('success', Yii::t('user','User activated !'));
                 return $this->redirect(['index']);
             } else {
-                Yii::$app->getSession()->setFlash('error', 'activation incomplete !.');
+                Yii::$app->getSession()->setFlash('error', Yii::t('user','activation incomplete !.'));
                 return $this->redirect(['index']);
             }
         } else {
-            Yii::$app->getSession()->setFlash('error', 'user already active !.');
+            Yii::$app->getSession()->setFlash('error', Yii::t('user','user already active !.'));
             return $this->redirect(['index']);
         }
     }
@@ -315,14 +315,14 @@ class AdminController extends Controller {
         if ($user = User::findOne($id)) {
             $user->generatePasswordResetToken();
             if ($user->save()) {
-                Yii::$app->getSession()->setFlash('success', 'Send email with new password token url');
+                Yii::$app->getSession()->setFlash('success', Yii::t('user','Send email with new password token url'));
                 $mailer = \Yii::$app->mailer;
                 $mailer->viewPath = $this->viewPath . '\mail';
                 $mailer->getView()->theme = \Yii::$app->view->theme;
                 $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
                         ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
                         ->setTo($user->email)
-                        ->setSubject('Password reset for ' . \Yii::$app->name)
+                        ->setSubject(Yii::t('user','Password reset for ') . \Yii::$app->name)
                         ->send();
                 return $this->redirect(['view', 'id' => $id]);
             }
@@ -340,7 +340,7 @@ class AdminController extends Controller {
 
         if ($user = User::findOne($id)) {
             if ($model->load(Yii::$app->request->post()) && $model->SaveNewPassword()) {
-                Yii::$app->getSession()->setFlash('success', 'new password set');
+                Yii::$app->getSession()->setFlash('success', Yii::t('user','new password set'));
                 return $this->redirect(['view', 'id' => $id]);
             } else {
                 return $this->render('set-password', ['model' => $model]);
@@ -358,7 +358,7 @@ class AdminController extends Controller {
         if (($model = CreateUserForm::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('user','The requested page does not exist.'));
         }
     }
 

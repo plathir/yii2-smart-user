@@ -8,7 +8,7 @@ use yii\web\View;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = Yii::t('user','Login');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,7 +16,7 @@ $this->title = 'Login';
 <div class="row">
     <div id="site-login-area" class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">  
         <div class="panel panel-default">
-            <div class="panel-heading">Login</div>
+            <div class="panel-heading"><?=Yii::t('user','Login')?></div>
             <div class="panel-body">                    
                 <div class="row">
 
@@ -96,7 +96,7 @@ $this->title = 'Login';
                 <div class="row form-group">
                     <div class="col-md-12 control">
                         <div>
-                            Don't have an account! 
+                            <?= Yii::t('user', "Don't have an account ? ") ?>
                             <?= Html::a(Yii::t('user', 'Sign Up Here'), ['/user/registration/signup']) ?>
                         </div>
                     </div>

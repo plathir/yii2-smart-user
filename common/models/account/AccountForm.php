@@ -4,6 +4,7 @@ namespace plathir\user\common\models\account;
 
 //use plathir\user\models\common\account\User;
 use yii\base\Model;
+use Yii;
 
 /**
  * Signup form
@@ -69,6 +70,20 @@ class AccountForm extends Model {
         ];
     }
 
+    public function attributeLabels() {
+        return [
+            'id' => Yii::t('user', 'ID'),
+            'username' => Yii::t('user', 'User Name'),
+            'email' => Yii::t('user', 'E-Mail'),
+            'status' => Yii::t('user', 'Status'),
+            'role' => Yii::t('user', 'User Role'),
+            'timezone' => Yii::t('user', 'Time Zone'),
+            'created_at' => Yii::t('user', 'Created At'),
+            'updated_at' => Yii::t('user', 'Updated At'),
+            'full_name' => Yii::t('user', 'Full Name'),
+        ];
+    }    
+    
     /**
      * Signs user up.
      *

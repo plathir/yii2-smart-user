@@ -37,7 +37,7 @@ use \backend\widgets\SmartDate;
 
         <div class="form-group">
             <?= Html::submitButton('<i class="fa fa-save"></i> ' . Yii::t('user', 'Create'), ['class' => 'btn btn-success btn-flat btn-loader']) ?>
-            <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Back', Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
+            <?= \yii\helpers\Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> ' . Yii::t('user', 'Back'), Yii::$app->request->referrer, ['class' => 'btn btn-primary pull-right btn-loader']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

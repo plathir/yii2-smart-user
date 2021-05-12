@@ -91,7 +91,7 @@ class SecurityController extends Controller {
             } else { // signup
                 if (isset($attributes['email']) && User::find()->where(['email' => $attributes['email']])->exists()) {
                     Yii::$app->getSession()->setFlash('error', [
-                        Yii::t('app', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $client->getTitle()]),
+                        Yii::t('user', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $client->getTitle()]),
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
